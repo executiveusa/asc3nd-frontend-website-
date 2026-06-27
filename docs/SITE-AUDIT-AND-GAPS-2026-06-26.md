@@ -1,4 +1,4 @@
-# Site Audit + Gaps — 2026-06-26
+# Site Audit + Gaps — 2026-06-26 (updated v0.7)
 
 ## Scope
 
@@ -18,24 +18,28 @@ npm run adamsreview            release_candidate
 /api/public/:tenant/volunteer  passed locally from allowed origin
 ```
 
-## Fixes applied in this pass
+## v0.7 fixes applied
 
 1. `apps/site/lib/api.js` now respects `NEXT_PUBLIC_MISSION_API_URL` before falling back to `NEXT_PUBLIC_API_URL`.
 2. `apps/site/app/login/page.jsx` no longer prefills demo credentials in production builds.
 3. `services/mission-api/server.js` now separates private API CORS from public bridge CORS so tenant frontends can reach public endpoints while the route still enforces tenant origin allowlists.
 4. Added prompt, architect, skill, and audit files for transferring the system mind to GLM builders and future agents.
+5. **v0.7: Production Next.js 16 public frontend** with Seattle youth/sports/mentorship mission copy, Mission OS preview dashboard, public bridge flows, AI-readable discovery, outcome-based navigation, and design system.
+6. **v0.7: Repo pushed to GitHub** (`main` branch) at `https://github.com/executiveusa/asc3nd-frontend-website-`.
+7. **v0.7: README and docs updated** to reflect current architecture, version history, and repo structure.
 
 ## Senior architect gaps
 
 ### Blocker/high
 
 1. **State is still JSON-backed in the Node API.** Production must use Postgres repositories and refuse JSON state in production.
-2. **Public website lacks actual Asc3nd mission proof.** The homepage explains the product more than the organization. It needs real program copy, service pathways, people served, donor value, volunteer path, sponsor path, and credibility proof.
-3. **Public forms are not yet visible on the public site.** The bridge exists, but the frontend should include actual volunteer, sponsor, donor, parent/program, and contact flows.
+2. **Public website needs more Asc3nd mission proof.** The homepage now explains the organization, but still needs real program copy, service pathways, people served, donor value, volunteer path, sponsor path, and credibility proof.
+3. **Public forms are not yet visible on the public site.** The bridge exists, but the frontend should include actual volunteer, sponsor, donor, parent/program, and contact flows rendered as UI.
 4. **Approval is not yet a real execution lifecycle.** Approval must create outbox events; workers must execute approved events and log result.
 5. **RBAC is too thin.** Youth-serving nonprofits need strict role separation.
 6. **ICM runner is not yet a true runtime.** ICM files exist, but stage execution, artifact indexing, and approval generation need to be real.
 7. **Live adapter status is mostly dry-run.** Pi, Absurd, Sandcastle, Postiz, Composio/MCP, voice, and model routing need real credential gates and live smoke tests.
+8. **Rust services not yet wired into production Docker Compose.** Source exists in `services/mission-*-rs/` but the production compose file still runs the Node API only.
 
 ### Medium
 

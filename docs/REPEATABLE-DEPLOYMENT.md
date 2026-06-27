@@ -1,5 +1,7 @@
 # Repeatable Deployment Contract
 
+Current version: **v0.7 Frontend Landing**.
+
 ## Product rule
 
 Mission OS has one shared backend and many custom frontends.
@@ -47,6 +49,14 @@ Supported kinds:
 - event-rsvp
 - donation-intent
 - impact-story
+
+## v0.7 deployment targets
+
+- **Public frontend**: Vercel (auto-deploy on push to `main`)
+- **API + ops cockpit**: Hostinger VPS via Docker Compose
+- **Rust services**: Docker Compose (wiring in progress)
+- **Vercel project ID**: `prj_0MLyBEnhrRChPaGd1P5wkArwpqpe`
+- **GitHub repo**: `https://github.com/executiveusa/asc3nd-frontend-website-`
 
 Every accepted submission creates:
 

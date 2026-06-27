@@ -1,11 +1,11 @@
 # Golden Standard Audit — Seattle Social Purpose OS
 
-Date: 2026-06-26
-Status: working scaffold, not full production automation yet
+Date: 2026-06-26 (updated v0.7)
+Status: production-grade frontend scaffold, backend still needs hardening
 
 ## Verdict
 
-The system has the right architecture direction: ICM as the operating layer, shared backend, customizable frontend, and a VPS/flywheel path. It is not yet the golden standard. The current build is a strong MVP scaffold that needs security hardening, real adapters, deeper product UX, and operational telemetry before being sold as managed infrastructure for youth-serving nonprofits.
+The system has the right architecture direction: ICM as the operating layer, shared backend, customizable frontend, and a VPS/flywheel path. With v0.7, the public frontend is now production-grade (Next.js 16, Seattle mission copy, Mission OS preview dashboard, public bridge, AI-readable discovery, design system). It is not yet the golden standard. The backend still needs security hardening, real adapters, Postgres migration, Rust service wiring, and operational telemetry before being sold as managed infrastructure for youth-serving nonprofits.
 
 ## What is strong
 

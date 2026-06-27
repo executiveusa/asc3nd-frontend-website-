@@ -1,5 +1,7 @@
 # Architecture
 
+Current version: **v0.7 Frontend Landing** (see `README.md` for version history).
+
 ## Product rule
 
 The backend stays reusable. Frontends and tenant `_config` files are customized.
@@ -17,9 +19,16 @@ AI-readable pages       approval queue             Pi / Absurd / Sandcastle seam
 
 ## Core services
 
-- `apps/site`: public website + private operations UI.
+- `apps/site`: public website + private operations UI (Next.js 16).
 - `services/mission-api`: API, onboarding, opportunity engine, approvals, campaigns, voice logs, ICM writes.
+- `services/mission-core-rs`: authoritative tenant/CRM/approval core.
+- `services/mission-connect-rs`: public frontend bridge for custom websites.
+- `services/mission-worker-rs`: outbox worker and scheduled durable jobs.
+- `services/mission-policy-rs`: deterministic action-risk classifier.
+- `services/mission-icm-rs`: filesystem-safe ICM stage runner.
 - `packages/core`: reusable business logic and tests.
+- `packages/mission-sdk-js`: JS SDK for any client frontend.
+- `packages/tenant-kit`: frontend config/theme/llms helpers.
 - `icm/tenant-template`: canonical workspace template.
 - `deploy`: Docker/Hostinger VPS deployment.
 

@@ -2,9 +2,11 @@
 
 This file is intentionally blunt. Do not sell the system as autonomous production infrastructure until these are closed.
 
+Current version: **v0.7 Frontend Landing**.
+
 ## Current build status
 
-- Frontend: working scaffold.
+- Frontend: **production-grade Next.js 16 public site** with Seattle mission copy, Mission OS preview dashboard, public bridge flows, AI-readable discovery.
 - API: working demo API.
 - ICM: real folder scaffold.
 - ACFS/flywheel: vendored reference + install script, not pre-installed on the host until `scripts/install-acfs.sh` runs.
@@ -12,6 +14,7 @@ This file is intentionally blunt. Do not sell the system as autonomous productio
 - Agents: adapter seams exist; real Pi/Absurd/Sandcastle execution still needs implementation.
 - Postiz: payload builder exists; real scheduler adapter needs implementation.
 - Voice: webhook logging exists; real Twilio/Vapi/Retell call workflow needs implementation.
+- Rust services: source exists in `services/mission-*-rs/`; not yet wired into Docker Compose production flow.
 
 ## Non-negotiable production bar
 

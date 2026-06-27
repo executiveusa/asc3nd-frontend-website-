@@ -1,5 +1,7 @@
 # Hostinger VPS Deployment
 
+Current version: **v0.7 Frontend Landing**.
+
 ## 1. Prepare VPS
 
 Use Ubuntu. Run the agentic coding flywheel first if this is a build/maintenance VPS:
@@ -38,4 +40,15 @@ For a new client:
 3. Save onboarding profile.
 4. Generate ICM workspace.
 5. Verify llms.txt, sitemap, robots, and schema.
+
+## 6. Vercel deployment (v0.7)
+
+The public frontend is deployed via Vercel:
+
+1. Connect the GitHub repo to Vercel.
+2. Set the Vercel project ID: `prj_0MLyBEnhrRChPaGd1P5wkArwpqpe`.
+3. Configure environment variables in Vercel (from `.env.example` — never commit real secrets).
+4. Set the build command: `npm run build` (from `apps/site`).
+5. Set the output directory: `apps/site/.next`.
+6. Deploy — Vercel auto-deploys on push to `main`.
 6. Connect integrations only after signed approval.
