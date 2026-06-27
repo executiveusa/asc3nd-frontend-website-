@@ -1,8 +1,0 @@
-{
-  email admin@example.org
-}
-
-example.org {
-  reverse_proxy /api/* api:4000
-  reverse_proxy web:3000
-}

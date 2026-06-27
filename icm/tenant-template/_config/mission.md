@@ -1,3 +1,0 @@
-# Mission
-
-Replace during onboarding.
