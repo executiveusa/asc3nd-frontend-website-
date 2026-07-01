@@ -1,9 +1,20 @@
 {
+  "version": 2,
   "buildCommand": "cd apps/site && npm install && npm run build",
   "outputDirectory": "apps/site/.next",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+  "env": {
+    "PUBLIC_SITE_URL": "https://asc3nd.org"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+      ]
+    }
   ]
 }
