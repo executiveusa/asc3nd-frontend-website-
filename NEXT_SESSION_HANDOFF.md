@@ -1,23 +1,30 @@
 # Next Session Handoff
 
-**Date:** 2026-06-26
-**Version:** v0.7.0 (Frontend Landing)
+**Date:** 2026-07-01
+**Version:** v0.7.1 (Spanish /es + Language Toggle + Skills)
 **Repo:** https://github.com/executiveusa/asc3nd-frontend-website- (branch `main`)
-**Release:** https://github.com/executiveusa/asc3nd-frontend-website-/releases/tag/v0.7.0
+**Release:** https://github.com/executiveusa/asc3nd-frontend-website-/releases/tag/v0.7.1
 
 ---
 
 ## Where we left off
 
-All code is pushed to `main` and synced with GitHub. The v0.7.0 release is tagged and published. Working tree is clean.
+All code is pushed to `main` and synced with GitHub. Working tree is clean.
 
-### What was done in this session
-1. Pushed all code to GitHub (`main` branch)
-2. Deleted stale `master` remote branch
-3. Resolved README merge conflict (kept project README over auto-generated one)
-4. Updated README and all docs to reflect v0.7 state
-5. Created GitHub release v0.7.0
-6. Verified no secrets (.env) were committed
+### What was done in this session (v0.7.1)
+1. Pushed all code to GitHub (`main` branch) after resolving rebase conflicts
+2. Added `/es` Mexican Spanish route (apps/site/app/es/page.jsx) with full Spanish copy
+3. Added LanguageToggle component wired into PublicNav (desktop + mobile)
+4. Added content files: site.es.js and site.en.js for localization
+5. Added skills/ folder with 4 subfolders (interactive-artifacts, library, review, localization)
+6. Added reviews/ folder with 7 report files (route-audit, steve-krug, design-violations, copy, forms, interactive-components, production-verification)
+7. Updated sitemap.js to include /es
+8. Updated llms.txt with public pages and Mexican Spanish page
+9. Added language toggle CSS to globals.css
+10. Added EMERALD_TABLETS.md at repo root (governance constitution)
+11. Resolved globals.css rebase conflict (took remote HEAD — modern CSS tokens)
+12. Resolved page.jsx + PublicNav.jsx rebase conflicts (took remote HEAD — superset)
+13. GitHub reported 1 moderate vulnerability (dependabot) — see: https://github.com/executiveusa/asc3nd-frontend-website-/security/dependabot/1
 
 ### Current running state
 - Next.js dev server running on http://localhost:3000 (PID 2656, started in prior session)
