@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
-import { SmoothScrollProvider } from '../components/SmoothScrollProvider';
 import './globals.css';
+import RootLayoutClient from './layout-client';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,8 +32,9 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} bg-[#030303]`}>
+      <head />
       <body>
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );
