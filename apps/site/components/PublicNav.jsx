@@ -1,147 +1,88 @@
 'use client';
-
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { tenantSite } from '../tenant.config';
-
-const navLinks = [
-  { label: 'Mission', href: '#mission' },
-  { label: 'Programs', href: '#programs' },
-  { label: 'Get involved', href: '#get-involved' },
-  { label: 'Stories', href: '#stories' },
-  { label: 'Contact', href: '#contact' },
-];
 
 export function PublicNav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, 'change', (y) => {
-    setScrolled(y > 24);
-  });
-
-  function closeMenu() {
-    setMenuOpen(false);
-  }
+  const pathname = usePathname();
+  const isSpanish = pathname.startsWith('/es');
+  const currentLang = isSpanish ? 'es' : 'en';
+  const targetLang = isSpanish ? 'en' : 'es';
+  const targetPath = targetLang === 'es' ? `/es${pathname === '/' || pathname === '' ? '' : pathname.replace(/^\/es/, '')}` : pathname.replace(/^\/es/, '');
 
   return (
-    <>
-      <motion.nav
-        className="a3-nav"
-        aria-label="Asc3nd public navigation"
-        initial={{ y: -12, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        data-scrolled={scrolled ? 'true' : 'false'}
-      >
-        <div className="a3-container a3-nav-inner">
-          <a className="a3-brand" href="#home" aria-label="Asc3nd Collective home">
-            <img src="/images/asc3nd-logo.jpg" alt="Asc3nd Collective logo" />
-            <span>
-              <strong>ASC3ND</strong>
-              <small>{tenantSite.tagline}</small>
-            </span>
-          </a>
-
-          {/* Desktop nav links */}
-          <div className="a3-nav-links" role="list">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} role="listitem">
-                {link.label}
-              </a>
-            ))}
+    <nav className="a3-nav" aria-label="Asc3nd Collective navigation">
+      <div className="a3-container a3-nav-inner">
+        {/* Logo mark */}
+        <a className="a3-brand" href="#home" aria-label="Asc3nd Collective home">
+          <div className="a3-logo-mark">
+            <span className="a3-logo-main">ASC<span className="a3-logo-3">3</span>ND</span>
+            <span className="a3-logo-sub">COLLECTIVE</span>
+            <span className="a3-logo-tag">ELEVATE. EMPOWER. ASC3ND.</span>
           </div>
+        </a>
 
-          <div className="a3-nav-end">
-            <a className="a3-button a3-button-gold" href={tenantSite.donationUrl}>
-              Donate
-            </a>
-            {/* Hamburger button — mobile only */}
-            <button
-              className="a3-hamburger"
-              aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((o) => !o)}
-            >
-              <span className={`a3-ham-line ${menuOpen ? 'open' : ''}`} aria-hidden="true" />
-              <span className={`a3-ham-line ${menuOpen ? 'open' : ''}`} aria-hidden="true" />
-              <span className={`a3-ham-line ${menuOpen ? 'open' : ''}`} aria-hidden="true" />
-            </button>
-          </div>
+        {/* Desktop Nav Links */}
+        <div className="a3-nav-links" role="list">
+          <a href="#home" className="a3-nav-link a3-nav-active" role="listitem">Home</a>
+          <a href="#mission" className="a3-nav-link" role="listitem">About Us</a>
+          <a href="#mission" className="a3-nav-link" role="listitem">Our Mission</a>
+          <a href="#programs" className="a3-nav-link" role="listitem">Programs</a>
+          <a href="#get-involved" className="a3-nav-link" role="listitem">Get Involved</a>
+          <a href="#events" className="a3-nav-link" role="listitem">Events</a>
+          <a href="#stories" className="a3-nav-link" role="listitem">Stories</a>
+          <a href="#contact" className="a3-nav-link" role="listitem">Contact</a>
         </div>
-      </motion.nav>
 
-      {/* Mobile drawer */}
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              className="a3-mobile-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.22 }}
-              onClick={closeMenu}
-              aria-hidden="true"
-            />
-            {/* Drawer panel */}
-            <motion.div
-              className="a3-mobile-menu"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobile navigation"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ duration: 0.34, ease: [0.32, 0.72, 0, 1] }}
-            >
-              <div className="a3-mobile-menu-header">
-                <a className="a3-brand" href="#home" onClick={closeMenu} aria-label="Asc3nd home">
-                  <img src="/images/asc3nd-logo.jpg" alt="Asc3nd Collective logo" />
-                  <span>
-                    <strong>ASC3ND</strong>
-                    <small>{tenantSite.tagline}</small>
-                  </span>
-                </a>
-                <button
-                  className="a3-mobile-close"
-                  aria-label="Close menu"
-                  onClick={closeMenu}
-                >
-                  &#x2715;
-                </button>
-              </div>
-              <nav aria-label="Mobile links">
-                {navLinks.map((link, i) => (
-                  <motion.a
-                    key={link.href}
-                    href={link.href}
-                    className="a3-mobile-link"
-                    onClick={closeMenu}
-                    initial={{ opacity: 0, x: 24 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.08 + i * 0.055, duration: 0.3 }}
-                  >
-                    {link.label}
-                  </motion.a>
-                ))}
-              </nav>
-              <div className="a3-mobile-menu-cta">
-                <a
-                  className="a3-button a3-button-gold"
-                  href={tenantSite.donationUrl}
-                  onClick={closeMenu}
-                  style={{ width: '100%', justifyContent: 'center' }}
-                >
-                  Donate today
-                </a>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+        {/* Language toggle */}
+        <Link
+          href={targetPath || '/'}
+          className="a3-lang-toggle"
+          aria-label={`Switch to ${targetLang === 'es' ? 'Spanish' : 'English'}`}
+        >
+          <span aria-hidden="true">{currentLang === 'en' ? '🇺🇸' : '🇲🇽'}</span>
+          <span>{currentLang === 'en' ? 'EN' : 'ES'}</span>
+        </Link>
+
+        {/* Donate CTA */}
+        <a className="a3-btn-donate" href={tenantSite.donationUrl} id="nav-donate-btn">
+          <span className="a3-heart">♥</span> {isSpanish ? 'DONAR' : 'DONATE'}
+        </a>
+
+        {/* Mobile hamburger */}
+        <button
+          className="a3-hamburger"
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span /><span /><span />
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="a3-mobile-menu">
+          <a href="#home" onClick={() => setMenuOpen(false)}>Home</a>
+          <a href="#mission" onClick={() => setMenuOpen(false)}>About Us</a>
+          <a href="#mission" onClick={() => setMenuOpen(false)}>Our Mission</a>
+          <a href="#programs" onClick={() => setMenuOpen(false)}>Programs</a>
+          <a href="#get-involved" onClick={() => setMenuOpen(false)}>Get Involved</a>
+          <a href="#events" onClick={() => setMenuOpen(false)}>Events</a>
+          <a href="#stories" onClick={() => setMenuOpen(false)}>Stories</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+          <Link
+            href={targetPath || '/'}
+            className="a3-lang-toggle-mobile"
+            onClick={() => setMenuOpen(false)}
+          >
+            🌐 {currentLang === 'en' ? 'EN' : 'ES'} → {targetLang === 'es' ? 'ES' : 'EN'}
+          </Link>
+          <a href={tenantSite.donationUrl} className="a3-mobile-donate">♥ {isSpanish ? 'DONAR' : 'DONATE'}</a>
+        </div>
+      )}
+    </nav>
   );
 }
