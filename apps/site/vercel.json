@@ -3,9 +3,5 @@
   "framework": "nextjs",
   "installCommand": "cd ../.. && npm install",
   "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "env": {
-    "PUBLIC_SITE_URL": "https://asc3nd.org",
-    "NEXT_PUBLIC_DONATION_URL": "https://donate.asc3nd.org"
-  }
+  "outputDirectory": ".next"
 }
