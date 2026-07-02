@@ -31,7 +31,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} bg-[#030303]`}>
+    <html lang="en" className={inter.variable} style={{ backgroundColor: '#030303' }}>
       <head />
       <body>
         <RootLayoutClient>{children}</RootLayoutClient>
