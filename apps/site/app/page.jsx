@@ -1,5 +1,6 @@
 import { tenantSite } from '../tenant.config';
 import { PublicNav } from '../components/PublicNav';
+import { SubscribeForm } from '../components/SubscribeForm';
 
 export const metadata = {
   title: 'Asc3nd Collective | Elevate. Empower. Asc3nd.',
@@ -212,12 +213,7 @@ export default function HomePage() {
           <div className="hp-footer-col">
             <strong>JOIN OUR COMMUNITY</strong>
             <p>Subscribe to our newsletter for updates, events and ways to get involved.</p>
-            <form className="hp-subscribe-form" onSubmit={(e) => e.preventDefault()} aria-label="Newsletter subscribe">
-              <div className="hp-subscribe-row">
-                <input type="email" placeholder="Enter your email" aria-label="Email address" id="footer-email-input" required />
-                <button type="submit" id="footer-subscribe-btn">SUBSCRIBE</button>
-              </div>
-            </form>
+            <SubscribeForm />
           </div>
 
         </div>

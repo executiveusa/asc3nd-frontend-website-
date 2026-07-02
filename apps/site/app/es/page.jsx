@@ -1,5 +1,6 @@
 import { Asc3ndPublicForms } from '../../components/Asc3ndPublicForms';
 import { PublicNav } from '../../components/PublicNav';
+import { SubscribeForm } from '../../components/SubscribeForm';
 import { tenantSite } from '../../tenant.config';
 import { site } from '../../content/site.es';
 
@@ -203,18 +204,13 @@ export default function EsHomePage() {
           <div className="hp-footer-col">
             <strong>{site.footer.joinCommunity}</strong>
             <p>{site.footer.newsletterText}</p>
-            <form className="hp-subscribe-form" onSubmit={(e) => e.preventDefault()} aria-label="Suscribirse al boletín">
-              <div className="hp-subscribe-row">
-                <input
-                  type="email"
-                  placeholder={site.footer.emailPlaceholder}
-                  aria-label="Correo electrónico"
-                  id="footer-email-input-es"
-                  required
-                />
-                <button type="submit" id="footer-subscribe-btn-es">{site.footer.subscribe}</button>
-              </div>
-            </form>
+            <SubscribeForm
+              placeholder={site.footer.emailPlaceholder}
+              buttonLabel={site.footer.subscribe}
+              ariaLabel="Suscribirse al boletín"
+              inputId="footer-email-input-es"
+              buttonId="footer-subscribe-btn-es"
+            />
           </div>
 
         </div>
