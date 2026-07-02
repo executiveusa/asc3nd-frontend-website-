@@ -2,12 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "apps/site/package.json",
-      "use": "@vercel/next"
+      "src": "apps/site/next.config.mjs",
+      "use": "@vercel/next",
+      "config": {
+        "rootDirectory": "apps/site"
+      }
     }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/apps/site/$1" }
   ],
   "env": {
     "PUBLIC_SITE_URL": "https://asc3nd.org",
