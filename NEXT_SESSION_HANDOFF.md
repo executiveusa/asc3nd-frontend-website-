@@ -1,124 +1,147 @@
-# Next Session Handoff
-
-**Date:** 2026-07-01
-**Version:** v0.7.1 (Spanish /es + Language Toggle + Skills)
-**Repo:** https://github.com/executiveusa/asc3nd-frontend-website- (branch `main`)
-**Release:** https://github.com/executiveusa/asc3nd-frontend-website-/releases/tag/v0.7.1
+# NEXT_SESSION_HANDOFF.md — Asc3nd Collective Frontend
+**Updated:** 2026-07-02 | **Outgoing model:** Gemini 2.0 Flash (Antigravity) | **Incoming model:** Gemini 2.5 Pro
 
 ---
 
-## Where we left off
+## 🟢 SITE IS LIVE
 
-All code is pushed to `main` and synced with GitHub. Working tree is clean.
-
-### What was done in this session (v0.7.1)
-1. Pushed all code to GitHub (`main` branch) after resolving rebase conflicts
-2. Added `/es` Mexican Spanish route (apps/site/app/es/page.jsx) with full Spanish copy
-3. Added LanguageToggle component wired into PublicNav (desktop + mobile)
-4. Added content files: site.es.js and site.en.js for localization
-5. Added skills/ folder with 4 subfolders (interactive-artifacts, library, review, localization)
-6. Added reviews/ folder with 7 report files (route-audit, steve-krug, design-violations, copy, forms, interactive-components, production-verification)
-7. Updated sitemap.js to include /es
-8. Updated llms.txt with public pages and Mexican Spanish page
-9. Added language toggle CSS to globals.css
-10. Added EMERALD_TABLETS.md at repo root (governance constitution)
-11. Resolved globals.css rebase conflict (took remote HEAD — modern CSS tokens)
-12. Resolved page.jsx + PublicNav.jsx rebase conflicts (took remote HEAD — superset)
-13. GitHub reported 1 moderate vulnerability (dependabot) — see: https://github.com/executiveusa/asc3nd-frontend-website-/security/dependabot/1
-
-### Current running state
-- Next.js dev server running on http://localhost:3000 (PID 2656, started in prior session)
-- Landing page is live and working
+| URL | Status |
+|---|---|
+| **https://asc3nd-frontend-website.vercel.app** | ✅ LIVE — Production alias |
+| https://asc3nd-frontend-website-jj4p0wp3t-the-pauli-effect.vercel.app | ✅ Latest deploy |
+| https://asc3nd.org | ⚠️ DNS not resolving yet — needs domain pointed to Vercel |
 
 ---
 
-## What to do next (priority order)
+## Project Identity
 
-### P0 — Production hardening (before any paid client delivery)
-
-1. **Postgres migration**
-   - Implement `PostgresTenantStore` matching `JsonTenantStore` interface
-   - Add `DATABASE_URL` support behind `STORAGE_MODE=postgres`
-   - Wire existing `db/schema.sql` migration runner
-   - Add tenant isolation tests (tenant A cannot read tenant B data)
-
-2. **Public site mission proof**
-   - Add real program copy, service pathways, people served, donor value, volunteer path, sponsor path
-   - Add credibility proof (logos, numbers, partner quotes)
-   - Wire actual public forms into the public site UI (volunteer, sponsor, donor, parent/program, contact)
-
-3. **Approval execution lifecycle**
-   - Approval must create outbox events
-   - Workers must execute approved events and log results
-   - Wire into ICM stage `05_approval_gate`
-
-4. **RBAC hardening**
-   - Youth-serving nonprofits need strict role separation
-   - Add roles: founder, program director, volunteer coordinator, board member, communications lead
-
-5. **Rust service integration**
-   - Wire `services/mission-*-rs/` into Docker Compose production flow
-   - Add integration tests for tenant boundary enforcement at network layer
-   - Add health checks and observability
-
-### P1 — Adapter hardening (real credentials)
-
-6. **Pi agent runtime** — command adapter with timeout, cwd restriction, output capture
-7. **Absurd** — durable queue for scans, report generation, campaign drafting
-8. **Sandcastle** — sandbox executor for browser tasks and untrusted code
-9. **Composio/MCP** — tenant-scoped allowlist, read/write split, tool-prompt injection checks
-10. **Postiz** — schedule only approved campaign IDs
-11. **Voice** — log calls automatically; require approval for outbound calls
-
-### P1 — Staff product polish
-
-12. First-run wizard with checklist cards
-13. Role-based views (founder, program director, volunteer coordinator, board member)
-14. Evidence Room uploads
-15. Sponsor pipeline
-16. Report export to markdown/PDF
-
-### P2 — ICM runner as true runtime
-
-17. Build `runIcmStage({ tenantId, stage, task })`
-18. Read AGENT.md, workspace CONTEXT.md, stage CONTEXT.md, scoped references, prior outputs
-19. Write `output/result.md`, `output/audit.json`, optional `approval-request.json`
-20. Never load the whole workspace
+| Field | Value |
+|---|---|
+| **Org** | Asc3nd Collective — Seattle youth nonprofit |
+| **Vercel Team** | `the-pauli-effect` |
+| **Vercel Project** | `asc3nd-frontend-website` |
+| **Vercel Project ID** | `prj_0MLyBEnhrRChPaGd1P5wkArwpqpe` |
+| **GitHub Repo** | https://github.com/executiveusa/asc3nd-frontend-website- |
+| **Local Repo** | `E:\ACTIVE PROJECTS-PIPELINE\ACTIVE PROJECTS-PIPELINE\asc3nd-frontend-website--main\asc3nd-frontend-website--main` |
 
 ---
 
-## Key files to read first
+## Stack
 
-- `README.md` — full architecture and version history
-- `docs/ARCHITECTURE.md` — system architecture
-- `docs/IMPLEMENTATION-NEXT.md` — detailed sprint plan
-- `docs/PRODUCTION-GAPS.md` — non-negotiable production gaps
-- `docs/SITE-AUDIT-AND-GAPS-2026-06-26.md` — latest audit findings
-- `docs/SAFETY.md` — youth-serving guardrails
-- `AGENTS.md` — product architecture rules and ICM operating system
+- **Framework:** Next.js 16.2.9 (App Router, Turbopack)
+- **Monorepo root:** `package.json` (workspaces: `apps/*`, `packages/*`)
+- **Site app:** `apps/site/` — this is the deployed Next.js app
+- **SDK package:** `packages/mission-sdk-js/` — `@asc3nd/mission-sdk-js`
+- **CSS:** Vanilla CSS in `apps/site/app/globals.css` — NO Tailwind
+- **Font:** Barlow Condensed (headings) + Barlow (body) via Google Fonts
+- **Palette:** Black `#000`, Gold `#F5A617`, White `#fff`
 
-## Key commands
+---
 
-```bash
-npm install          # install deps
-npm run dev          # full stack (web + API concurrently)
-npm run dev:web      # frontend only
-npm test             # unit tests
-npm run build        # production build
-npm run smoke        # e2e smoke tests
-npm run doctor       # ICM/flywheel/deployment checks
-npm run verify       # test + build + doctor + adamsreview + missionctl
+## Vercel Deploy Config (CRITICAL — took many iterations to get right)
+
+- **Vercel Dashboard Root Directory:** `apps/site` ← SET IN DASHBOARD, not just vercel.json
+- **`apps/site/vercel.json`:**
+  ```json
+  {
+    "version": 2,
+    "framework": "nextjs",
+    "installCommand": "cd ../.. && npm install",
+    "buildCommand": "npm run build",
+    "outputDirectory": ".next"
+  }
+  ```
+- **Deploy command (from repo root):** `npx vercel --prod`
+- **DO NOT run `npx vercel --prod` from `apps/site/`** — doubles the path
+
+---
+
+## Current State of Code
+
+### Key files changed this session
+| File | What it does |
+|---|---|
+| `apps/site/app/page.jsx` | Full homepage — hero, pillars, who-we-are, 5 programs, CTA band, footer |
+| `apps/site/app/globals.css` | Full design system — all `hp-*` and `a3-*` classes, tokens |
+| `apps/site/components/PublicNav.jsx` | Sticky black nav, 8 links, gold DONATE button, mobile hamburger |
+| `apps/site/components/SubscribeForm.jsx` | `'use client'` newsletter form — extracted to fix Server Component error |
+| `apps/site/app/es/page.jsx` | Spanish homepage — same layout, Spanish content from `content/site.es` |
+| `apps/site/app/layout.jsx` | Root layout — Inter font, dark bg, wraps in SmoothScrollProvider |
+| `apps/site/app/layout-client.jsx` | Client wrapper for Lenis smooth scroll |
+| `apps/site/vercel.json` | Build config for Vercel |
+| `vercel.json` (root) | Minimal `{"version":2}` — Vercel dashboard handles rootDirectory |
+
+### Design reference
+- **Flyer image:** `apps/site/public/images/asc3nd-site-reference.jpg` (used as hero bg + program card images)
+- **Screenshot of live site:** `site_live.png` (repo root)
+- **Brand:** Black background, gold `#F5A617` accents, white text, ALL CAPS headings in Barlow Condensed 900
+
+---
+
+## What Still Needs Work
+
+### High priority
+1. **`asc3nd.org` DNS** — point the domain to Vercel in DNS settings. In Vercel: Settings → Domains → Add `asc3nd.org`
+2. **Hero image** — currently using flyer reference image as background. Needs a real hero photo of youth/community
+3. **Donation URL** — `tenantSite.donationUrl` in `tenant.config.js` points to a placeholder. Update to real donation platform (Zeffy, PayPal, etc.)
+4. **Social links** — currently pointing to `instagram.com`, `facebook.com` etc. — update to real handles in `page.jsx` and `es/page.jsx`
+
+### Medium priority
+5. **Email subscribe** — `SubscribeForm` submits to nowhere (`e.preventDefault()` only). Wire to Mailchimp/ConvertKit/etc.
+6. **Events section** — referenced in nav but no `/events` page exists
+7. **Stories section** — referenced in nav but no `/stories` page exists
+8. **Contact page** — footer links to `#contact` anchor only, no dedicated `/contact` page
+9. **`/privacy` and `/terms` pages** — footer links exist, pages don't
+
+### Design audit
+10. Run the `impeccable` CLI audit against UDEC axes (spacing, rhythm, contrast)
+11. Mobile QA — test hamburger nav on real device
+12. Check hero image loading performance (currently unoptimized JPG)
+
+---
+
+## How to Deploy Updates
+
+```powershell
+# From repo root:
+cd "E:\ACTIVE PROJECTS-PIPELINE\ACTIVE PROJECTS-PIPELINE\asc3nd-frontend-website--main\asc3nd-frontend-website--main"
+
+# Make changes, then:
+git add -A
+git commit -m "feat/fix: description"
+git push origin main
+# Vercel auto-deploys on push to main
+
+# OR manual deploy:
+npx vercel --prod
 ```
 
-## Environment
+---
 
-- Vercel project ID: `prj_0MLyBEnhrRChPaGd1P5wkArpe`
-- Local dev: http://localhost:3000 (public site), /login (cockpit), /ops (console), :4000/api/health
-- Demo login: `admin@asc3nd.local` / `change-this-password` (from .env)
+## Content System
 
-## Safety reminders
+- `apps/site/tenant.config.js` — org name, EIN, donation URL, tagline, region
+- `apps/site/content/site.es.js` — Spanish translations for `/es` route
+- All page content is hardcoded in `page.jsx` for now (not CMS-driven)
 
-- `.env` is git-committed — never push secrets
-- No automatic grant submission, legal/financial filing, or outbound youth/family/donor communication
-- Human approval gates are mandatory for money, youth data, legal/compliance, public publishing
-- Rotate any secrets that may have been exposed in the workspace
+---
+
+## Known Issues / Watch Out For
+
+- `@asc3nd/mission-sdk-js` is a local workspace package — install must run from repo root (`cd ../.. && npm install`), NOT from `apps/site` alone
+- No Tailwind installed — do NOT use `className="bg-[...]"` or any Tailwind utilities
+- `page.jsx` and `es/page.jsx` are Server Components (they export `metadata`) — any interactivity must be in separate `'use client'` components
+- The `SmoothScrollProvider` uses Lenis — if scroll behavior feels broken, check `components/SmoothScrollProvider.jsx`
+
+---
+
+## Git Log (recent)
+```
+e612dd1 fix: extract SubscribeForm as client component
+e047ba5 fix(vercel): clean config — dashboard rootDirectory=apps/site
+5d002c1 fix(vercel): point builds src at next.config.mjs
+2a7382e fix(vercel): use builds API with @vercel/next
+c18d281 fix(vercel): correct build config
+498fde1 feat: add new screenshot images for site (#3)
+7030ade Design/flyer redesign v1 (#4)
+```
