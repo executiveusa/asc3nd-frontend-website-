@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { tenantSite } from '../tenant.config';
+import { LanguageToggle } from './LanguageToggle';
 
 export function PublicNav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,9 +31,12 @@ export function PublicNav() {
         </div>
 
         {/* Donate CTA */}
-        <a className="a3-btn-donate" href={tenantSite.donationUrl} id="nav-donate-btn">
-          <span aria-hidden="true">♥</span> DONATE
-        </a>
+        <div className="a3-nav-actions">
+          <a className="a3-btn-donate" href={tenantSite.donationUrl} id="nav-donate-btn">
+            <span aria-hidden="true">♥</span> DONATE
+          </a>
+          <LanguageToggle />
+        </div>
 
         {/* Mobile hamburger */}
         <button
@@ -57,6 +61,9 @@ export function PublicNav() {
           <a href="#stories"      onClick={() => setMenuOpen(false)}>Stories</a>
           <a href="#contact"      onClick={() => setMenuOpen(false)}>Contact</a>
           <a href={tenantSite.donationUrl} className="a3-mobile-donate">♥ DONATE</a>
+          <div className="a3-mobile-lang-wrap">
+            <LanguageToggle />
+          </div>
         </div>
       )}
     </nav>
