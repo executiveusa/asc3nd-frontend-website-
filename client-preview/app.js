@@ -809,6 +809,21 @@
       closeModal();
       closeMobileMenu();
     }
+    if (event.key === "Tab" && modal && !modal.hidden) {
+      const focusable = modal.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
   });
 
   langToggle?.addEventListener("click", () => {
@@ -882,8 +897,50 @@
       });
     }, { threshold: 0.12 });
     document.querySelectorAll(".reveal").forEach((section) => observer.observe(section));
+
+    // Active-section nav highlight (homepage only — sections have ids)
+    const sections = document.querySelectorAll("main section[id]");
+    if (sections.length) {
+      const navLinks = document.querySelectorAll('.a3-nav-links a.a3-nav-link[href^="#"]');
+      const sectionMap = new Map();
+      navLinks.forEach((link) => {
+        const id = link.getAttribute("href").replace("#", "");
+        sectionMap.set(id, link);
+      });
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const link = sectionMap.get(entry.target.id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            navLinks.forEach((l) => l.classList.remove("is-section-active"));
+            link.classList.add("is-section-active");
+          }
+        });
+      }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+      sections.forEach((s) => sectionObserver.observe(s));
+    }
   } else {
     document.querySelectorAll(".reveal").forEach((section) => section.classList.add("is-visible"));
+  }
+
+  // Theme toggle (light default; persisted; flips [data-theme] on <html>)
+  const themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle) {
+    let theme = "light";
+    try {
+      const stored = localStorage.getItem("asc3nd_theme");
+      if (stored === "dark" || stored === "light") theme = stored;
+      else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) theme = "dark";
+    } catch {}
+    document.documentElement.setAttribute("data-theme", theme);
+    themeToggle.hidden = false;
+    themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+    themeToggle.addEventListener("click", () => {
+      theme = theme === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", theme);
+      try { localStorage.setItem("asc3nd_theme", theme); } catch {}
+      themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+    });
   }
 
   Object.values(socialUrls).forEach((url) => {
