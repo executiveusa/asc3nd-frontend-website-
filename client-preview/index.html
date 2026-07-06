@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Asc3nd Collective flyer-faithful static preview with bilingual copy, working modals, merch preview, blog preview, and contact workflow."
+    />
+    <title>Asc3nd Collective | Elevate. Empower. Asc3nd.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./assets/asc3nd-logo.jpg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <header class="a3-nav" id="site-header">
+      <div class="a3-container a3-nav-inner">
+        <a class="a3-brand" href="#home" aria-label="Asc3nd Collective home">
+          <span class="a3-logo-mark">
+            <span class="a3-logo-main">ASC<span>3</span>ND</span>
+            <span class="a3-logo-sub">COLLECTIVE</span>
+            <span class="a3-logo-tag">ELEVATE. EMPOWER. ASC3ND.</span>
+          </span>
+        </a>
+
+        <nav class="a3-nav-links" aria-label="Primary navigation">
+          <a class="a3-nav-link a3-nav-active" href="#home" data-i18n="nav.home">Home</a>
+          <a class="a3-nav-link" href="#mission" data-i18n="nav.about">About Us</a>
+          <a class="a3-nav-link" href="#mission" data-i18n="nav.mission">Our Mission</a>
+          <a class="a3-nav-link" href="#programs" data-i18n="nav.programs">Programs</a>
+          <button class="a3-nav-link a3-nav-button" type="button" data-modal-trigger="volunteer" data-i18n="nav.getInvolved">Get Involved</button>
+          <button class="a3-nav-link a3-nav-button" type="button" data-modal-trigger="events" data-i18n="nav.events">Events</button>
+          <a class="a3-nav-link" href="#blog" data-i18n="nav.stories">Stories</a>
+          <a class="a3-nav-link" href="#store" data-i18n="nav.store">Store</a>
+          <a class="a3-nav-link" href="#contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+
+        <div class="a3-actions">
+          <button class="lang-toggle" type="button" id="lang-toggle" aria-label="Switch language">
+            <span class="lang-chip is-active" data-lang-chip="en">EN</span>
+            <span class="lang-divider">/</span>
+            <span class="lang-chip" data-lang-chip="es">MX</span>
+          </button>
+          <a class="a3-btn-donate" href="https://www.givelively.org/" target="_blank" rel="noreferrer">
+            <span aria-hidden="true">&hearts;</span>
+            <span data-i18n="nav.donate">Donate</span>
+          </a>
+          <button class="a3-hamburger" id="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="a3-mobile-menu" id="mobile-menu" aria-label="Mobile navigation" hidden>
+        <a href="#home" data-i18n="nav.home">Home</a>
+        <a href="#mission" data-i18n="nav.about">About Us</a>
+        <a href="#programs" data-i18n="nav.programs">Programs</a>
+        <button type="button" data-modal-trigger="volunteer" data-i18n="nav.getInvolved">Get Involved</button>
+        <button type="button" data-modal-trigger="events" data-i18n="nav.events">Events</button>
+        <a href="#blog" data-i18n="nav.stories">Stories</a>
+        <a href="#store" data-i18n="nav.store">Store</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+        <a class="a3-mobile-donate" href="https://www.givelively.org/" target="_blank" rel="noreferrer" data-i18n="nav.donate">Donate</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hp-hero reveal" aria-label="Asc3nd Collective hero">
+        <div class="hp-hero-overlay" aria-hidden="true"></div>
+        <div class="hp-container hp-hero-content">
+          <div class="hp-hero-copy">
+            <h1>
+              <span data-i18n="hero.line1">EMPOWERING</span> <em data-i18n="hero.youth">YOUTH.</em>
+              <span data-i18n="hero.line2">ELEVATING</span> <em data-i18n="hero.futures">FUTURES.</em>
+              <span data-i18n="hero.line3">BUILDING</span> <em data-i18n="hero.community">COMMUNITY.</em>
+            </h1>
+            <p data-i18n="hero.lede">
+              We equip youth with the tools, opportunities, and support they need to rise, lead, and create the future they deserve.
+            </p>
+            <div class="hp-hero-ctas">
+              <a class="hp-btn-gold" href="https://www.givelively.org/" target="_blank" rel="noreferrer">
+                <span aria-hidden="true">&hearts;</span>
+                <span data-i18n="hero.donate">Donate Today</span>
+              </a>
+              <button class="hp-btn-outline" type="button" data-modal-trigger="volunteer">
+                <span aria-hidden="true">+</span>
+                <span data-i18n="hero.volunteer">Volunteer With Us</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-pillars-strip reveal" aria-label="Core pillars">
+        <div class="hp-container hp-pillars-grid" id="pillars-grid"></div>
+      </section>
+
+      <section class="hp-section hp-who reveal" id="mission" aria-labelledby="mission-heading">
+        <div class="hp-container hp-split">
+          <div class="hp-who-image">
+            <img src="./assets/site-reference.jpg" alt="Asc3nd youth planning together" />
+          </div>
+          <div class="hp-who-copy">
+            <span class="hp-eyebrow" data-i18n="mission.kicker">Who We Are</span>
+            <h2 id="mission-heading">
+              <span data-i18n="mission.titleA">We Believe In The</span>
+              <em data-i18n="mission.titleB">Potential Of Every Youth.</em>
+            </h2>
+            <p data-i18n="mission.body">
+              Asc3nd Collective is a youth development nonprofit dedicated to empowering young people through mentorship, education, leadership development, and community engagement.
+            </p>
+            <a class="hp-btn-dark" href="#programs" data-i18n="mission.cta">Learn More About Us</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-programs reveal" id="programs" aria-labelledby="programs-heading">
+        <div class="hp-container">
+          <div class="hp-center-head">
+            <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="programs.kicker">Our Programs</span>
+            <h2 id="programs-heading" data-i18n="programs.title">Building Brighter Tomorrows</h2>
+          </div>
+          <div class="hp-program-grid" id="program-grid"></div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-blog reveal" id="blog" aria-labelledby="blog-heading">
+        <div class="hp-container">
+          <div class="hp-section-head-row">
+            <div>
+              <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="blog.kicker">Stories</span>
+              <h2 id="blog-heading" data-i18n="blog.title">Youth Leadership Notes</h2>
+            </div>
+            <p data-i18n="blog.intro">
+              Editorial previews for mentorship, grant readiness, AI operations, donor trust, and community leadership.
+            </p>
+          </div>
+          <div class="hp-blog-grid" id="blog-grid"></div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-store reveal" id="store" aria-labelledby="store-heading">
+        <div class="hp-container">
+          <div class="hp-center-head">
+            <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="store.kicker">Merch Preview</span>
+            <h2 id="store-heading" data-i18n="store.title">Community Gear Fundraising Concept</h2>
+            <p class="hp-center-copy" data-i18n="store.intro">
+              Product cards are visible as a fundraising concept only. Checkout, inventory, and Printify are not live in this preview.
+            </p>
+          </div>
+          <div class="hp-store-grid" id="store-grid"></div>
+          <article class="commerce-note">
+            <strong data-i18n="store.engineTitle">Commerce engine planned</strong>
+            <p data-i18n="store.engineBody">
+              Product catalog ready. Printify adapter planned. Server-side API required. Checkout is not connected in preview. Product mockup images come next.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="hp-cta-band reveal" id="get-involved" aria-labelledby="cta-heading">
+        <div class="hp-container hp-cta-inner">
+          <div class="hp-cta-copy">
+            <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="cta.kicker">Get Involved</span>
+            <h2 id="cta-heading" data-i18n="cta.title">Be Part Of The Movement.</h2>
+            <p data-i18n="cta.body">
+              Whether you volunteer, donate, mentor or partner with us, your support helps us empower youth and transform communities.
+            </p>
+          </div>
+          <div class="hp-cta-buttons">
+            <a class="hp-cta-btn-gold" href="https://www.givelively.org/" target="_blank" rel="noreferrer">
+              <span aria-hidden="true">&hearts;</span>
+              <span data-i18n="cta.donate">Donate</span>
+            </a>
+            <button class="hp-cta-btn-outline" type="button" data-modal-trigger="volunteer">
+              <span aria-hidden="true">+</span>
+              <span data-i18n="cta.volunteer">Volunteer</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-contact reveal" id="contact" aria-labelledby="contact-heading">
+        <div class="hp-container hp-contact-grid">
+          <div class="hp-contact-copy">
+            <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="contact.kicker">Contact Preview</span>
+            <h2 id="contact-heading" data-i18n="contact.title">Start The Conversation.</h2>
+            <p data-i18n="contact.body">
+              This form validates locally and creates an email draft. It does not send to a backend yet.
+            </p>
+            <div class="hp-contact-card">
+              <strong data-i18n="contact.previewTitle">Preview mode only</strong>
+              <p data-i18n="contact.previewBody">No database, no fake submission, and no hidden automation. Live email workflow connects after approval.</p>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contact-form" novalidate>
+            <label>
+              <span data-i18n="contact.name">Name</span>
+              <input id="contact-name" name="name" autocomplete="name" required />
+              <small class="field-error" data-error-for="name"></small>
+            </label>
+            <label>
+              <span data-i18n="contact.email">Email</span>
+              <input id="contact-email" name="email" type="email" autocomplete="email" required />
+              <small class="field-error" data-error-for="email"></small>
+            </label>
+            <label>
+              <span data-i18n="contact.interest">Interest Type</span>
+              <select id="contact-interest" name="interest" required></select>
+              <small class="field-error" data-error-for="interest"></small>
+            </label>
+            <label>
+              <span data-i18n="contact.message">Message</span>
+              <textarea id="contact-message" name="message" rows="5" required></textarea>
+              <small class="field-error" data-error-for="message"></small>
+            </label>
+            <button class="hp-btn-gold contact-submit" type="submit" data-i18n="contact.submit">Create Preview Message</button>
+            <div class="contact-success" id="contact-success" hidden>
+              <strong data-i18n="contact.successTitle">Preview mode: this message was not sent yet.</strong>
+              <p data-i18n="contact.successBody">The live email workflow will be connected after approval.</p>
+              <pre id="contact-summary"></pre>
+              <div class="contact-actions">
+                <a class="hp-btn-dark" id="mailto-link" href="#">Open Email Draft</a>
+                <button class="hp-btn-outline hp-btn-outline-dark" type="button" id="copy-summary">Copy Summary</button>
+                <button class="hp-btn-outline hp-btn-outline-dark" type="button" id="reset-contact">Reset</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="hp-footer" aria-label="Site footer">
+      <div class="hp-container hp-footer-grid">
+        <div class="hp-footer-brand">
+          <div class="hp-footer-logo">
+            <span class="hp-footer-logo-main">ASC<span>3</span>ND</span>
+            <span class="hp-footer-logo-sub">COLLECTIVE</span>
+            <span class="hp-footer-logo-tag">ELEVATE. EMPOWER. ASC3ND.</span>
+          </div>
+          <p data-i18n="footer.description">A 501(c)(3) nonprofit organization empowering youth, elevating futures, and building community.</p>
+          <p class="hp-ein"><strong>EIN: 99-1881891</strong></p>
+        </div>
+
+        <div class="hp-footer-col">
+          <strong data-i18n="footer.quick">Quick Links</strong>
+          <a href="#mission" data-i18n="nav.about">About Us</a>
+          <a href="#mission" data-i18n="nav.mission">Our Mission</a>
+          <a href="#programs" data-i18n="nav.programs">Programs</a>
+          <button class="hp-footer-link-btn" type="button" data-modal-trigger="volunteer" data-i18n="nav.getInvolved">Get Involved</button>
+          <button class="hp-footer-link-btn" type="button" data-modal-trigger="events" data-i18n="nav.events">Events</button>
+          <a href="#blog" data-i18n="nav.stories">Stories</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+          <a href="./llms.txt" data-i18n="footer.llms">AI-readable site file</a>
+        </div>
+
+        <div class="hp-footer-col">
+          <strong data-i18n="footer.connected">Stay Connected</strong>
+          <div class="hp-social-row" aria-label="Social media signup links">
+            <a class="hp-social-icon" href="https://www.instagram.com/accounts/emailsignup/" target="_blank" rel="noreferrer" aria-label="Instagram signup">IG</a>
+            <a class="hp-social-icon" href="https://www.facebook.com/reg/" target="_blank" rel="noreferrer" aria-label="Facebook signup">FB</a>
+            <a class="hp-social-icon" href="https://x.com/i/flow/signup" target="_blank" rel="noreferrer" aria-label="X signup">X</a>
+            <a class="hp-social-icon" href="https://www.tiktok.com/signup" target="_blank" rel="noreferrer" aria-label="TikTok signup">TT</a>
+            <a class="hp-social-icon" href="https://www.linkedin.com/signup" target="_blank" rel="noreferrer" aria-label="LinkedIn signup">IN</a>
+          </div>
+        </div>
+
+        <div class="hp-footer-col">
+          <strong data-i18n="footer.join">Join Our Community</strong>
+          <p data-i18n="footer.joinBody">Subscribe to our newsletter for updates, events and ways to get involved.</p>
+          <form class="hp-subscribe-form" id="subscribe-form">
+            <div class="hp-subscribe-row">
+              <input type="email" id="subscribe-email" placeholder="Enter your email" aria-label="Email address" required />
+              <button type="submit" data-i18n="footer.subscribe">Subscribe</button>
+            </div>
+            <small class="subscribe-note" id="subscribe-note" aria-live="polite"></small>
+          </form>
+        </div>
+      </div>
+
+      <div class="hp-footer-bottom">
+        <div class="hp-container hp-footer-bottom-inner">
+          <span data-i18n="footer.copyright">&copy; 2026 Asc3nd Collective. All Rights Reserved.</span>
+          <div class="hp-footer-legal">
+            <button type="button" data-modal-trigger="privacy" data-i18n="footer.privacy">Privacy Policy</button>
+            <span aria-hidden="true">|</span>
+            <button type="button" data-modal-trigger="terms" data-i18n="footer.terms">Terms & Conditions</button>
+            <span aria-hidden="true">|</span>
+            <a href="https://www.givelively.org/" target="_blank" rel="noreferrer" data-i18n="nav.donate">Donate</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+      <div class="modal__surface">
+        <button class="modal__x" type="button" data-modal-close aria-label="Close">x</button>
+        <p class="modal__kicker" id="modal-kicker"></p>
+        <h2 id="modal-title"></h2>
+        <div class="modal__body" id="modal-body"></div>
+        <div class="modal__actions">
+          <a class="hp-btn-gold" href="#contact" id="modal-primary">Contact Asc3nd</a>
+          <button class="hp-btn-outline hp-btn-outline-dark" type="button" data-modal-close>Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

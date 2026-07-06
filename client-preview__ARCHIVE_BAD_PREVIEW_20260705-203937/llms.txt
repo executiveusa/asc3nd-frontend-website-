@@ -1,0 +1,51 @@
+# Asc3nd Client Preview
+
+Standalone static sales demo for Asc3nd Collective.
+
+Primary sections:
+- Hero
+- Mission
+- Program lanes
+- Impact / stories teaser
+- Blog preview
+- Merch store preview
+- Contact / note box
+- Footer
+
+Primary public action:
+- Donate: https://www.givelively.org/
+
+Blog topics:
+- Youth mentorship in Seattle
+- Grant readiness for small nonprofits
+- AI tools for nonprofit operations
+- Donor trust and public storytelling
+- Volunteer coordination
+- Community sports and leadership
+- Pacific Northwest sponsorship partnerships
+- Building a nonprofit content engine
+
+Store products:
+- Asc3nd Signature T-shirt
+- Asc3nd Crown Hat
+- Asc3nd Community Hoodie
+- Asc3nd Everyday Tote
+- Asc3nd Sticker Pack
+- Asc3nd Wall Print
+- Asc3nd Camp Mug or Water Bottle
+
+Contact workflow status:
+- Preview mode only
+- Local validation only
+- Email draft and copyable summary available
+- No backend storage
+
+Bilingual support:
+- English
+- Mexican Spanish
+
+Notes:
+- No secrets
+- No internal file paths
+- No fake checkout
+- No fake Printify integration

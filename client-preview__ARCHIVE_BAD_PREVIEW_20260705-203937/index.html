@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#09090b" />
+    <meta
+      name="description"
+      content="Asc3nd Collective client preview - a polished static sales demo for youth leadership, stories, merch, and bilingual public storytelling."
+    />
+    <title>Asc3nd Collective | Client Preview</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0b0d'/%3E%3Cpath d='M18 44L32 16l14 28h-7l-3-6H28l-3 6h-7zm13-16h2l-1-2-1 2z' fill='%23d7b35a'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+      <header class="site-header" id="site-header">
+        <div class="site-header__inner">
+          <a class="brand-mark" href="#home" aria-label="Asc3nd Collective home">
+            <span class="brand-mark__glyph">A</span>
+            <span class="brand-mark__copy">
+              <span class="brand-mark__name">Asc3nd Collective</span>
+              <span class="brand-mark__tag" data-i18n="brandTag"></span>
+            </span>
+          </a>
+
+          <button class="lang-toggle" type="button" id="lang-toggle" aria-label="Switch language">
+            <span class="lang-toggle__chip is-active" data-lang-chip="en">🇺🇸 EN</span>
+            <span class="lang-toggle__divider" aria-hidden="true">/</span>
+            <span class="lang-toggle__chip" data-lang-chip="es">🇲🇽 ES</span>
+          </button>
+
+          <nav class="site-nav" aria-label="Primary navigation">
+            <a href="#home" data-nav="home"></a>
+            <a href="#mission" data-nav="mission"></a>
+            <a href="#programs" data-nav="programs"></a>
+            <a href="#stories" data-nav="stories"></a>
+            <a href="#store" data-nav="store"></a>
+            <a href="#contact" data-nav="contact"></a>
+            <button type="button" data-modal-trigger="events" data-nav="events"></button>
+            <button type="button" data-modal-trigger="volunteer" data-nav="volunteer"></button>
+            <a
+              class="nav-donate"
+              href="https://www.givelively.org/"
+              target="_blank"
+              rel="noreferrer"
+              data-nav="donate"
+            ></a>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero section reveal" id="home">
+          <div class="hero__copy">
+            <div class="eyebrow-row">
+              <span class="eyebrow-pill" data-i18n="heroKicker"></span>
+              <span class="eyebrow-pill eyebrow-pill--soft" data-i18n="heroChip"></span>
+            </div>
+
+            <h1 class="hero__title">
+              <span data-i18n="heroTitleA"></span>
+              <span class="hero__brand">Asc3nd Collective</span>
+              <span data-i18n="heroTitleB"></span>
+            </h1>
+
+            <p class="hero__lede" data-i18n="heroLede"></p>
+
+            <div class="hero__actions">
+              <a
+                class="button button--primary"
+                href="https://www.givelively.org/"
+                target="_blank"
+                rel="noreferrer"
+                data-i18n="heroDonate"
+              ></a>
+              <button class="button button--secondary" type="button" data-modal-trigger="volunteer" data-i18n="heroVolunteer"></button>
+              <a class="button button--ghost" href="#programs" data-i18n="heroPrograms"></a>
+            </div>
+
+            <div class="hero__trust-grid">
+              <article class="mini-card">
+                <span class="mini-card__label" data-i18n="heroTrust1Label"></span>
+                <strong class="mini-card__value" data-i18n="heroTrust1Value"></strong>
+                <p class="mini-card__text" data-i18n="heroTrust1Text"></p>
+              </article>
+              <article class="mini-card">
+                <span class="mini-card__label" data-i18n="heroTrust2Label"></span>
+                <strong class="mini-card__value" data-i18n="heroTrust2Value"></strong>
+                <p class="mini-card__text" data-i18n="heroTrust2Text"></p>
+              </article>
+              <article class="mini-card">
+                <span class="mini-card__label" data-i18n="heroTrust3Label"></span>
+                <strong class="mini-card__value" data-i18n="heroTrust3Value"></strong>
+                <p class="mini-card__text" data-i18n="heroTrust3Text"></p>
+              </article>
+            </div>
+          </div>
+
+          <aside class="hero__panel">
+            <div class="hero-panel hero-panel--top">
+              <p class="hero-panel__kicker" data-i18n="heroPanelKicker"></p>
+              <h2 class="hero-panel__title" data-i18n="heroPanelTitle"></h2>
+              <p class="hero-panel__text" data-i18n="heroPanelText"></p>
+            </div>
+
+            <img
+              src="./assets/site-reference.jpg"
+              alt="Asc3nd Collective preview"
+              class="hero-panel__image"
+            />
+
+            <div class="hero-panel__stack">
+              <article class="preview-chip">
+                <span class="preview-chip__eyebrow" data-i18n="heroPanelChip1Label"></span>
+                <strong data-i18n="heroPanelChip1Value"></strong>
+                <p data-i18n="heroPanelChip1Text"></p>
+              </article>
+              <article class="preview-chip">
+                <span class="preview-chip__eyebrow" data-i18n="heroPanelChip2Label"></span>
+                <strong data-i18n="heroPanelChip2Value"></strong>
+                <p data-i18n="heroPanelChip2Text"></p>
+              </article>
+              <article class="preview-chip preview-chip--accent">
+                <span class="preview-chip__eyebrow" data-i18n="heroPanelChip3Label"></span>
+                <strong data-i18n="heroPanelChip3Value"></strong>
+                <p data-i18n="heroPanelChip3Text"></p>
+              </article>
+            </div>
+          </aside>
+        </section>
+
+        <section class="section section--compact reveal">
+          <div class="pillars-grid">
+            <article class="pillar-card">
+              <span class="pillar-card__icon">01</span>
+              <div>
+                <h3 data-i18n="pillar1Title"></h3>
+                <p data-i18n="pillar1Text"></p>
+              </div>
+            </article>
+            <article class="pillar-card">
+              <span class="pillar-card__icon">02</span>
+              <div>
+                <h3 data-i18n="pillar2Title"></h3>
+                <p data-i18n="pillar2Text"></p>
+              </div>
+            </article>
+            <article class="pillar-card">
+              <span class="pillar-card__icon">03</span>
+              <div>
+                <h3 data-i18n="pillar3Title"></h3>
+                <p data-i18n="pillar3Text"></p>
+              </div>
+            </article>
+            <article class="pillar-card">
+              <span class="pillar-card__icon">04</span>
+              <div>
+                <h3 data-i18n="pillar4Title"></h3>
+                <p data-i18n="pillar4Text"></p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section section--tinted reveal" id="mission">
+          <div class="split-grid">
+            <div class="split-grid__media">
+              <img src="./assets/site-reference.jpg" alt="Youth working together at Asc3nd" class="split-grid__image" />
+            </div>
+            <div class="split-grid__copy">
+              <span class="section__kicker" data-i18n="missionKicker"></span>
+              <h2 data-i18n="missionTitle"></h2>
+              <p data-i18n="missionLede"></p>
+              <a class="button button--dark" href="#programs" data-i18n="missionCta"></a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section--cream reveal" id="programs">
+          <div class="section__heading">
+            <span class="section__kicker section__kicker--center" data-i18n="programsKicker"></span>
+            <h2 data-i18n="programsTitle"></h2>
+          </div>
+          <div class="program-grid">
+            <article class="program-card">
+              <img src="./assets/site-reference.jpg" alt="" aria-hidden="true" class="program-card__image" />
+              <span class="program-card__icon">📘</span>
+              <h3 data-i18n="program1Title"></h3>
+              <p data-i18n="program1Text"></p>
+            </article>
+            <article class="program-card">
+              <img src="./assets/site-reference.jpg" alt="" aria-hidden="true" class="program-card__image" />
+              <span class="program-card__icon">👥</span>
+              <h3 data-i18n="program2Title"></h3>
+              <p data-i18n="program2Text"></p>
+            </article>
+            <article class="program-card">
+              <img src="./assets/site-reference.jpg" alt="" aria-hidden="true" class="program-card__image" />
+              <span class="program-card__icon">💡</span>
+              <h3 data-i18n="program3Title"></h3>
+              <p data-i18n="program3Text"></p>
+            </article>
+            <article class="program-card">
+              <img src="./assets/site-reference.jpg" alt="" aria-hidden="true" class="program-card__image" />
+              <span class="program-card__icon">🤝</span>
+              <h3 data-i18n="program4Title"></h3>
+              <p data-i18n="program4Text"></p>
+            </article>
+            <article class="program-card">
+              <img src="./assets/site-reference.jpg" alt="" aria-hidden="true" class="program-card__image" />
+              <span class="program-card__icon">⭐</span>
+              <h3 data-i18n="program5Title"></h3>
+              <p data-i18n="program5Text"></p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section reveal" id="stories">
+          <div class="section__heading">
+            <span class="section__kicker section__kicker--center" data-i18n="storiesKicker"></span>
+            <h2 data-i18n="storiesTitle"></h2>
+          </div>
+          <div class="story-grid">
+            <article class="story-card">
+              <h3 data-i18n="story1Title"></h3>
+              <p data-i18n="story1Text"></p>
+            </article>
+            <article class="story-card">
+              <h3 data-i18n="story2Title"></h3>
+              <p data-i18n="story2Text"></p>
+            </article>
+            <article class="story-card">
+              <h3 data-i18n="story3Title"></h3>
+              <p data-i18n="story3Text"></p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section section--dark reveal" id="store">
+          <div class="commerce-grid">
+            <div class="commerce-grid__media">
+              <img src="./assets/site-reference.jpg" alt="Asc3nd store preview" class="commerce-grid__image" />
+            </div>
+            <div class="commerce-grid__copy">
+              <span class="section__kicker" data-i18n="storeKicker"></span>
+              <h2 data-i18n="storeTitle"></h2>
+              <p data-i18n="storeLede"></p>
+              <ul class="commerce-list">
+                <li data-i18n="storeBullet1"></li>
+                <li data-i18n="storeBullet2"></li>
+                <li data-i18n="storeBullet3"></li>
+                <li data-i18n="storeBullet4"></li>
+                <li data-i18n="storeBullet5"></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section--tinted reveal" id="contact">
+          <div class="section__heading">
+            <span class="section__kicker section__kicker--center" data-i18n="contactKicker"></span>
+            <h2 data-i18n="contactTitle"></h2>
+            <p data-i18n="contactLede"></p>
+          </div>
+
+          <div class="contact-grid">
+            <form class="contact-form" id="contact-form" novalidate>
+              <label class="field">
+                <span data-i18n="contactName"></span>
+                <input type="text" id="contact-name" name="name" required />
+              </label>
+              <label class="field">
+                <span data-i18n="contactEmail"></span>
+                <input type="email" id="contact-email" name="email" required />
+              </label>
+              <label class="field">
+                <span data-i18n="contactInterest"></span>
+                <select id="contact-interest" name="interest" required></select>
+              </label>
+              <label class="field field--full">
+                <span data-i18n="contactMessage"></span>
+                <textarea id="contact-message" name="message" rows="5" required></textarea>
+              </label>
+
+              <div class="contact-form__actions">
+                <button class="button button--primary" type="submit" data-i18n="contactSubmit"></button>
+                <button class="button button--ghost" type="button" id="reset-contact" data-i18n="contactReset"></button>
+              </div>
+
+              <p class="contact-form__success" id="contact-success" hidden></p>
+              <p class="contact-form__hint" data-i18n="contactHint"></p>
+            </form>
+
+            <aside class="contact-note">
+              <span class="contact-note__badge" data-i18n="contactNoteBadge"></span>
+              <h3 class="contact-note__title" data-i18n="contactNoteTitle"></h3>
+              <p class="contact-note__text" data-i18n="contactNoteText"></p>
+
+              <div class="contact-note__actions">
+                <a class="button button--secondary" id="mailto-link" href="#" target="_blank" rel="noreferrer" data-i18n="contactOpenEmail"></a>
+                <button class="button button--ghost" type="button" id="copy-summary" data-i18n="contactCopySummary"></button>
+              </div>
+
+              <pre class="contact-summary" id="contact-summary"></pre>
+            </aside>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer__grid">
+          <div class="site-footer__brand">
+            <span class="site-footer__mark">Asc3nd Collective</span>
+            <p data-i18n="footerCopy"></p>
+          </div>
+
+          <div class="site-footer__links">
+            <a href="#events" data-modal-trigger="events" data-footer-nav="events"></a>
+            <a href="#privacy" data-modal-trigger="privacy" data-footer-nav="privacy"></a>
+            <a href="#terms" data-modal-trigger="terms" data-footer-nav="terms"></a>
+            <a href="/llms.txt" data-footer-nav="llms"></a>
+            <a href="https://www.givelively.org/" target="_blank" rel="noreferrer" data-footer-nav="donate"></a>
+          </div>
+
+          <div class="site-footer__social">
+            <a href="https://www.instagram.com/accounts/emailsignup/" target="_blank" rel="noreferrer" data-social="instagram"></a>
+            <a href="https://www.facebook.com/reg/" target="_blank" rel="noreferrer" data-social="facebook"></a>
+            <a href="https://x.com/i/flow/signup" target="_blank" rel="noreferrer" data-social="x"></a>
+            <a href="https://www.tiktok.com/signup" target="_blank" rel="noreferrer" data-social="tiktok"></a>
+            <a href="https://www.linkedin.com/signup" target="_blank" rel="noreferrer" data-social="linkedin"></a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="modal" id="modal" aria-hidden="true">
+      <div class="modal__backdrop" data-modal-close></div>
+      <div
+        class="modal__surface"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-body"
+        tabindex="-1"
+      >
+        <button class="modal__close" type="button" data-modal-close aria-label="Close modal">×</button>
+        <p class="modal__kicker" id="modal-kicker"></p>
+        <h2 class="modal__title" id="modal-title"></h2>
+        <div class="modal__body" id="modal-body"></div>
+        <div class="modal__footer">
+          <button class="button button--ghost" type="button" data-modal-close data-i18n="modalClose"></button>
+          <a class="button button--primary" href="https://www.givelively.org/" target="_blank" rel="noreferrer" data-modal-primary></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

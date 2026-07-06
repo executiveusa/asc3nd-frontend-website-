@@ -1,0 +1,74 @@
+# Asc3nd Collective Static Preview
+
+Purpose:
+- Flyer-faithful public preview for Asc3nd Collective.
+- Built from the black/gold/youth nonprofit reference image and Asc3nd logo.
+- Static HTML, CSS, and vanilla JavaScript only.
+
+Primary sections:
+- Hero
+- Mission
+- Core pillars
+- Program lanes
+- Stories / blog preview
+- Merch store preview
+- Get involved call to action
+- Contact preview workflow
+- Footer
+
+Primary public action:
+- Donate: https://www.givelively.org/
+
+Navigation:
+- Home: #home
+- Mission: #mission
+- Programs: #programs
+- Stories: #blog
+- Store: #store
+- Contact: #contact
+- Events: modal, coming soon
+- Volunteer: modal, preview workflow
+
+Social signup links:
+- Instagram: https://www.instagram.com/accounts/emailsignup/
+- Facebook: https://www.facebook.com/reg/
+- X: https://x.com/i/flow/signup
+- TikTok: https://www.tiktok.com/signup
+- LinkedIn: https://www.linkedin.com/signup
+
+Blog topics:
+- Youth mentorship in Seattle
+- Grant readiness for small nonprofits
+- AI tools for nonprofit operations
+- Donor trust and public storytelling
+- Volunteer coordination
+- Community sports and leadership
+- Pacific Northwest sponsorship partnerships
+- Building a nonprofit content engine
+
+Store products:
+- Asc3nd Signature T-shirt
+- Asc3nd Crown Hat
+- Asc3nd Community Hoodie
+- Asc3nd Everyday Tote
+- Asc3nd Sticker Pack
+- Asc3nd Wall Print
+- Asc3nd Camp Mug or Water Bottle
+
+Contact workflow status:
+- Preview mode only.
+- Local validation only.
+- Email draft and copyable summary available.
+- No backend storage.
+- No fake submission.
+
+Bilingual support:
+- English.
+- Mexican Spanish.
+
+Boundaries:
+- No secrets.
+- No internal file paths.
+- No fake checkout.
+- No fake Printify integration.
+- Final legal/privacy review still required before production.
