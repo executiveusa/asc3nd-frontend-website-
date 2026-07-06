@@ -18,7 +18,7 @@
         getInvolved: "Get Involved",
         events: "Events",
         stories: "Stories",
-        store: "Store",
+        store: "Merch",
         contact: "Contact",
         donate: "Donate",
       },
@@ -48,11 +48,20 @@
         kicker: "Stories",
         title: "Youth Leadership Notes",
         intro: "Editorial previews for mentorship, grant readiness, AI operations, donor trust, and community leadership.",
+        viewAll: "Read All Stories",
+      },
+      storiesPage: {
+        kicker: "Stories",
+        title: "Notes From The Movement",
+        lede: "Original editorial guides for Pacific Northwest nonprofits — grant readiness, mentorship, AI operations, donor trust, and community leadership.",
+        disclaimer: "Original Asc3nd editorial. No invented statistics, deadlines, or partnerships. Verify each funder's current cycle before applying.",
+        all: "All",
       },
       store: {
         kicker: "Merch Preview",
         title: "Community Gear Fundraising Concept",
         intro: "Product cards are visible as a fundraising concept only. Checkout, inventory, and Printify are not live in this preview.",
+        viewAll: "View Full Store",
         engineTitle: "Commerce engine planned",
         engineBody: "Product catalog ready. Printify adapter planned. Server-side API required. Checkout is not connected in preview. Product mockup images come next.",
       },
@@ -274,11 +283,20 @@
         kicker: "Historias",
         title: "Notas De Liderazgo Juvenil",
         intro: "Guías editoriales sobre mentoría, preparación para fondos, operaciones con IA, confianza de donantes y liderazgo comunitario.",
+        viewAll: "Leer Todas Las Historias",
+      },
+      storiesPage: {
+        kicker: "Historias",
+        title: "Notas Del Movimiento",
+        lede: "Guías editoriales originales para nonprofits del Pacífico Noroeste — preparación para fondos, mentoría, operaciones con IA, confianza de donantes y liderazgo comunitario.",
+        disclaimer: "Editorial original de Asc3nd. Sin estadísticas inventadas, fechas límite ni alianzas falsas. Verifica el ciclo actual de cada financiador antes de solicitar.",
+        all: "Todo",
       },
       store: {
         kicker: "Preview De Merch",
         title: "Concepto De Recaudación Con Productos",
         intro: "Las tarjetas de productos muestran un concepto de recaudación. Checkout, inventario y Printify no están activos en este preview.",
+        viewAll: "Ver Tienda Completa",
         engineTitle: "Motor de comercio planeado",
         engineBody: "Catálogo listo. Adaptador Printify planeado. Se requiere API del servidor. El checkout no está conectado en el preview. Las imágenes reales de productos vienen después.",
       },
@@ -511,6 +529,7 @@
     if (resetContact) resetContact.textContent = content[currentLang].labels.reset;
     renderDynamicSections();
     renderInterestOptions();
+    renderBlogToolbar();
   };
 
   const renderDynamicSections = () => {
@@ -548,7 +567,11 @@
 
     const blogGrid = document.getElementById("blog-grid");
     if (blogGrid) {
-      blogGrid.innerHTML = c.posts
+      const filter = blogGrid.dataset.filter || "all";
+      const teaser = parseInt(blogGrid.dataset.teaser || "0", 10);
+      const filtered = filter === "all" ? c.posts : c.posts.filter((p) => p.category === filter);
+      const list = teaser > 0 ? c.posts.slice(0, teaser) : (filtered.length ? filtered : c.posts);
+      blogGrid.innerHTML = list
         .map((post) => `
           <article class="blog-card">
             <div class="blog-meta">${post.date} / ${post.category}</div>
@@ -563,7 +586,9 @@
 
     const storeGrid = document.getElementById("store-grid");
     if (storeGrid) {
-      storeGrid.innerHTML = c.products
+      const teaser = parseInt(storeGrid.dataset.teaser || "0", 10);
+      const list = teaser > 0 ? c.products.slice(0, teaser) : c.products;
+      storeGrid.innerHTML = list
         .map(([name, description, action], index) => `
           <article class="store-card">
             <div class="product-image" style="background-position:${50 + (index % 3) * 8}% ${48 + (index % 2) * 8}%"></div>
@@ -578,6 +603,37 @@
         `)
         .join("");
     }
+
+    const socialRow = document.getElementById("social-row");
+    if (socialRow && !socialRow.dataset.rendered) {
+      socialRow.innerHTML = socialIcons.map(({ key, label, path }) =>
+        `<a class="hp-social-icon hp-social-svg" href="${socialUrls[key]}" target="_blank" rel="noreferrer" aria-label="${label} signup">${path}</a>`
+      ).join("");
+      socialRow.dataset.rendered = "1";
+    }
+  };
+
+  const socialIcons = [
+    { key: "instagram", label: "Instagram", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>' },
+    { key: "facebook", label: "Facebook", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7h2.3l.4-2.7h-2.7V9.5c0-.8.2-1.3 1.4-1.3h1.4V5.8c-.7-.1-1.4-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2H8.3V14h2.2v7h3z"/></svg>' },
+    { key: "x", label: "X", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.5 4h2.4l-5.2 5.9L20.7 20h-4.8l-3.8-4.9L7.7 20H5.3l5.6-6.3L4.3 4h4.9l3.4 4.5L17.5 4zm-.8 14.4h1.3L8.4 5.4H7l9.7 13z"/></svg>' },
+    { key: "tiktok", label: "TikTok", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.5 3h2.3c.3 1.9 1.4 3.4 3.2 3.7v2.4c-1.2.1-2.3-.2-3.3-.7v5.6c0 3.1-2.3 5.5-5.3 5.5S6.1 17.1 6.1 14s2.3-5.5 5.3-5.5c.4 0 .8 0 1.1.1v2.5c-.3-.1-.7-.2-1.1-.2-1.7 0-3 1.4-3 3.1s1.3 3.1 3 3.1 3-1.4 3-3.1V3z"/></svg>' },
+    { key: "linkedin", label: "LinkedIn", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.9 8.5H4.4V20h2.5V8.5zm-1.2-4c-.8 0-1.5.7-1.5 1.5S4.9 7.5 5.7 7.5s1.5-.7 1.5-1.5S6.5 4.5 5.7 4.5zM20 20h-2.5v-5.7c0-1.4-.5-2.3-1.7-2.3-1 0-1.5.6-1.8 1.3-.1.2-.1.5-.1.8V20H11.4V8.5h2.5v1.2c.3-.5 1-1.3 2.5-1.3 1.8 0 3.6 1.2 3.6 3.8V20z"/></svg>' },
+  ];
+
+  const renderBlogToolbar = () => {
+    const toolbar = document.getElementById("blog-toolbar");
+    if (!toolbar) return;
+    const c = content[currentLang];
+    const categories = ["all", ...new Set(c.posts.map((p) => p.category))];
+    const active = document.getElementById("blog-grid")?.dataset.filter || "all";
+    toolbar.innerHTML = categories
+      .map((cat) => {
+        const label = cat === "all" ? c.storiesPage.all : cat;
+        const isActive = cat === active ? " is-active" : "";
+        return `<button class="blog-chip${isActive}" type="button" role="tab" data-filter="${cat}" aria-selected="${cat === active}">${label}</button>`;
+      })
+      .join("");
   };
 
   const renderInterestOptions = () => {
@@ -719,7 +775,24 @@
     const merch = event.target.closest("[data-merch-interest]");
     if (merch) {
       event.preventDefault();
-      focusContactForMerch(merch.dataset.merchInterest);
+      if (document.getElementById("contact")) {
+        focusContactForMerch(merch.dataset.merchInterest);
+      } else {
+        const interest = merch.dataset.merchInterest;
+        sessionStorage.setItem("asc3nd_merch_interest", interest);
+        window.location.href = "./index.html#contact";
+      }
+      return;
+    }
+
+    const filterBtn = event.target.closest("[data-filter]");
+    if (filterBtn) {
+      const grid = document.getElementById("blog-grid");
+      if (grid) {
+        grid.dataset.filter = filterBtn.dataset.filter;
+        renderBlogToolbar();
+        renderDynamicSections();
+      }
       return;
     }
 
@@ -740,6 +813,7 @@
 
   langToggle?.addEventListener("click", () => {
     currentLang = currentLang === "en" ? "es" : "en";
+    try { localStorage.setItem("asc3nd_lang", currentLang); } catch {}
     setText();
   });
 
@@ -816,6 +890,21 @@
     if (!url.startsWith("https://")) console.warn("Unexpected social URL", url);
   });
   if (donateUrl !== "https://www.givelively.org/") console.warn("Donate URL changed", donateUrl);
+
+  // Persisted language across pages
+  try {
+    const stored = localStorage.getItem("asc3nd_lang");
+    if (stored === "en" || stored === "es") currentLang = stored;
+  } catch {}
+
+  // Restore a merch interest carried over from merch.html → index contact form
+  try {
+    const merchInterest = sessionStorage.getItem("asc3nd_merch_interest");
+    if (merchInterest && document.getElementById("contact")) {
+      sessionStorage.removeItem("asc3nd_merch_interest");
+      window.addEventListener("load", () => focusContactForMerch(merchInterest));
+    }
+  } catch {}
 
   setText();
   updateScrollState();
