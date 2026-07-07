@@ -5,8 +5,9 @@
   --gold: #f5a617;
   --gold-lt: #ffb733;
   --white: #ffffff;
-  --off: #f7f1e8;
+  --off: #f3ebdd;
   --cream: #fffaf2;
+  --paper: #fbf7f0;
   --gray: #6f6f6f;
   --gray2: #3d3d3d;
   --nav-h: 78px;
@@ -31,12 +32,16 @@ html {
 body {
   margin: 0;
   font-family: "Barlow", sans-serif;
-  background: var(--white);
+  background: var(--paper);
   color: var(--black);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* Light-mode only: keep hero/nav/footer black, but the content surface
+   reads as warm paper rather than stark hospital white. Dark theme
+   overrides --paper below. */
 
 body.modal-open {
   overflow: hidden;
@@ -547,6 +552,15 @@ button {
   padding: 82px 0;
 }
 
+/* Section pacing: peaks/valleys so the page breathes.
+   High-content showcase sections (programs, store) get more room;
+   transitional bands (who-we-are, contact) stay tighter. */
+.hp-programs { padding-top: 96px; padding-bottom: 96px; }
+.hp-store { padding-top: 96px; padding-bottom: 96px; }
+.hp-blog { padding-top: 92px; padding-bottom: 92px; }
+.hp-who { padding-top: 88px; padding-bottom: 88px; }
+.hp-contact { padding-top: 88px; padding-bottom: 88px; }
+
 .hp-eyebrow {
   display: inline-block;
   margin-bottom: 10px;
@@ -1032,6 +1046,28 @@ button {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 13px;
+}
+
+/* Homepage store teaser: 3 products should sit in 3 comfortable columns,
+   not be squeezed into a 7-col full-store grid. */
+.hp-store .hp-store-grid[data-teaser] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+@media (max-width: 760px) {
+  .hp-store .hp-store-grid[data-teaser] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hp-store .hp-store-grid[data-teaser] {
+    grid-template-columns: 1fr;
+  }
 }
 
 .store-card {
@@ -1908,8 +1944,9 @@ button {
 /* ===== Dark theme ===== */
 [data-theme="dark"] {
   --white: #0c0c0c;
-  --off: #111111;
+  --off: #0a0a0a;
   --cream: #141414;
+  --paper: #0c0c0c;
   --black: #ffffff;
   --black2: #0a0a0a;
   --black3: #161616;
@@ -2605,16 +2642,16 @@ body {
 
 @media (max-width: 520px) {
   .hp-hero {
-    min-height: 86vh;
+    min-height: 88vh;
   }
 
   .hp-hero::before {
-    background-position: 68% 28%;
-    background-size: cover;
+    background-position: 50% 25%;
+    background-size: 115%;
   }
 
   .hp-hero-content {
-    padding: 48px 0 42px;
+    padding: 54px 0 48px;
   }
 
   .hp-hero-copy h1 {
