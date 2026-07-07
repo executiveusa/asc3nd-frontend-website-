@@ -143,11 +143,11 @@
         { icon: "/\\", title: "Together We Asc3nd", text: "Uniting our community to elevate every generation." },
       ],
       programsList: [
-        { icon: "B", title: "Education Support", text: "Tutoring, homework help, and academic resources to help youth succeed." },
-        { icon: "M", title: "Mentorship", text: "One-on-one mentorship that builds confidence, character and leadership." },
-        { icon: "*", title: "Leadership Development", text: "Equipping youth with the skills to lead, inspire and create change." },
-        { icon: "H", title: "Community Engagement", text: "Service projects and community initiatives that create impact and build unity." },
-        { icon: "S", title: "Life Skills & Wellness", text: "Workshops and resources that support mental health, wellness and resilience." },
+        { icon: "B", title: "Education Support", text: "Tutoring, homework help, and academic resources to help youth succeed.", image: "./assets/mission-mentors-youth.png" },
+        { icon: "M", title: "Mentorship", text: "One-on-one mentorship that builds confidence, character and leadership.", image: "./assets/cta-mentorship.png" },
+        { icon: "*", title: "Leadership Development", text: "Equipping youth with the skills to lead, inspire and create change.", image: "./assets/programs-leadership.png" },
+        { icon: "H", title: "Community Engagement", text: "Service projects and community initiatives that create impact and build unity.", image: "./assets/community-building.png" },
+        { icon: "S", title: "Life Skills & Wellness", text: "Workshops and resources that support mental health, wellness and resilience.", image: "./assets/hero-asc3nd-seattle.png" },
       ],
       posts: [
         {
@@ -397,11 +397,11 @@
         { icon: "/\\", title: "Juntos Ascendemos", text: "Uniendo a la comunidad para elevar cada generación." },
       ],
       programsList: [
-        { icon: "B", title: "Apoyo Educativo", text: "Tutoría, tareas y recursos académicos para ayudar a jóvenes a avanzar." },
-        { icon: "M", title: "Mentorías", text: "Acompañamiento uno a uno que construye confianza, carácter y liderazgo." },
-        { icon: "*", title: "Desarrollo De Liderazgo", text: "Habilidades para liderar, inspirar y crear cambio positivo." },
-        { icon: "H", title: "Participación Comunitaria", text: "Proyectos de servicio e iniciativas que crean impacto y unidad." },
-        { icon: "S", title: "Vida Y Bienestar", text: "Talleres y recursos que apoyan salud mental, bienestar y resiliencia." },
+        { icon: "B", title: "Apoyo Educativo", text: "Tutoría, tareas y recursos académicos para ayudar a jóvenes a avanzar.", image: "./assets/mission-mentors-youth.png" },
+        { icon: "M", title: "Mentorías", text: "Acompañamiento uno a uno que construye confianza, carácter y liderazgo.", image: "./assets/cta-mentorship.png" },
+        { icon: "*", title: "Desarrollo De Liderazgo", text: "Habilidades para liderar, inspirar y crear cambio positivo.", image: "./assets/programs-leadership.png" },
+        { icon: "H", title: "Participación Comunitaria", text: "Proyectos de servicio e iniciativas que crean impacto y unidad.", image: "./assets/community-building.png" },
+        { icon: "S", title: "Vida Y Bienestar", text: "Talleres y recursos que apoyan salud mental, bienestar y resiliencia.", image: "./assets/hero-asc3nd-seattle.png" },
       ],
       posts: [
         {
@@ -596,12 +596,17 @@
     if (programGrid) {
       programGrid.innerHTML = c.programsList
         .map((item, index) => `
-          <article class="hp-program-card">
-            <div class="hp-program-img" style="background-position-y:${24 + index * 8}%">
-              <div class="hp-program-icon-wrap"><span class="hp-program-icon" aria-hidden="true">${item.icon}</span></div>
+          <article class="hp-program-card hp-program-card-v2" style="--card-index:${index}">
+            <div class="hp-program-card-media">
+              <div class="hp-program-card-tint" aria-hidden="true"></div>
+              <img src="${item.image}" alt="${item.title} — Asc3nd Collective" loading="lazy" />
             </div>
-            <h3>${item.title}</h3>
-            <p>${item.text}</p>
+            <div class="hp-program-card-badge" aria-hidden="true"><span>${item.icon}</span></div>
+            <div class="hp-program-card-body">
+              <h3>${item.title}</h3>
+              <p>${item.text}</p>
+              <div class="hp-program-card-rule" aria-hidden="true"></div>
+            </div>
           </article>
         `)
         .join("");
@@ -614,8 +619,8 @@
       const filtered = filter === "all" ? c.posts : c.posts.filter((p) => p.category === filter);
       const list = teaser > 0 ? c.posts.slice(0, teaser) : (filtered.length ? filtered : c.posts);
       blogGrid.innerHTML = list
-        .map((post) => `
-          <article class="blog-card">
+        .map((post, index) => `
+          <article class="blog-card" style="--card-index:${index}">
             <div class="blog-card-top">
               <span class="blog-meta">${post.date}</span>
               <span class="blog-category">${post.category}</span>
@@ -637,7 +642,7 @@
       const list = teaser > 0 ? c.products.slice(0, teaser) : c.products;
       storeGrid.innerHTML = list
         .map(([name, description, action, kind, price, image], index) => `
-          <article class="store-card product-${index + 1} has-product-art" data-tilt-card>
+          <article class="store-card product-${index + 1} has-product-art" data-tilt-card style="--card-index:${index}">
             <div class="product-image" role="img" aria-label="${name}" style="background-image:url('${image}');background-size:contain;background-repeat:no-repeat;background-position:center;background-color:#111;">
               <span class="product-mock-label">${kind || c.labels.previewOnly}</span>
             </div>
