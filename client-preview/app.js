@@ -590,7 +590,6 @@
           </article>
         `)
         .join("");
-      productReveals.querySelectorAll(".reveal").forEach((section) => section.classList.add("is-visible"));
     }
 
     const programGrid = document.getElementById("program-grid");
