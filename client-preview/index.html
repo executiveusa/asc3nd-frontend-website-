@@ -20,6 +20,7 @@
   </head>
   <body>
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="a3-nav" id="site-header">
       <div class="a3-container a3-nav-inner">
@@ -36,18 +37,21 @@
           <a class="a3-nav-link" href="#mission" data-i18n="nav.about">About Us</a>
           <a class="a3-nav-link" href="#mission" data-i18n="nav.mission">Our Mission</a>
           <a class="a3-nav-link" href="#programs" data-i18n="nav.programs">Programs</a>
-          <button class="a3-nav-link a3-nav-button" type="button" data-modal-trigger="volunteer" data-i18n="nav.getInvolved">Get Involved</button>
-          <button class="a3-nav-link a3-nav-button" type="button" data-modal-trigger="events" data-i18n="nav.events">Events</button>
-          <a class="a3-nav-link" href="#blog" data-i18n="nav.stories">Stories</a>
-          <a class="a3-nav-link" href="#store" data-i18n="nav.store">Store</a>
+          <a class="a3-nav-link" href="./blog.html" data-i18n="nav.stories">Stories</a>
+          <a class="a3-nav-link" href="./merch.html" data-i18n="nav.store">Merch</a>
           <a class="a3-nav-link" href="#contact" data-i18n="nav.contact">Contact</a>
         </nav>
 
         <div class="a3-actions">
           <button class="lang-toggle" type="button" id="lang-toggle" aria-label="Switch language">
+            <span class="lang-flag lang-flag-us" aria-hidden="true"></span>
             <span class="lang-chip is-active" data-lang-chip="en">EN</span>
             <span class="lang-divider">/</span>
-            <span class="lang-chip" data-lang-chip="es">MX</span>
+            <span class="lang-flag lang-flag-mx" aria-hidden="true"></span>
+            <span class="lang-chip" data-lang-chip="es">ES</span>
+          </button>
+          <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle theme" hidden>
+            <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
           </button>
           <a class="a3-btn-donate" href="https://www.givelively.org/" target="_blank" rel="noreferrer">
             <span aria-hidden="true">&hearts;</span>
@@ -65,17 +69,15 @@
         <a href="#home" data-i18n="nav.home">Home</a>
         <a href="#mission" data-i18n="nav.about">About Us</a>
         <a href="#programs" data-i18n="nav.programs">Programs</a>
-        <button type="button" data-modal-trigger="volunteer" data-i18n="nav.getInvolved">Get Involved</button>
-        <button type="button" data-modal-trigger="events" data-i18n="nav.events">Events</button>
-        <a href="#blog" data-i18n="nav.stories">Stories</a>
-        <a href="#store" data-i18n="nav.store">Store</a>
+        <a href="./blog.html" data-i18n="nav.stories">Stories</a>
+        <a href="./merch.html" data-i18n="nav.store">Merch</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
         <a class="a3-mobile-donate" href="https://www.givelively.org/" target="_blank" rel="noreferrer" data-i18n="nav.donate">Donate</a>
       </nav>
     </header>
 
-    <main id="home">
-      <section class="hp-hero reveal" aria-label="Asc3nd Collective hero">
+    <main id="main-content">
+      <section class="hp-hero reveal" id="home" aria-label="Asc3nd Collective hero">
         <div class="hp-hero-overlay" aria-hidden="true"></div>
         <div class="hp-container hp-hero-content">
           <div class="hp-hero-copy">
@@ -87,6 +89,11 @@
             <p data-i18n="hero.lede">
               We equip youth with the tools, opportunities, and support they need to rise, lead, and create the future they deserve.
             </p>
+            <div class="hp-hero-trust" aria-label="Asc3nd preview trust markers">
+              <span>501(c)(3)</span>
+              <span>EIN 99-1881891</span>
+              <span data-i18n="hero.preview">Preview-ready path: Donate, Volunteer, Contact</span>
+            </div>
             <div class="hp-hero-ctas">
               <a class="hp-btn-gold" href="https://www.givelively.org/" target="_blank" rel="noreferrer">
                 <span aria-hidden="true">&hearts;</span>
@@ -145,7 +152,10 @@
               Editorial previews for mentorship, grant readiness, AI operations, donor trust, and community leadership.
             </p>
           </div>
-          <div class="hp-blog-grid" id="blog-grid"></div>
+          <div class="hp-blog-grid" id="blog-grid" data-teaser="4"></div>
+          <div class="hp-section-foot">
+            <a class="hp-btn-dark" href="./blog.html" data-i18n="blog.viewAll">Read All Stories</a>
+          </div>
         </div>
       </section>
 
@@ -158,7 +168,10 @@
               Product cards are visible as a fundraising concept only. Checkout, inventory, and Printify are not live in this preview.
             </p>
           </div>
-          <div class="hp-store-grid" id="store-grid"></div>
+          <div class="hp-store-grid" id="store-grid" data-teaser="3"></div>
+          <div class="hp-section-foot hp-section-foot-center">
+            <a class="hp-btn-dark" href="./merch.html" data-i18n="store.viewAll">View Full Store</a>
+          </div>
           <article class="commerce-note">
             <strong data-i18n="store.engineTitle">Commerce engine planned</strong>
             <p data-i18n="store.engineBody">
@@ -186,6 +199,42 @@
               <span aria-hidden="true">+</span>
               <span data-i18n="cta.volunteer">Volunteer</span>
             </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-offer reveal" id="approval-path" aria-labelledby="offer-heading">
+        <div class="hp-container hp-offer-grid">
+          <div class="hp-offer-copy">
+            <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="offer.kicker">Preview Offer</span>
+            <h2 id="offer-heading" data-i18n="offer.title">Approve The Public Preview. Then Build The Live Engine.</h2>
+            <p data-i18n="offer.body">
+              This static preview proves the brand direction, donation path, stories, merch concept, contact workflow, and AI-readable site before backend work begins.
+            </p>
+            <div class="hp-offer-actions">
+              <a class="hp-btn-gold" href="https://www.givelively.org/" target="_blank" rel="noreferrer" data-i18n="offer.primary">Donate Through GiveLively</a>
+              <a class="hp-btn-dark" href="#contact" data-i18n="offer.secondary">Start Approval Conversation</a>
+            </div>
+          </div>
+          <div class="hp-offer-panel" aria-label="Preview and production status">
+            <div class="hp-offer-column">
+              <strong data-i18n="offer.nowTitle">Ready Now</strong>
+              <ul>
+                <li data-i18n="offer.now1">Flyer-faithful public preview</li>
+                <li data-i18n="offer.now2">GiveLively donation path</li>
+                <li data-i18n="offer.now3">Stories and merch concept pages</li>
+                <li data-i18n="offer.now4">Local contact preview workflow</li>
+              </ul>
+            </div>
+            <div class="hp-offer-column">
+              <strong data-i18n="offer.nextTitle">After Approval</strong>
+              <ul>
+                <li data-i18n="offer.next1">Live email intake or backend</li>
+                <li data-i18n="offer.next2">Real merch product images</li>
+                <li data-i18n="offer.next3">Printify/server adapter</li>
+                <li data-i18n="offer.next4">Final legal and production QA</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -260,14 +309,15 @@
           <a href="#programs" data-i18n="nav.programs">Programs</a>
           <button class="hp-footer-link-btn" type="button" data-modal-trigger="volunteer" data-i18n="nav.getInvolved">Get Involved</button>
           <button class="hp-footer-link-btn" type="button" data-modal-trigger="events" data-i18n="nav.events">Events</button>
-          <a href="#blog" data-i18n="nav.stories">Stories</a>
+          <a href="./blog.html" data-i18n="nav.stories">Stories</a>
+          <a href="./merch.html" data-i18n="nav.store">Merch</a>
           <a href="#contact" data-i18n="nav.contact">Contact</a>
           <a href="./llms.txt" data-i18n="footer.llms">AI-readable site file</a>
         </div>
 
         <div class="hp-footer-col">
           <strong data-i18n="footer.connected">Stay Connected</strong>
-          <div class="hp-social-row" aria-label="Social media signup links">
+          <div class="hp-social-row" id="social-row" aria-label="Social media signup links">
             <a class="hp-social-icon" href="https://www.instagram.com/accounts/emailsignup/" target="_blank" rel="noreferrer" aria-label="Instagram signup">IG</a>
             <a class="hp-social-icon" href="https://www.facebook.com/reg/" target="_blank" rel="noreferrer" aria-label="Facebook signup">FB</a>
             <a class="hp-social-icon" href="https://x.com/i/flow/signup" target="_blank" rel="noreferrer" aria-label="X signup">X</a>

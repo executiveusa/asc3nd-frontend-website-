@@ -18,7 +18,7 @@
         getInvolved: "Get Involved",
         events: "Events",
         stories: "Stories",
-        store: "Store",
+        store: "Merch",
         contact: "Contact",
         donate: "Donate",
       },
@@ -30,6 +30,7 @@
         line3: "BUILDING",
         community: "COMMUNITY.",
         lede: "We equip youth with the tools, opportunities, and support they need to rise, lead, and create the future they deserve.",
+        preview: "Preview-ready path: Donate, Volunteer, Contact",
         donate: "Donate Today",
         volunteer: "Volunteer With Us",
       },
@@ -48,13 +49,22 @@
         kicker: "Stories",
         title: "Youth Leadership Notes",
         intro: "Editorial previews for mentorship, grant readiness, AI operations, donor trust, and community leadership.",
+        viewAll: "Read All Stories",
+      },
+      storiesPage: {
+        kicker: "Stories",
+        title: "Notes From The Movement",
+        lede: "Original editorial guides for Pacific Northwest nonprofits — grant readiness, mentorship, AI operations, donor trust, and community leadership.",
+        disclaimer: "Original Asc3nd editorial. No invented statistics, deadlines, or partnerships. Verify each funder's current cycle before applying.",
+        all: "All",
       },
       store: {
         kicker: "Merch Preview",
-        title: "Community Gear Fundraising Concept",
-        intro: "Product cards are visible as a fundraising concept only. Checkout, inventory, and Printify are not live in this preview.",
-        engineTitle: "Commerce engine planned",
-        engineBody: "Product catalog ready. Printify adapter planned. Server-side API required. Checkout is not connected in preview. Product mockup images come next.",
+        title: "Wear The Mission. Fund The Work.",
+        intro: "Every product in this store supports Asc3nd Collective's youth mentorship, leadership, and community programs. Checkout, inventory, and Printify are not live in this preview.",
+        viewAll: "View Full Store",
+        engineTitle: "Why This Store Exists",
+        engineBody: "This is the branded merch storefront for Asc3nd Collective. Black, white, and gold product images will sit here. Every purchase is meant to fund youth programs, volunteer moments, and the community work behind the logo.",
       },
       cta: {
         kicker: "Get Involved",
@@ -62,6 +72,23 @@
         body: "Whether you volunteer, donate, mentor or partner with us, your support helps us empower youth and transform communities.",
         donate: "Donate",
         volunteer: "Volunteer",
+      },
+      offer: {
+        kicker: "Preview Offer",
+        title: "Approve The Public Preview. Then Build The Live Engine.",
+        body: "This static preview proves the brand direction, donation path, stories, merch concept, contact workflow, and AI-readable site before backend work begins.",
+        primary: "Donate Through GiveLively",
+        secondary: "Start Approval Conversation",
+        nowTitle: "Ready Now",
+        now1: "Flyer-faithful public preview",
+        now2: "GiveLively donation path",
+        now3: "Stories and merch concept pages",
+        now4: "Local contact preview workflow",
+        nextTitle: "After Approval",
+        next1: "Live email intake or backend",
+        next2: "Real merch product images",
+        next3: "Printify/server adapter",
+        next4: "Final legal and production QA",
       },
       contact: {
         kicker: "Contact Preview",
@@ -98,6 +125,7 @@
       labels: {
         pricePending: "Price pending",
         comingSoon: "Coming soon",
+        previewOnly: "Preview only",
         readStatus: "Status",
         sourceNote: "Source note",
         mailto: "Open Email Draft",
@@ -122,23 +150,87 @@
         { icon: "S", title: "Life Skills & Wellness", text: "Workshops and resources that support mental health, wellness and resilience." },
       ],
       posts: [
-        ["Youth Mentorship In Seattle", "2026-06-07", "Mentorship", "How consistent adult support helps young people build confidence, direction, and durable leadership habits.", "Editorial guide", "Preview editorial plan only."],
-        ["Grant Readiness For Small Nonprofits", "2026-06-10", "Funding", "A practical checklist for trust signals, program clarity, documentation, and outcome storytelling.", "Grant-readiness note", "No fake grant deadlines."],
-        ["AI Tools For Nonprofit Operations", "2026-06-14", "AI Operations", "Where automation can help with intake, follow-up, reporting, and team coordination without replacing human care.", "AI operations guide", "Conceptual workflow note."],
-        ["Donor Trust And Public Storytelling", "2026-06-18", "Donor Trust", "Why clear mission language, visible programs, and honest preview labels matter before a fundraising push.", "Community update framework", "No fake statistics."],
-        ["Volunteer Coordination That Feels Human", "2026-06-22", "Volunteer", "A better volunteer path starts with simple choices, clear response expectations, and low-friction follow-up.", "Editorial guide", "Preview workflow only."],
-        ["Community Sports And Leadership", "2026-06-25", "Leadership", "Sports and team activities can become entry points for accountability, mentoring, and confidence building.", "Community update framework", "No fake partnerships."],
-        ["Pacific Northwest Sponsorship Partnerships", "2026-06-29", "Sponsorship", "Local sponsors need a clear story, clean assets, and a credible path from support to visible community impact.", "Grant-readiness note", "Prospect strategy only."],
-        ["Building A Nonprofit Content Engine", "2026-07-03", "Content", "A repeatable blog and social workflow can keep the mission visible without overwhelming a small team.", "AI operations guide", "Original preview copy."],
+        {
+          title: "Grant Readiness For Small Washington Nonprofits",
+          date: "2026-06-06",
+          category: "Grant Readiness",
+          excerpt: "Before applying for funding, small Washington nonprofits can tighten five things: mission language, program documentation, financial records, board governance, and outcome storytelling.",
+          body: "Most declined grants are not lost on the idea — they are lost on readiness. Funders in the Pacific Northwest, from regional community foundations to corporate giving programs, look for the same fundamentals: a mission statement a stranger can repeat back, current program documentation, clean financials, an active board, and honest outcome language. Washington state also offers capacity builders — Washington Nonprofits, 501 Commons, and Wayfind among them — that help small organizations close these gaps before an ask. Treat grant readiness as a year-round practice, not a scramble before a deadline. The organizations that win repeat funding are the ones that can prove, in plain language, what changed because of the money. Build that evidence loop first; the applications get easier every cycle after.",
+          status: "Grant-readiness guide",
+          source: "Original editorial. Verify each funder's current cycle.",
+        },
+        {
+          title: "Where Seattle Youth Programs Find Local Funding",
+          date: "2026-06-09",
+          category: "Funding",
+          excerpt: "From The Seattle Foundation and United Way of King County to community funds and corporate giving, the region offers several real paths for youth-serving organizations.",
+          body: "Seattle is one of the better-funded metro areas for youth work, but the money is scattered across channels. Community foundations such as The Seattle Foundation and giving programs like United Way of King County are long-standing anchors. Regional networks including Philanthropy Northwest and Washington Nonprofits help connect small organizations to funders they would not reach alone. On the corporate side, the region's technology presence translates into donated software, volunteer time, and matching gifts through programs run by Microsoft, Amazon, and others — much of it routed through eligibility hubs like TechSoup. Sponsorships from local businesses matter too, especially when a program can show neighborhood ties. The realistic path for a small nonprofit is to diversify: a community foundation grant, a corporate in-kind partnership, and a base of individual recurring donors, so no single funder can quietly walk away and break the program.",
+          status: "Funding landscape note",
+          source: "Original summary. Confirm each funder is currently accepting applications.",
+        },
+        {
+          title: "Mentorship That Sticks Beyond The First Meeting",
+          date: "2026-06-12",
+          category: "Mentorship",
+          excerpt: "Durable mentoring depends on consistency, clear boundaries, training, and a real matching process — not just good intentions.",
+          body: "A mentor who shows up once is nice. A mentor who shows up for a year changes a young person's trajectory. The difference is almost never charisma; it is structure. Strong programs screen and train mentors, set clear expectations about time commitment and boundaries, and match youth with adults whose strengths fit their needs. They also build in a backup: a coordinator who notices when a match is fading before the young person does. Background checks, trauma-informed practice, and supervision are not optional paperwork — they are how a program earns the trust of families. The mentorship programs that survive in Washington over the long term treat the relationship as the product, and everything else — events, marketing, fundraising — as support for it.",
+          status: "Editorial guide",
+          source: "Original program-design guidance.",
+        },
+        {
+          title: "AI Tools Nonprofits Actually Use Without Losing The Human Touch",
+          date: "2026-06-16",
+          category: "AI Operations",
+          excerpt: "Nonprofit pricing from Microsoft, Google, and TechSoup makes tools like Copilot and Gemini accessible for intake, drafting, and reporting while keeping people in charge.",
+          body: "AI is not a substitute for the people who do this work, but it is a real lever for small teams that are stretched thin. Donation-eligible programs — Microsoft's Tech for Social Impact, Google for Nonprofits, and the TechSoup catalog — put capable tools within reach at a fraction of retail cost. The honest use cases are the unglamorous ones: drafting grant narratives from notes, turning intake conversations into structured records, summarizing a board meeting, translating a flyer, or generating a first pass at a quarterly report. The rules that keep this safe are simple: never put a young person's private information into a public model, keep a human review step on anything public-facing, and disclose AI assistance in donor communications where it matters. Done well, automation buys back the staff hours that get redirected toward the youth themselves.",
+          status: "AI operations guide",
+          source: "Original summary. Confirm current eligibility and pricing.",
+        },
+        {
+          title: "Volunteer Coordination That Keeps People Coming Back",
+          date: "2026-06-20",
+          category: "Volunteer",
+          excerpt: "A strong volunteer path starts with one clear choice, a fast follow-up, defined roles, and a simple way to recognize effort.",
+          body: "Most volunteer drop-off happens in the first two weeks, and the cause is almost always friction: too many steps to sign up, no follow-up after they do, or showing up to a shift with nothing meaningful to do. A good volunteer pipeline answers one question fast — what can I do this Saturday — and then assigns a real role with a real endpoint. It recognizes effort without ceremony: a thank-you text, a name on a wall, a reference letter for a job application. For youth-serving nonprofits in particular, the screening step is non-negotiable for anyone working with minors, and that requirement has to be visible up front, not sprung on people later. The programs with the strongest volunteer retention treat their volunteers the way they treat their donors: as relationships to invest in, not shifts to fill.",
+          status: "Editorial guide",
+          source: "Original workflow guidance.",
+        },
+        {
+          title: "Telling Your Story Without Exploiting The People You Serve",
+          date: "2026-06-24",
+          category: "Donor Trust",
+          excerpt: "Trustworthy nonprofit storytelling earns donor confidence through consent, specificity, and dignity — not crisis imagery or borrowed statistics.",
+          body: "There is a version of nonprofit storytelling that raises money in the short term and quietly damages the people it claims to serve: borrowing a young person's hardest moment, using a stock image of a stranger, attaching a statistic that came from somewhere else. Trust breaks the moment a donor — or a family — notices. The alternative is slower and stronger: stories shared with written consent, specific enough to be verifiable, told with the dignity the subject would want. A youth program earns the right to tell a story; it does not own it. The same rule applies to numbers. A real, modest outcome — eight students finished the mentorship cohort, six stayed in school — is more persuasive to a serious funder than a round, unattributed percentage. Honest storytelling is not just ethical; it is the most durable fundraising strategy a small nonprofit has.",
+          status: "Community framework",
+          source: "Original ethics guidance.",
+        },
+        {
+          title: "Pacific Northwest Sponsorships: Making The Local Business Case",
+          date: "2026-06-28",
+          category: "Sponsorship",
+          excerpt: "Local sponsors back programs when they see community ties, clean assets, employee engagement, and a credible path from support to visible impact.",
+          body: "A neighborhood business will sponsor a youth program when the case is concrete and local. Generic sponsorship decks fail because they ask a small business to act like a national brand. What actually lands is specificity: this event, these families, this neighborhood, this many young people, this kind of visibility in return. Washington sponsors — whether a regional bank, a local manufacturer, or an independent retailer — increasingly want employee engagement attached to the sponsorship, not just a logo. They want staff to be able to volunteer at the program they fund. That means a sponsorship package is really a partnership package: visibility plus a volunteer day plus a clear impact report at year end. Small nonprofits that frame it this way, and can deliver clean assets on deadline, win renewals that outlast any single grant cycle.",
+          status: "Prospect strategy",
+          source: "Original partnership guidance.",
+        },
+        {
+          title: "Leadership Through Sport: Why Team Programs Build Future Leaders",
+          date: "2026-07-02",
+          category: "Leadership",
+          excerpt: "Coaches, accountability, and healthy competition teach youth to set goals, recover from setbacks, and lead peers — skills that transfer far beyond the game.",
+          body: "Sport is one of the oldest leadership laboratories there is, and for youth development work it remains one of the most effective. A team teaches things a classroom struggles to: how to commit to something when you are tired, how to take correction from an adult who is not your parent, how to lose without quitting, how to win without humiliating the other side. For communities in the Pacific Northwest, where access to fields, gear, and leagues is uneven, a sponsored community-sports program is not a luxury — it is an on-ramp to mentorship, physical health, and accountability at the same time. The programs that endure pair the sport with something else: a study table, a mentor check-in, a meal. The athletics draw them in. The structure keeps them. The leadership is what they carry out.",
+          status: "Community framework",
+          source: "Original program-design guidance.",
+        },
       ],
       products: [
-        ["Asc3nd Signature T-shirt", "A clean black/gold launch tee for events, volunteers, and donor thank-yous.", "Request merch info"],
-        ["Asc3nd Crown Hat", "A simple crown-mark cap concept for everyday community visibility.", "Notify me"],
-        ["Asc3nd Community Hoodie", "A premium hoodie concept for mentors, youth leaders, and winter events.", "Sponsor merch launch"],
-        ["Asc3nd Everyday Tote", "A reusable tote concept for workshops, resource days, and outreach tables.", "Request merch info"],
-        ["Asc3nd Sticker Pack", "Small-format brand pieces for laptops, notebooks, bottles, and event kits.", "Notify me"],
-        ["Asc3nd Wall Print", "A motivational poster concept using the Asc3nd message and black/gold identity.", "Sponsor merch launch"],
-        ["Asc3nd Camp Mug or Water Bottle", "A durable everyday item concept for volunteers, mentors, and program days.", "Notify me"],
+        ["Asc3nd Signature T-shirt", "A clean black and gold launch tee that helps fund mentorship, leadership, and community events.", "Request merch info", "Tee", "$28", "./assets/store-watermarked/tee.png"],
+        ["Asc3nd Crown Hat", "A simple crown-mark cap for everyday visibility and direct mission support.", "Notify me", "Hat", "$30", "./assets/store-watermarked/cap.png"],
+        ["Asc3nd Community Hoodie", "A premium hoodie for mentors, youth leaders, and winter fundraisers that keeps programs moving.", "Sponsor merch launch", "Hoodie", "$58", "./assets/store-watermarked/hoodie.png"],
+        ["Asc3nd Everyday Tote", "A reusable tote for workshops, resource days, and outreach tables that supports local youth work.", "Request merch info", "Tote", "$24", "./assets/store-watermarked/tote-bag.png"],
+        ["Asc3nd Sticker Pack", "Small-format brand pieces for laptops, notebooks, bottles, and event kits that spread the message.", "Notify me", "Stickers", "$12", "./assets/store-watermarked/sticker-pack.png"],
+        ["Asc3nd Wall Print", "A motivational poster concept that keeps the mission visible in homes, offices, and community spaces.", "Sponsor merch launch", "Print", "$34", "./assets/store-watermarked/wall-print.png"],
+        ["Asc3nd Camp Mug or Water Bottle", "A durable everyday item for volunteers, mentors, and program days that funds the next step.", "Notify me", "Bottle", "$32", "./assets/store-watermarked/water-bottle.png"],
       ],
       modals: {
         events: {
@@ -186,148 +278,240 @@
       },
       hero: {
         line1: "IMPULSANDO",
-        youth: "JOVENES.",
+        youth: "JÓVENES.",
         line2: "ELEVANDO",
         futures: "FUTUROS.",
         line3: "CREANDO",
         community: "COMUNIDAD.",
         lede: "Damos a la juventud las herramientas, oportunidades y apoyo que necesitan para crecer, liderar y crear el futuro que merecen.",
+        preview: "Ruta preview lista: donar, voluntariado, contacto",
         donate: "Donar Hoy",
         volunteer: "Ser Voluntario",
       },
       mission: {
-        kicker: "Quienes Somos",
+        kicker: "Quiénes Somos",
         titleA: "Creemos En El",
         titleB: "Potencial De Cada Joven.",
-        body: "Asc3nd Collective es una organizacion de desarrollo juvenil dedicada a empoderar a jovenes por medio de mentorias, educacion, liderazgo y participacion comunitaria. Caminamos junto a ellos mientras ascienden a su mayor potencial.",
-        cta: "Conocer Mas",
+        body: "Asc3nd Collective es una organización de desarrollo juvenil dedicada a empoderar a jóvenes por medio de mentorías, educación, liderazgo y participación comunitaria. Caminamos junto a ellos mientras ascienden a su mayor potencial.",
+        cta: "Conocer Más",
       },
       programs: {
         kicker: "Nuestros Programas",
-        title: "Construyendo Mananas Mas Brillantes",
+        title: "Construyendo Mañanas Más Brillantes",
       },
       blog: {
         kicker: "Historias",
         title: "Notas De Liderazgo Juvenil",
-        intro: "Previews editoriales sobre mentorias, preparacion para fondos, operaciones con IA, confianza de donantes y liderazgo comunitario.",
+        intro: "Guías editoriales sobre mentoría, preparación para fondos, operaciones con IA, confianza de donantes y liderazgo comunitario.",
+        viewAll: "Leer Todas Las Historias",
+      },
+      storiesPage: {
+        kicker: "Historias",
+        title: "Notas Del Movimiento",
+        lede: "Guías editoriales originales para nonprofits del Pacífico Noroeste — preparación para fondos, mentoría, operaciones con IA, confianza de donantes y liderazgo comunitario.",
+        disclaimer: "Editorial original de Asc3nd. Sin estadísticas inventadas, fechas límite ni alianzas falsas. Verifica el ciclo actual de cada financiador antes de solicitar.",
+        all: "Todo",
       },
       store: {
         kicker: "Preview De Merch",
-        title: "Concepto De Recaudacion Con Productos",
-        intro: "Las tarjetas de productos muestran un concepto de recaudacion. Checkout, inventario y Printify no estan activos en este preview.",
-        engineTitle: "Motor de comercio planeado",
-        engineBody: "Catalogo listo. Adaptador Printify planeado. Se requiere API del servidor. El checkout no esta conectado en el preview. Las imagenes reales de productos vienen despues.",
+        title: "Usa La Mision. Financia El Trabajo.",
+        intro: "Cada producto de esta tienda apoya los programas de mentorias, liderazgo y comunidad de Asc3nd Collective. Checkout, inventario y Printify no estan activos en este preview.",
+        viewAll: "Ver Tienda Completa",
+        engineTitle: "Por Que Existe Esta Tienda",
+        engineBody: "Esta es la tienda de merch con la marca de Asc3nd Collective. Aqui iran las imagenes de producto en negro, blanco y dorado. Cada compra esta pensada para apoyar programas juveniles, voluntariado y el trabajo comunitario detras del logo.",
       },
       cta: {
         kicker: "Participa",
-        title: "Se Parte Del Movimiento.",
-        body: "Ya sea que dones, apoyes, seas mentor o voluntario, tu ayuda impulsa a jovenes y transforma comunidades.",
+        title: "Sé Parte Del Movimiento.",
+        body: "Ya sea que dones, apoyes, seas mentor o voluntario, tu ayuda impulsa a jóvenes y transforma comunidades.",
         donate: "Donar",
         volunteer: "Voluntario",
       },
+      offer: {
+        kicker: "Oferta Preview",
+        title: "Aprueba El Preview Publico. Luego Construimos El Motor Real.",
+        body: "Este preview estatico prueba la direccion de marca, donaciones, historias, concepto de merch, contacto y archivo legible para IA antes del backend.",
+        primary: "Donar En GiveLively",
+        secondary: "Iniciar Conversacion",
+        nowTitle: "Listo Ahora",
+        now1: "Preview publico fiel al flyer",
+        now2: "Ruta de donacion GiveLively",
+        now3: "Paginas de historias y merch",
+        now4: "Contacto local en modo preview",
+        nextTitle: "Despues De Aprobar",
+        next1: "Intake real por email o backend",
+        next2: "Imagenes reales de merch",
+        next3: "Adaptador Printify/servidor",
+        next4: "Legal final y QA de produccion",
+      },
       contact: {
         kicker: "Contacto Preview",
-        title: "Inicia La Conversacion.",
-        body: "Este formulario valida localmente y crea un borrador de correo. Todavia no envia a un backend.",
+        title: "Inicia La Conversación.",
+        body: "Este formulario valida localmente y crea un borrador de correo. Todavía no envía a un backend.",
         previewTitle: "Solo modo preview",
-        previewBody: "Sin base de datos, sin envio falso y sin automatizacion oculta. El flujo real de email se conecta despues de aprobacion.",
+        previewBody: "Sin base de datos, sin envío falso y sin automatización oculta. El flujo real de email se conecta después de aprobación.",
         name: "Nombre",
         email: "Email",
-        interest: "Tipo De Interes",
+        interest: "Tipo De Interés",
         message: "Mensaje",
         submit: "Crear Mensaje Preview",
-        successTitle: "Modo preview: este mensaje todavia no se envio.",
-        successBody: "El flujo real de email se conectara despues de la aprobacion.",
+        successTitle: "Modo preview: este mensaje todavía no se envió.",
+        successBody: "El flujo real de email se conectará después de la aprobación.",
         errors: {
           name: "Escribe un nombre.",
-          email: "Escribe un email valido.",
-          interest: "Elige un tipo de interes.",
+          email: "Escribe un email válido.",
+          interest: "Elige un tipo de interés.",
           message: "Escribe un mensaje.",
         },
       },
       footer: {
-        description: "Una organizacion 501(c)(3) que empodera jovenes, eleva futuros y construye comunidad.",
-        quick: "Links Rapidos",
+        description: "Una organización 501(c)(3) que empodera jóvenes, eleva futuros y construye comunidad.",
+        quick: "Links Rápidos",
         connected: "Sigue Conectado",
-        join: "Unete A La Comunidad",
-        joinBody: "Suscribete para recibir noticias, eventos y formas de participar.",
+        join: "Únete A La Comunidad",
+        joinBody: "Suscríbete para recibir noticias, eventos y formas de participar.",
         subscribe: "Suscribir",
         llms: "Archivo legible para IA",
         copyright: "© 2026 Asc3nd Collective. Todos los derechos reservados.",
-        privacy: "Politica De Privacidad",
-        terms: "Terminos Y Condiciones",
+        privacy: "Política De Privacidad",
+        terms: "Términos Y Condiciones",
       },
       labels: {
         pricePending: "Precio pendiente",
         comingSoon: "Muy pronto",
+        previewOnly: "Solo preview",
         readStatus: "Estado",
         sourceNote: "Nota de fuente",
         mailto: "Abrir Borrador",
         copy: "Copiar Resumen",
         reset: "Reiniciar",
         copied: "Resumen copiado.",
-        merchToast: "Interes de merch agregado al formulario.",
-        subscribeSuccess: "Modo preview: la suscripcion se conectara despues de aprobacion.",
+        merchToast: "Interés de merch agregado al formulario.",
+        subscribeSuccess: "Modo preview: la suscripción se conectará después de aprobación.",
       },
       interests: ["Voluntario", "Patrocinador", "Donar", "Merch", "Pregunta de programa", "Alianza", "Otro"],
       pillars: [
         { icon: "OO", title: "Enfoque Juvenil", text: "Construyendo confianza, liderazgo y habilidades de vida." },
-        { icon: "^", title: "Futuro En Marcha", text: "Brindando educacion, mentoria y oportunidades reales." },
+        { icon: "^", title: "Futuro En Marcha", text: "Brindando educación, mentoría y oportunidades reales." },
         { icon: "<3", title: "Comunidad Primero", text: "Fortaleciendo familias y creando impacto duradero." },
-        { icon: "/\\", title: "Juntos Ascendemos", text: "Uniendo a la comunidad para elevar cada generacion." },
+        { icon: "/\\", title: "Juntos Ascendemos", text: "Uniendo a la comunidad para elevar cada generación." },
       ],
       programsList: [
-        { icon: "B", title: "Apoyo Educativo", text: "Tutoria, tareas y recursos academicos para ayudar a jovenes a avanzar." },
-        { icon: "M", title: "Mentorias", text: "Acompanamiento uno a uno que construye confianza, caracter y liderazgo." },
+        { icon: "B", title: "Apoyo Educativo", text: "Tutoría, tareas y recursos académicos para ayudar a jóvenes a avanzar." },
+        { icon: "M", title: "Mentorías", text: "Acompañamiento uno a uno que construye confianza, carácter y liderazgo." },
         { icon: "*", title: "Desarrollo De Liderazgo", text: "Habilidades para liderar, inspirar y crear cambio positivo." },
-        { icon: "H", title: "Participacion Comunitaria", text: "Proyectos de servicio e iniciativas que crean impacto y unidad." },
+        { icon: "H", title: "Participación Comunitaria", text: "Proyectos de servicio e iniciativas que crean impacto y unidad." },
         { icon: "S", title: "Vida Y Bienestar", text: "Talleres y recursos que apoyan salud mental, bienestar y resiliencia." },
       ],
       posts: [
-        ["Mentoria Juvenil En Seattle", "2026-06-07", "Mentoria", "Como el apoyo constante de adultos ayuda a jovenes a construir confianza, direccion y liderazgo.", "Guia editorial", "Plan editorial preview."],
-        ["Preparacion Para Fondos", "2026-06-10", "Fondos", "Una lista practica para senales de confianza, claridad de programas, documentacion y resultados.", "Nota de preparacion", "Sin fechas falsas de fondos."],
-        ["Herramientas De IA Para Nonprofits", "2026-06-14", "Operaciones IA", "Donde la automatizacion puede apoyar intake, seguimiento, reportes y coordinacion de equipo.", "Guia de operaciones IA", "Nota conceptual."],
-        ["Confianza Donante Y Narrativa Publica", "2026-06-18", "Confianza", "Por que la mision clara, programas visibles y etiquetas honestas importan antes de recaudar.", "Marco comunitario", "Sin estadisticas falsas."],
-        ["Coordinacion De Voluntarios Humana", "2026-06-22", "Voluntarios", "Un mejor camino voluntario empieza con opciones claras y seguimiento facil.", "Guia editorial", "Solo workflow preview."],
-        ["Deporte Comunitario Y Liderazgo", "2026-06-25", "Liderazgo", "El deporte y las actividades de equipo pueden abrir caminos para responsabilidad, mentoria y confianza.", "Marco comunitario", "Sin alianzas falsas."],
-        ["Patrocinios Del Pacific Northwest", "2026-06-29", "Patrocinio", "Patrocinadores locales necesitan una historia clara, activos limpios y un camino creible hacia impacto.", "Nota de preparacion", "Estrategia prospectiva."],
-        ["Crear Un Motor De Contenido Nonprofit", "2026-07-03", "Contenido", "Un flujo repetible de blog y redes mantiene visible la mision sin saturar a un equipo pequeno.", "Guia de operaciones IA", "Copy original preview."],
+        {
+          title: "Preparación Para Obtener Fondos En Washington",
+          date: "2026-06-06",
+          category: "Preparación",
+          excerpt: "Antes de solicitar fondos, una pequeña organización en Washington puede fortalecer cinco cosas: claridad de misión, documentación de programas, finanzas, gobernanza y narrativa de resultados.",
+          body: "La mayoría de los fondos que se pierden no se pierden por la idea, sino por la preparación. Los financiadores del Pacífico Noroeste, desde fundaciones comunitarias hasta programas corporativos, buscan lo mismo: una misión que un extraño pueda repetir, documentación vigente de programas, finanzas limpias, una junta activa y un lenguaje honesto sobre resultados. Washington ofrece además fortalecedores de capacidad, como Washington Nonprofits, 501 Commons y Wayfind, que ayudan a cerrar estas brechas antes de pedir. La preparación debe verse como una práctica de todo el año, no como un apuro antes de una fecha límite. Las organizaciones que ganan fondos repetidos son las que pueden demostrar, en lenguaje claro, qué cambió gracias al dinero.",
+          status: "Guía de preparación",
+          source: "Editorial original. Verifica el ciclo actual de cada financiador.",
+        },
+        {
+          title: "Dónde Encuentran Financiamiento Los Programas Juveniles De Seattle",
+          date: "2026-06-09",
+          category: "Financiamiento",
+          excerpt: "De The Seattle Foundation y United Way of King County hasta fondos comunitarios y donaciones corporativas, la región ofrece varios caminos reales para organizaciones juveniles.",
+          body: "Seattle es una de las áreas metropolitanas con mejor financiamiento para el trabajo con jóvenes, pero el dinero está repartido en muchos canales. Fundaciones comunitarias como The Seattle Foundation y programas como United Way of King County son pilares de larga data. Redes regionales como Philanthropy Northwest y Washington Nonprofits conectan a organizaciones pequeñas con financiadores a los que no llegarían solas. En el lado corporativo, la presencia tecnológica de la región se traduce en software donado, horas de voluntariado y donaciones equivalentes a través de programas de Microsoft, Amazon y otros, gran parte canalizada por elegibilidad como TechSoup. Los patrocinios de negocios locales también importan, sobre todo cuando el programa puede demostrar vínculo con el barrio. El camino realista es diversificar: una beca de fundación, una alianza corporativa en especie y una base de donantes recurrentes.",
+          status: "Nota de panorama",
+          source: "Resumen original. Confirma que cada financiador siga recibiendo solicitudes.",
+        },
+        {
+          title: "Mentoría Que Permanece Más Allá Del Primer Encuentro",
+          date: "2026-06-12",
+          category: "Mentoría",
+          excerpt: "La mentoría duradera depende de constancia, límites claros, capacitación y un proceso real de emparejamiento, no solo de buenas intenciones.",
+          body: "Un mentor que llega una vez ayuda. Un mentor que llega durante un año cambia la trayectoria de un joven. La diferencia casi nunca es el carisma, es la estructura. Los programas fuertes evalúan y capacitan a los mentores, fijan expectativas claras sobre tiempo y límites, y emparejan a los jóvenes con adultos cuyas fortalezas se ajusten a sus necesidades. También construyen un respaldo: un coordinador que nota cuando un emparejamiento se está debilitando antes que el joven. Las verificaciones de antecedentes, la práctica informada sobre trauma y la supervisión no son trámites opcionales, son la forma en que un programa se gana la confianza de las familias.",
+          status: "Guía editorial",
+          source: "Guía original de diseño de programas.",
+        },
+        {
+          title: "Herramientas De IA Que Las Nonprofits Usan Sin Perder El Toque Humano",
+          date: "2026-06-16",
+          category: "Operaciones IA",
+          excerpt: "Los precios para nonprofits de Microsoft, Google y TechSoup ponen herramientas como Copilot y Gemini al alcance para intake, redacción y reportes, con las personas a cargo.",
+          body: "La IA no reemplaza a las personas que hacen este trabajo, pero es una palanca real para equipos pequeños que están saturados. Los programas con elegibilidad de donación, como Tech for Social Impact de Microsoft, Google for Nonprofits y el catálogo de TechSoup, ponen herramientas capaces al alcance por una fracción del costo. Los usos honestos son los poco glamorosos: redactar narrativas de subvención a partir de notas, convertir conversaciones de intake en registros estructurados, resumir una reunión de junta, traducir un volante o generar un primer borrador de un informe trimestral. Las reglas para mantenerlo seguro son simples: nunca pongas información privada de un menor en un modelo público, mantén una revisión humana en todo lo que sea público y disclose la asistencia de IA donde corresponda.",
+          status: "Guía de operaciones IA",
+          source: "Resumen original. Confirma elegibilidad y precios actuales.",
+        },
+        {
+          title: "Coordinación De Voluntarios Que Hace Que La Gente Regrese",
+          date: "2026-06-20",
+          category: "Voluntarios",
+          excerpt: "Un buen camino voluntario empieza con una opción clara, un seguimiento rápido, roles definidos y una forma simple de reconocer el esfuerzo.",
+          body: "La mayoría de la pérdida de voluntarios ocurre en las primeras dos semanas, y casi siempre por fricción: demasiados pasos para registrarse, ningún seguimiento después de hacerlo, o llegar a un turno sin nada significativo que hacer. Un buen flujo de voluntarios responde rápido a una pregunta, qué puedo hacer este sábado, y luego asigna un rol real con un final real. Reconoce el esfuerzo sin ceremonia: un mensaje de gracias, un nombre en un muro, una carta de referencia para una solicitud de empleo. Para organizaciones que sirven a jóvenes, el filtro de antecedentes es innegociable para cualquiera que trabaje con menores, y ese requisito debe verse desde el inicio, no sorprender a la gente después.",
+          status: "Guía editorial",
+          source: "Guía original de flujo de trabajo.",
+        },
+        {
+          title: "Contar Tu Historia Sin Explotar A Las Personas Que Sirves",
+          date: "2026-06-24",
+          category: "Confianza",
+          excerpt: "La narrativa confiable de una nonprofit genera confianza de donantes mediante consentimiento, especificidad y dignidad, no imágenes de crisis ni estadísticas prestadas.",
+          body: "Existe una versión de la narrativa nonprofit que recauda dinero a corto plazo y daña silenciosamente a quienes dice servir: tomar el momento más difícil de un joven, usar una imagen de archivo de un desconocido, adjuntar una estadística que vino de otra parte. La confianza se rompe en el momento en que un donante, o una familia, lo nota. La alternativa es más lenta y más fuerte: historias compartidas con consentimiento por escrito, lo bastante específicas para verificarse, contadas con la dignidad que el sujeto querría. Un programa juvenil se gana el derecho a contar una historia, no la posee. La misma regla aplica a los números.",
+          status: "Marco comunitario",
+          source: "Guía original de ética.",
+        },
+        {
+          title: "Patrocinios En El Pacífico Noroeste: El Caso De Negocio Local",
+          date: "2026-06-28",
+          category: "Patrocinio",
+          excerpt: "Los patrocinadores locales apoyan programas cuando ven vínculo comunitario, activos limpios, participación de empleados y un camino creíble del apoyo al impacto visible.",
+          body: "Un negocio del barrio patrocinará un programa juvenil cuando el caso sea concreto y local. Las presentaciones genéricas fallan porque le piden a un pequeño negocio que actúe como una marca nacional. Lo que funciona es la especificidad: este evento, estas familias, este barrio, esta cantidad de jóvenes, esta visibilidad a cambio. Los patrocinadores en Washington, ya sea un banco regional, un fabricante local o un minorista independiente, quieren cada vez más que la participación de los empleados venga adjunta al patrocinio. Quieren que su personal pueda voluntariar en el programa que financian. Eso significa que un paquete de patrocinio es realmente un paquete de alianza: visibilidad, más un día de voluntariado, más un informe claro de impacto al cierre de año.",
+          status: "Estrategia prospectiva",
+          source: "Guía original de alianzas.",
+        },
+        {
+          title: "Liderazgo A Través Del Deporte: Por Qué Los Programas En Equipo Forman Líderes",
+          date: "2026-07-02",
+          category: "Liderazgo",
+          excerpt: "Entrenadores, rendición de cuentas y competencia sana enseñan a los jóvenes a fijar metas, recuperarse de los reveses y liderar a sus pares, habilidades que van más allá del juego.",
+          body: "El deporte es uno de los laboratorios de liderazgo más antiguos que existen y, para el trabajo de desarrollo juvenil, sigue siendo uno de los más efectivos. Un equipo enseña lo que un salón difícilmente logra: comprometerse con algo cuando se está cansado, aceptar corrección de un adulto que no es tu padre, perder sin abandonar, ganar sin humillar al otro lado. Para comunidades del Pacífico Noroeste, donde el acceso a canchas, equipo y ligas es desigual, un programa comunitario de deporte patrocinado no es un lujo, es una rampa de entrada hacia mentoría, salud física y rendición de cuentas al mismo tiempo. Los programas que duran acompañan el deporte con algo más: una mesa de estudio, una charla con un mentor, una comida.",
+          status: "Marco comunitario",
+          source: "Guía original de diseño de programas.",
+        },
       ],
       products: [
-        ["Playera Signature Asc3nd", "Playera negra/dorada para eventos, voluntarios y agradecimientos a donantes.", "Pedir info"],
-        ["Gorra Crown Asc3nd", "Concepto de gorra con marca de corona para visibilidad comunitaria diaria.", "Avisame"],
-        ["Hoodie Comunidad Asc3nd", "Concepto premium para mentores, lideres juveniles y eventos de invierno.", "Patrocinar lanzamiento"],
-        ["Tote Asc3nd Diario", "Bolsa reusable para talleres, dias de recursos y mesas comunitarias.", "Pedir info"],
-        ["Sticker Pack Asc3nd", "Piezas pequenas para laptops, cuadernos, botellas y kits de eventos.", "Avisame"],
-        ["Print De Pared Asc3nd", "Poster motivacional con el mensaje Asc3nd y la identidad negro/dorado.", "Patrocinar lanzamiento"],
-        ["Taza O Botella Asc3nd", "Articulo diario durable para voluntarios, mentores y dias de programa.", "Avisame"],
+        ["Playera Signature Asc3nd", "Playera negra y dorada que ayuda a financiar mentorias, liderazgo y eventos comunitarios.", "Pedir info", "Playera", "$28", "./assets/store-watermarked/tee.png"],
+        ["Gorra Crown Asc3nd", "Gorra simple con marca de corona para visibilidad diaria y apoyo directo a la mision.", "Avísame", "Gorra", "$30", "./assets/store-watermarked/cap.png"],
+        ["Hoodie Comunidad Asc3nd", "Hoodie premium para mentores, lideres juveniles y recaudaciones de invierno que mantiene los programas en marcha.", "Patrocinar lanzamiento", "Hoodie", "$58", "./assets/store-watermarked/hoodie.png"],
+        ["Tote Asc3nd Diario", "Bolsa reutilizable para talleres, dias de recursos y mesas comunitarias que apoya el trabajo juvenil local.", "Pedir info", "Tote", "$24", "./assets/store-watermarked/tote-bag.png"],
+        ["Sticker Pack Asc3nd", "Piezas pequenas para laptops, cuadernos, botellas y kits de eventos que difunden el mensaje.", "Avísame", "Stickers", "$12", "./assets/store-watermarked/sticker-pack.png"],
+        ["Print De Pared Asc3nd", "Poster motivacional que mantiene la mision visible en casas, oficinas y espacios comunitarios.", "Patrocinar lanzamiento", "Print", "$34", "./assets/store-watermarked/wall-print.png"],
+        ["Taza O Botella Asc3nd", "Articulo diario durable para voluntarios, mentores y dias de programa que financia el siguiente paso.", "Avísame", "Bottle", "$32", "./assets/store-watermarked/water-bottle.png"],
       ],
       modals: {
         events: {
           kicker: "Eventos",
           title: "Eventos Muy Pronto",
-          body: "<p>Asc3nd esta preparando su calendario de eventos. En este preview, esto abre limpio en vez de mandar a una pagina rota o vacia.</p><p>Usa el formulario de contacto para informacion actual de voluntariado, patrocinio o programas.</p>",
+          body: "<p>Asc3nd está preparando su calendario de eventos. En este preview, esto abre limpio en vez de mandar a una página rota o vacía.</p><p>Usa el formulario de contacto para información actual de voluntariado, patrocinio o programas.</p>",
           primary: "Contactar Asc3nd",
           href: "#contact",
         },
         volunteer: {
           kicker: "Participa",
           title: "Camino Voluntario Muy Pronto",
-          body: "<p>El flujo de voluntariado esta preparado como interaccion preview. La version final debe mandar el interes a un backend real o workflow de email.</p><ul><li>Interes de mentoria</li><li>Apoyo en eventos</li><li>Apoyo de programas</li><li>Conversacion de patrocinio</li></ul>",
+          body: "<p>El flujo de voluntariado está preparado como interacción preview. La versión final debe mandar el interés a un backend real o workflow de email.</p><ul><li>Interés de mentoría</li><li>Apoyo en eventos</li><li>Apoyo de programas</li><li>Conversación de patrocinio</li></ul>",
           primary: "Abrir Contacto",
           href: "#contact",
         },
         privacy: {
           kicker: "Legal Preview",
-          title: "Politica De Privacidad",
-          body: "<p>Este preview no guarda ni almacena mensajes del formulario. Las entradas se validan localmente y solo pueden crear un borrador de email.</p><p>La produccion final necesita revision legal y de privacidad antes del lanzamiento.</p>",
+          title: "Política De Privacidad",
+          body: "<p>Este preview no guarda ni almacena mensajes del formulario. Las entradas se validan localmente y solo pueden crear un borrador de email.</p><p>La producción final necesita revisión legal y de privacidad antes del lanzamiento.</p>",
           primary: "Leer Archivo IA",
           href: "./llms.txt",
         },
         terms: {
           kicker: "Legal Preview",
-          title: "Terminos Y Condiciones",
-          body: "<p>Este preview estatico es para revision y aprobacion. Merch, checkout, Printify, email y backend no estan activos todavia.</p><p>Los terminos finales deben revisarse antes del deploy de produccion.</p>",
+          title: "Términos Y Condiciones",
+          body: "<p>Este preview estático es para revisión y aprobación. Merch, checkout, Printify, email y backend no están activos todavía.</p><p>Los términos finales deben revisarse antes del deploy de producción.</p>",
           primary: "Contactar Asc3nd",
           href: "#contact",
         },
@@ -359,7 +543,11 @@
   const subscribeNote = document.getElementById("subscribe-note");
   const toast = document.getElementById("toast");
 
-  const get = (path) => path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), content[currentLang]);
+  const get = (path) => {
+    const local = path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), content[currentLang]);
+    if (local !== undefined) return local;
+    return path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), content.en);
+  };
 
   const showToast = (message) => {
     if (!toast) return;
@@ -383,6 +571,7 @@
     if (resetContact) resetContact.textContent = content[currentLang].labels.reset;
     renderDynamicSections();
     renderInterestOptions();
+    renderBlogToolbar();
   };
 
   const renderDynamicSections = () => {
@@ -401,6 +590,7 @@
           </article>
         `)
         .join("");
+      productReveals.querySelectorAll(".reveal").forEach((section) => section.classList.add("is-visible"));
     }
 
     const programGrid = document.getElementById("program-grid");
@@ -420,14 +610,23 @@
 
     const blogGrid = document.getElementById("blog-grid");
     if (blogGrid) {
-      blogGrid.innerHTML = c.posts
-        .map(([title, date, category, excerpt, status, source]) => `
+      const filter = blogGrid.dataset.filter || "all";
+      const teaser = parseInt(blogGrid.dataset.teaser || "0", 10);
+      const filtered = filter === "all" ? c.posts : c.posts.filter((p) => p.category === filter);
+      const list = teaser > 0 ? c.posts.slice(0, teaser) : (filtered.length ? filtered : c.posts);
+      blogGrid.innerHTML = list
+        .map((post) => `
           <article class="blog-card">
-            <div class="blog-meta">${date} / ${category}</div>
-            <h3>${title}</h3>
-            <p>${excerpt}</p>
-            <span class="product-status">${status}</span>
-            <span class="source-note">${source}</span>
+            <div class="blog-card-top">
+              <span class="blog-meta">${post.date}</span>
+              <span class="blog-category">${post.category}</span>
+            </div>
+            <h3>${post.title}</h3>
+            <p>${post.excerpt}</p>
+            <div class="blog-card-proof">
+              <span class="product-status">${post.status}</span>
+              <span class="source-note">${post.source}</span>
+            </div>
           </article>
         `)
         .join("");
@@ -435,21 +634,81 @@
 
     const storeGrid = document.getElementById("store-grid");
     if (storeGrid) {
-      storeGrid.innerHTML = c.products
-        .map(([name, description, action], index) => `
-          <article class="store-card">
-            <div class="product-image" style="background-position:${50 + (index % 3) * 8}% ${48 + (index % 2) * 8}%"></div>
+      const teaser = parseInt(storeGrid.dataset.teaser || "0", 10);
+      const list = teaser > 0 ? c.products.slice(0, teaser) : c.products;
+      storeGrid.innerHTML = list
+        .map(([name, description, action, kind, price, image], index) => `
+          <article class="store-card product-${index + 1} has-product-art" data-tilt-card>
+            <div class="product-image" role="img" aria-label="${name}" style="background-image:url('${image}');background-size:contain;background-repeat:no-repeat;background-position:center;background-color:#111;">
+              <span class="product-mock-label">${kind || c.labels.previewOnly}</span>
+            </div>
             <div class="product-body">
               <span class="product-status">${c.labels.comingSoon}</span>
               <h3>${name}</h3>
               <p>${description}</p>
-              <div class="product-price">${c.labels.pricePending}</div>
+              <div class="product-price">${price || c.labels.pricePending}</div>
               <button class="product-action" type="button" data-merch-interest="${name}">${action}</button>
             </div>
           </article>
         `)
         .join("");
     }
+
+    const productReveals = document.getElementById("product-reveals");
+    if (productReveals) {
+      productReveals.innerHTML = c.products
+        .map(([name, description, action, kind, price, image], index) => `
+          <article class="product-reveal" data-product-reveal>
+            <div class="product-reveal__sticky">
+              <div class="product-reveal__copy" data-parallax-copy>
+                <span class="section-badge">${kind || c.labels.previewOnly}</span>
+                <h2>${name}</h2>
+                <p>${description}</p>
+                <div class="product-reveal__meta">
+                  <strong>${price || c.labels.pricePending}</strong>
+                  <button class="product-action magnetic-target" type="button" data-merch-interest="${name}">${action}</button>
+                </div>
+              </div>
+              <div class="product-reveal__image-wrap" data-parallax-image>
+                <img src="${image}" alt="${name}" loading="lazy" />
+              </div>
+              <span class="product-reveal__index">${String(index + 1).padStart(2, "0")}</span>
+            </div>
+          </article>
+        `)
+        .join("");
+    }
+
+    const socialRow = document.getElementById("social-row");
+    if (socialRow && !socialRow.dataset.rendered) {
+      socialRow.innerHTML = socialIcons.map(({ key, label, path }) =>
+        `<a class="hp-social-icon hp-social-svg" href="${socialUrls[key]}" target="_blank" rel="noreferrer" aria-label="${label} signup">${path}</a>`
+      ).join("");
+      socialRow.dataset.rendered = "1";
+    }
+  };
+
+  const socialIcons = [
+    { key: "instagram", label: "Instagram", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>' },
+    { key: "facebook", label: "Facebook", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7h2.3l.4-2.7h-2.7V9.5c0-.8.2-1.3 1.4-1.3h1.4V5.8c-.7-.1-1.4-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2H8.3V14h2.2v7h3z"/></svg>' },
+    { key: "x", label: "X", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.5 4h2.4l-5.2 5.9L20.7 20h-4.8l-3.8-4.9L7.7 20H5.3l5.6-6.3L4.3 4h4.9l3.4 4.5L17.5 4zm-.8 14.4h1.3L8.4 5.4H7l9.7 13z"/></svg>' },
+    { key: "tiktok", label: "TikTok", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.5 3h2.3c.3 1.9 1.4 3.4 3.2 3.7v2.4c-1.2.1-2.3-.2-3.3-.7v5.6c0 3.1-2.3 5.5-5.3 5.5S6.1 17.1 6.1 14s2.3-5.5 5.3-5.5c.4 0 .8 0 1.1.1v2.5c-.3-.1-.7-.2-1.1-.2-1.7 0-3 1.4-3 3.1s1.3 3.1 3 3.1 3-1.4 3-3.1V3z"/></svg>' },
+    { key: "linkedin", label: "LinkedIn", path: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.9 8.5H4.4V20h2.5V8.5zm-1.2-4c-.8 0-1.5.7-1.5 1.5S4.9 7.5 5.7 7.5s1.5-.7 1.5-1.5S6.5 4.5 5.7 4.5zM20 20h-2.5v-5.7c0-1.4-.5-2.3-1.7-2.3-1 0-1.5.6-1.8 1.3-.1.2-.1.5-.1.8V20H11.4V8.5h2.5v1.2c.3-.5 1-1.3 2.5-1.3 1.8 0 3.6 1.2 3.6 3.8V20z"/></svg>' },
+  ];
+
+  const renderBlogToolbar = () => {
+    const toolbar = document.getElementById("blog-toolbar");
+    if (!toolbar) return;
+    const c = content[currentLang];
+    const categories = ["all", ...new Set(c.posts.map((p) => p.category))];
+    const active = document.getElementById("blog-grid")?.dataset.filter || "all";
+    toolbar.innerHTML = categories
+      .map((cat) => {
+        const label = cat === "all" ? c.storiesPage.all : cat;
+        const isActive = cat === active ? " is-active" : "";
+        return `<button class="blog-chip${isActive}" type="button" role="tab" data-filter="${cat}" aria-selected="${cat === active}">${label}</button>`;
+      })
+      .join("");
   };
 
   const renderInterestOptions = () => {
@@ -470,6 +729,53 @@
       const max = document.documentElement.scrollHeight - window.innerHeight;
       progress.style.width = max > 0 ? `${Math.min(100, (top / max) * 100)}%` : "0%";
     }
+  };
+
+  const prefersReducedMotion = () =>
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const updateMotionState = () => {
+    if (prefersReducedMotion()) return;
+    document.querySelectorAll("[data-product-reveal]").forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const viewport = window.innerHeight || 1;
+      const progress = Math.max(0, Math.min(1, (viewport - rect.top) / (viewport + rect.height)));
+      const image = section.querySelector("[data-parallax-image]");
+      const copy = section.querySelector("[data-parallax-copy]");
+      const imageY = (0.5 - progress) * 88;
+      const copyY = (progress - 0.5) * 46;
+      const scale = 0.95 + Math.sin(progress * Math.PI) * 0.06;
+      section.style.setProperty("--reveal-progress", progress.toFixed(3));
+      if (image) image.style.transform = `translate3d(0, ${imageY}px, 0) scale(${scale.toFixed(3)})`;
+      if (copy) copy.style.transform = `translate3d(0, ${copyY}px, 0)`;
+    });
+  };
+
+  const resetMotionTarget = (target) => {
+    target.style.transform = "";
+    target.style.setProperty("--tilt-x", "0deg");
+    target.style.setProperty("--tilt-y", "0deg");
+  };
+
+  const handleMagneticMove = (event) => {
+    if (prefersReducedMotion()) return;
+    const target = event.target.closest(".magnetic-target, .hp-btn-gold, .hp-btn-dark, .hp-btn-outline, .a3-btn-donate, .product-action");
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const x = (event.clientX - rect.left - rect.width / 2) * 0.14;
+    const y = (event.clientY - rect.top - rect.height / 2) * 0.14;
+    target.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  };
+
+  const handleTiltMove = (event) => {
+    if (prefersReducedMotion()) return;
+    const card = event.target.closest("[data-tilt-card]");
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    card.style.setProperty("--tilt-y", `${(x * 7).toFixed(2)}deg`);
+    card.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
   };
 
   const closeMobileMenu = () => {
@@ -591,7 +897,24 @@
     const merch = event.target.closest("[data-merch-interest]");
     if (merch) {
       event.preventDefault();
-      focusContactForMerch(merch.dataset.merchInterest);
+      if (document.getElementById("contact")) {
+        focusContactForMerch(merch.dataset.merchInterest);
+      } else {
+        const interest = merch.dataset.merchInterest;
+        sessionStorage.setItem("asc3nd_merch_interest", interest);
+        window.location.href = "./index.html#contact";
+      }
+      return;
+    }
+
+    const filterBtn = event.target.closest("[data-filter]");
+    if (filterBtn) {
+      const grid = document.getElementById("blog-grid");
+      if (grid) {
+        grid.dataset.filter = filterBtn.dataset.filter;
+        renderBlogToolbar();
+        renderDynamicSections();
+      }
       return;
     }
 
@@ -608,10 +931,26 @@
       closeModal();
       closeMobileMenu();
     }
+    if (event.key === "Tab" && modal && !modal.hidden) {
+      const focusable = modal.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
   });
 
   langToggle?.addEventListener("click", () => {
     currentLang = currentLang === "en" ? "es" : "en";
+    try { localStorage.setItem("asc3nd_lang", currentLang); } catch {}
     setText();
   });
 
@@ -669,6 +1008,19 @@
 
   window.addEventListener("scroll", updateScrollState, { passive: true });
   window.addEventListener("resize", updateScrollState);
+  window.addEventListener("scroll", updateMotionState, { passive: true });
+  window.addEventListener("resize", updateMotionState);
+  window.addEventListener("pointermove", (event) => {
+    if (prefersReducedMotion()) return;
+    document.documentElement.style.setProperty("--cursor-x", `${event.clientX}px`);
+    document.documentElement.style.setProperty("--cursor-y", `${event.clientY}px`);
+    handleMagneticMove(event);
+    handleTiltMove(event);
+  }, { passive: true });
+  window.addEventListener("pointerout", (event) => {
+    const target = event.target.closest?.(".magnetic-target, .hp-btn-gold, .hp-btn-dark, .hp-btn-outline, .a3-btn-donate, .product-action, [data-tilt-card]");
+    if (target) resetMotionTarget(target);
+  });
 
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -680,8 +1032,50 @@
       });
     }, { threshold: 0.12 });
     document.querySelectorAll(".reveal").forEach((section) => observer.observe(section));
+
+    // Active-section nav highlight (homepage only — sections have ids)
+    const sections = document.querySelectorAll("main section[id]");
+    if (sections.length) {
+      const navLinks = document.querySelectorAll('.a3-nav-links a.a3-nav-link[href^="#"]');
+      const sectionMap = new Map();
+      navLinks.forEach((link) => {
+        const id = link.getAttribute("href").replace("#", "");
+        sectionMap.set(id, link);
+      });
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const link = sectionMap.get(entry.target.id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            navLinks.forEach((l) => l.classList.remove("is-section-active"));
+            link.classList.add("is-section-active");
+          }
+        });
+      }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+      sections.forEach((s) => sectionObserver.observe(s));
+    }
   } else {
     document.querySelectorAll(".reveal").forEach((section) => section.classList.add("is-visible"));
+  }
+
+  // Theme toggle (light default; persisted; flips [data-theme] on <html>)
+  const themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle) {
+    let theme = "light";
+    try {
+      const stored = localStorage.getItem("asc3nd_theme");
+      if (stored === "dark" || stored === "light") theme = stored;
+      else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) theme = "dark";
+    } catch {}
+    document.documentElement.setAttribute("data-theme", theme);
+    themeToggle.hidden = false;
+    themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+    themeToggle.addEventListener("click", () => {
+      theme = theme === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", theme);
+      try { localStorage.setItem("asc3nd_theme", theme); } catch {}
+      themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+    });
   }
 
   Object.values(socialUrls).forEach((url) => {
@@ -689,6 +1083,22 @@
   });
   if (donateUrl !== "https://www.givelively.org/") console.warn("Donate URL changed", donateUrl);
 
+  // Persisted language across pages
+  try {
+    const stored = localStorage.getItem("asc3nd_lang");
+    if (stored === "en" || stored === "es") currentLang = stored;
+  } catch {}
+
+  // Restore a merch interest carried over from merch.html → index contact form
+  try {
+    const merchInterest = sessionStorage.getItem("asc3nd_merch_interest");
+    if (merchInterest && document.getElementById("contact")) {
+      sessionStorage.removeItem("asc3nd_merch_interest");
+      window.addEventListener("load", () => focusContactForMerch(merchInterest));
+    }
+  } catch {}
+
   setText();
   updateScrollState();
+  updateMotionState();
 })();

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://client-preview-nine.vercel.app/sitemap.xml
+Sitemap: https://asc3nd-frontend-website.vercel.app/sitemap.xml
