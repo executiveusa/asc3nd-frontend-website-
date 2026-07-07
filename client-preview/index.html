@@ -44,10 +44,10 @@
 
         <div class="a3-actions">
           <button class="lang-toggle" type="button" id="lang-toggle" aria-label="Switch language">
-            <span class="lang-flag" aria-hidden="true">🇺🇸</span>
+            <span class="lang-flag lang-flag-us" aria-hidden="true"></span>
             <span class="lang-chip is-active" data-lang-chip="en">EN</span>
             <span class="lang-divider">/</span>
-            <span class="lang-flag" aria-hidden="true">🇲🇽</span>
+            <span class="lang-flag lang-flag-mx" aria-hidden="true"></span>
             <span class="lang-chip" data-lang-chip="es">ES</span>
           </button>
           <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle theme" hidden>
@@ -89,6 +89,11 @@
             <p data-i18n="hero.lede">
               We equip youth with the tools, opportunities, and support they need to rise, lead, and create the future they deserve.
             </p>
+            <div class="hp-hero-trust" aria-label="Asc3nd preview trust markers">
+              <span>501(c)(3)</span>
+              <span>EIN 99-1881891</span>
+              <span data-i18n="hero.preview">Preview-ready path: Donate, Volunteer, Contact</span>
+            </div>
             <div class="hp-hero-ctas">
               <a class="hp-btn-gold" href="https://www.givelively.org/" target="_blank" rel="noreferrer">
                 <span aria-hidden="true">&hearts;</span>
@@ -194,6 +199,42 @@
               <span aria-hidden="true">+</span>
               <span data-i18n="cta.volunteer">Volunteer</span>
             </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-offer reveal" id="approval-path" aria-labelledby="offer-heading">
+        <div class="hp-container hp-offer-grid">
+          <div class="hp-offer-copy">
+            <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="offer.kicker">Preview Offer</span>
+            <h2 id="offer-heading" data-i18n="offer.title">Approve The Public Preview. Then Build The Live Engine.</h2>
+            <p data-i18n="offer.body">
+              This static preview proves the brand direction, donation path, stories, merch concept, contact workflow, and AI-readable site before backend work begins.
+            </p>
+            <div class="hp-offer-actions">
+              <a class="hp-btn-gold" href="https://www.givelively.org/" target="_blank" rel="noreferrer" data-i18n="offer.primary">Donate Through GiveLively</a>
+              <a class="hp-btn-dark" href="#contact" data-i18n="offer.secondary">Start Approval Conversation</a>
+            </div>
+          </div>
+          <div class="hp-offer-panel" aria-label="Preview and production status">
+            <div class="hp-offer-column">
+              <strong data-i18n="offer.nowTitle">Ready Now</strong>
+              <ul>
+                <li data-i18n="offer.now1">Flyer-faithful public preview</li>
+                <li data-i18n="offer.now2">GiveLively donation path</li>
+                <li data-i18n="offer.now3">Stories and merch concept pages</li>
+                <li data-i18n="offer.now4">Local contact preview workflow</li>
+              </ul>
+            </div>
+            <div class="hp-offer-column">
+              <strong data-i18n="offer.nextTitle">After Approval</strong>
+              <ul>
+                <li data-i18n="offer.next1">Live email intake or backend</li>
+                <li data-i18n="offer.next2">Real merch product images</li>
+                <li data-i18n="offer.next3">Printify/server adapter</li>
+                <li data-i18n="offer.next4">Final legal and production QA</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>

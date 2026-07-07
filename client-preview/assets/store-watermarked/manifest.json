@@ -1,0 +1,44 @@
+[
+  {
+    "source": "C:\\Users\\execu\\Downloads\\asc3nd_watermarked_mockups.zip::01_water_bottle.png",
+    "output": "C:\\Users\\execu\\Documents\\ASC3ND FRONTEND WEBSITE\\client-preview\\assets\\store-watermarked\\water-bottle.png",
+    "product": "water-bottle",
+    "size": [2048, 2048]
+  },
+  {
+    "source": "C:\\Users\\execu\\Downloads\\asc3nd_watermarked_mockups.zip::02_poster.png",
+    "output": "C:\\Users\\execu\\Documents\\ASC3ND FRONTEND WEBSITE\\client-preview\\assets\\store-watermarked\\wall-print.png",
+    "product": "wall-print",
+    "size": [2048, 2048]
+  },
+  {
+    "source": "C:\\Users\\execu\\Downloads\\asc3nd_watermarked_mockups.zip::03_sticker_sheet.png",
+    "output": "C:\\Users\\execu\\Documents\\ASC3ND FRONTEND WEBSITE\\client-preview\\assets\\store-watermarked\\sticker-pack.png",
+    "product": "sticker-pack",
+    "size": [2048, 2048]
+  },
+  {
+    "source": "C:\\Users\\execu\\Downloads\\asc3nd_watermarked_mockups.zip::04_tote_bag.png",
+    "output": "C:\\Users\\execu\\Documents\\ASC3ND FRONTEND WEBSITE\\client-preview\\assets\\store-watermarked\\tote-bag.png",
+    "product": "tote-bag",
+    "size": [2048, 2048]
+  },
+  {
+    "source": "C:\\Users\\execu\\Downloads\\asc3nd_watermarked_mockups.zip::05_hoodie.png",
+    "output": "C:\\Users\\execu\\Documents\\ASC3ND FRONTEND WEBSITE\\client-preview\\assets\\store-watermarked\\hoodie.png",
+    "product": "hoodie",
+    "size": [2048, 2048]
+  },
+  {
+    "source": "C:\\Users\\execu\\Downloads\\asc3nd_watermarked_mockups.zip::06_cap.png",
+    "output": "C:\\Users\\execu\\Documents\\ASC3ND FRONTEND WEBSITE\\client-preview\\assets\\store-watermarked\\cap.png",
+    "product": "cap",
+    "size": [2048, 2048]
+  },
+  {
+    "source": "C:\\Users\\execu\\Downloads\\asc3nd_watermarked_mockups.zip::07_tshirt.png",
+    "output": "C:\\Users\\execu\\Documents\\ASC3ND FRONTEND WEBSITE\\client-preview\\assets\\store-watermarked\\tee.png",
+    "product": "tee",
+    "size": [2048, 2048]
+  }
+]
