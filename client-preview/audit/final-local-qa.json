@@ -1,0 +1,87 @@
+{
+  "home": {
+    "title": "Asc3nd Collective | Elevate. Empower. Asc3nd.",
+    "heroBg": "url(\"http://127.0.0.1:4199/assets/hero-asc3nd-seattle.png\")",
+    "heroPos": "58% 50%",
+    "heroHeight": 922,
+    "donate": [
+      "https://www.givelively.org/",
+      "https://www.givelively.org/",
+      "https://www.givelively.org/",
+      "https://www.givelively.org/",
+      "https://www.givelively.org/",
+      "https://www.givelively.org/"
+    ],
+    "hasPrograms": true,
+    "hasContact": true,
+    "hasFrameRegression": false,
+    "staleMerchCopy": false
+  },
+  "lang": {
+    "lang": "es-MX",
+    "chips": "ES"
+  },
+  "theme": {
+    "theme": "dark",
+    "pressed": "true"
+  },
+  "modalResults": [
+    {
+      "mode": "x",
+      "closed": true
+    },
+    {
+      "mode": "button",
+      "closed": true
+    },
+    {
+      "mode": "escape",
+      "closed": true
+    },
+    {
+      "mode": "overlay",
+      "closed": true
+    }
+  ],
+  "mobileMenu": {
+    "expanded": "true",
+    "hidden": false
+  },
+  "contactFilled": {
+    "mailto": "mailto:?subject=Asc3nd%20Contact%20Preview%20-%20Voluntario&body=Nombre%3A%20QA%20Tester%0AEmail%3A%20qa%40example.com%0AInteres%3A%20Voluntario%0AMensaje%3A%20Final%20launch%20QA%20message.%0AEstado%3A%20Preview%20mode%20only.%20Not%20sent%20yet.",
+    "summary": "Nombre: QA Tester\nEmail: qa@example.com\nInteres: Voluntario\nMensaje: Final launch QA message.\nEstado: Preview mode only. Not sent yet.",
+    "successHidden": false
+  },
+  "merch": {
+    "revealCount": 7,
+    "cardCount": 7,
+    "prices": [
+      "$28",
+      "$30",
+      "$58",
+      "$24",
+      "$12",
+      "$34",
+      "$32"
+    ],
+    "allProductImages": true,
+    "staleCopy": false,
+    "hasFrameRegression": false
+  },
+  "blog": {
+    "cards": 8,
+    "toolbar": true,
+    "hasFrameRegression": false
+  },
+  "consoleErrors": [],
+  "failures": [],
+  "screenshots": [
+    "blog-1440.png",
+    "home-1024.png",
+    "home-1440.png",
+    "home-1920.png",
+    "home-390.png",
+    "home-768.png",
+    "merch-1440.png"
+  ]
+}
