@@ -6,9 +6,9 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Asc3nd Collective community gear — a fundraising concept store preview. Seven branded products. Printify adapter planned. Checkout is not live in this preview."
+      content="Asc3nd Collective Stories — Pacific Northwest nonprofit editorial guides on grant readiness, mentorship, AI operations, donor trust, volunteer coordination, and community leadership."
     />
-    <title>Merch | Asc3nd Collective</title>
+    <title>Stories | Asc3nd Collective</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -37,8 +37,8 @@
           <a class="a3-nav-link" href="./index.html#mission" data-i18n="nav.about">About Us</a>
           <a class="a3-nav-link" href="./index.html#mission" data-i18n="nav.mission">Our Mission</a>
           <a class="a3-nav-link" href="./index.html#programs" data-i18n="nav.programs">Programs</a>
-          <a class="a3-nav-link" href="./blog.html" data-i18n="nav.stories">Stories</a>
-          <a class="a3-nav-link a3-nav-active" href="./merch.html" data-i18n="nav.store">Merch</a>
+          <a class="a3-nav-link a3-nav-active" href="./blog.html" data-i18n="nav.stories">Stories</a>
+          <a class="a3-nav-link" href="./merch.html" data-i18n="nav.store">Merch</a>
           <a class="a3-nav-link" href="./index.html#contact" data-i18n="nav.contact">Contact</a>
         </nav>
 
@@ -75,41 +75,23 @@
     </header>
 
     <main id="main-content">
-      <section class="page-hero" aria-labelledby="store-heading">
+      <section class="page-hero" aria-labelledby="stories-heading">
         <div class="hp-container">
-          <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="store.kicker">Merch Preview</span>
-          <h1 id="store-heading" data-i18n="store.title">Community Gear Fundraising Concept</h1>
-          <p class="page-hero-lede" data-i18n="store.intro">
-            Every piece in this store supports Asc3nd Collective's youth mentorship, leadership development, and community work. The merch stays black, white, and gold so the shop feels like a real extension of the brand, not a side project.
+          <span class="hp-eyebrow hp-eyebrow-gold" data-i18n="storiesPage.kicker">Stories</span>
+          <h1 id="stories-heading" data-i18n="storiesPage.title">Notes From The Movement</h1>
+          <p class="page-hero-lede" data-i18n="storiesPage.lede">
+            Original editorial guides for Pacific Northwest nonprofits — grant readiness, mentorship, AI operations, donor trust, and community leadership.
           </p>
         </div>
       </section>
 
-      <section class="hp-section">
+      <section class="hp-section hp-blog" aria-label="Story archive">
         <div class="hp-container">
-          <article class="commerce-note">
-            <strong>Mission-backed merch</strong>
-            <p>
-              When the store goes live, purchases help fund youth programs, volunteer moments, and community events. The product visuals are live for review, while checkout and fulfillment are intentionally not connected yet.
-            </p>
-            <p>
-              The prices shown on the cards are normal retail estimates for this type of apparel and accessory, so the shop feels familiar to buyers while still supporting the mission.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="cinematic-products" id="product-reveals" aria-label="Official merch product reveals"></section>
-
-      <section class="hp-section hp-store" aria-label="Store">
-        <div class="hp-container">
-          <div class="hp-store-grid hp-store-grid-full" id="store-grid"></div>
-          <article class="commerce-note">
-            <strong data-i18n="store.engineTitle">Why This Store Exists</strong>
-            <p data-i18n="store.engineBody">
-              This is the branded merch storefront for Asc3nd Collective. The product visuals are ready for review, while checkout, inventory, and fulfillment stay offline until the real store engine is approved.
-            </p>
-          </article>
+          <div class="blog-toolbar" id="blog-toolbar" role="tablist" aria-label="Filter stories by category"></div>
+          <div class="hp-blog-grid hp-blog-grid-archive" id="blog-grid"></div>
+          <p class="blog-disclaimer" data-i18n="storiesPage.disclaimer">
+            Original Asc3nd editorial. No invented statistics, deadlines, or partnerships. Verify each funder's current cycle before applying.
+          </p>
         </div>
       </section>
     </main>

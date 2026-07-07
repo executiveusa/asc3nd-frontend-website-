@@ -1,0 +1,91 @@
+# Asc3nd Collective Static Preview
+
+Purpose:
+- Flyer-faithful public preview for Asc3nd Collective.
+- Built from the black/gold/white youth nonprofit reference image and Asc3nd logo.
+- Static HTML, CSS, and vanilla JavaScript only. No build step, no backend.
+
+Pages:
+- / (index.html) — homepage: hero, mission, programs, Stories teaser, Merch teaser, contact, footer.
+- /blog.html — Stories archive: full post grid with category filter.
+- /merch.html — Merch: seven-product fundraising concept.
+
+Primary homepage sections:
+- Hero — "Empowering youth. Elevating futures. Building community."
+- Mission / Who we are
+- Core pillars
+- Program lanes
+- Stories teaser (4 posts) — links to /blog.html
+- Merch teaser (3 products) — links to /merch.html
+- Get involved call to action
+- Contact preview workflow
+- Footer
+
+Primary public action:
+- Donate: https://www.givelively.org/
+
+Navigation:
+- Home: index.html#home
+- About Us / Our Mission: index.html#mission
+- Programs: index.html#programs
+- Stories: blog.html
+- Merch: merch.html
+- Contact: index.html#contact
+- Events: modal, coming soon
+- Volunteer: modal, preview workflow
+
+Features:
+- Light/dark theme toggle (persisted, honors prefers-color-scheme).
+- English / Mexican Spanish flag toggle (persisted across pages).
+- Sticky header with scroll state and active-section highlight.
+- Reveal-on-scroll, scroll progress bar, reduced-motion support.
+- Modal focus trap (Tab/Shift+Tab), Escape / overlay / X close.
+
+Social signup links (all open the platform signup page):
+- Instagram: https://www.instagram.com/accounts/emailsignup/
+- Facebook: https://www.facebook.com/reg/
+- X: https://x.com/i/flow/signup
+- TikTok: https://www.tiktok.com/signup
+- LinkedIn: https://www.linkedin.com/signup
+
+Stories topics (original Asc3nd editorial, backdated across 30 days):
+- Grant readiness for small Washington nonprofits
+- Where Seattle youth programs find local funding
+- Mentorship that sticks beyond the first meeting
+- AI tools nonprofits actually use without losing the human touch
+- Volunteer coordination that keeps people coming back
+- Telling your story without exploiting the people you serve
+- Pacific Northwest sponsorships: making the local business case
+- Leadership through sport: why team programs build future leaders
+
+Merch products (concept only):
+- Asc3nd Signature T-shirt
+- Asc3nd Crown Hat
+- Asc3nd Community Hoodie
+- Asc3nd Everyday Tote
+- Asc3nd Sticker Pack
+- Asc3nd Wall Print
+- Asc3nd Camp Mug or Water Bottle
+
+Contact workflow status:
+- Preview mode only.
+- Local validation only.
+- Email draft and copyable summary available.
+- No backend storage.
+- No fake submission.
+
+Organization:
+- Asc3nd Collective, 501(c)(3) youth development nonprofit.
+- EIN: 99-1881891.
+
+Bilingual support:
+- English.
+- Mexican Spanish (es-MX). "Asc3nd Collective" is never translated.
+
+Boundaries:
+- No secrets.
+- No internal file paths.
+- No fake checkout.
+- No fake Printify integration.
+- No invented statistics, deadlines, or partnerships.
+- Final legal/privacy review still required before production.

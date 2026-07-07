@@ -30,7 +30,6 @@
         line3: "BUILDING",
         community: "COMMUNITY.",
         lede: "We equip youth with the tools, opportunities, and support they need to rise, lead, and create the future they deserve.",
-        preview: "Preview-ready path: Donate, Volunteer, Contact",
         donate: "Donate Today",
         volunteer: "Volunteer With Us",
       },
@@ -60,11 +59,11 @@
       },
       store: {
         kicker: "Merch Preview",
-        title: "Wear The Mission. Fund The Work.",
-        intro: "Every product in this store supports Asc3nd Collective's youth mentorship, leadership, and community programs. Checkout, inventory, and Printify are not live in this preview.",
+        title: "Community Gear Fundraising Concept",
+        intro: "Product cards are visible as a fundraising concept only. Checkout, inventory, and Printify are not live in this preview.",
         viewAll: "View Full Store",
-        engineTitle: "Why This Store Exists",
-        engineBody: "This is the branded merch storefront for Asc3nd Collective. The product visuals are live for review, while checkout, inventory, and fulfillment are intentionally not connected yet. Every future purchase is meant to fund youth programs, volunteer moments, and the community work behind the logo.",
+        engineTitle: "Commerce engine planned",
+        engineBody: "Product catalog ready. Printify adapter planned. Server-side API required. Checkout is not connected in preview. Product mockup images come next.",
       },
       cta: {
         kicker: "Get Involved",
@@ -72,23 +71,6 @@
         body: "Whether you volunteer, donate, mentor or partner with us, your support helps us empower youth and transform communities.",
         donate: "Donate",
         volunteer: "Volunteer",
-      },
-      offer: {
-        kicker: "Preview Offer",
-        title: "Approve The Public Preview. Then Build The Live Engine.",
-        body: "This static preview proves the brand direction, donation path, stories, merch concept, contact workflow, and AI-readable site before backend work begins.",
-        primary: "Donate Through GiveLively",
-        secondary: "Start Approval Conversation",
-        nowTitle: "Ready Now",
-        now1: "Flyer-faithful public preview",
-        now2: "GiveLively donation path",
-        now3: "Stories and merch concept pages",
-        now4: "Local contact preview workflow",
-        nextTitle: "After Approval",
-        next1: "Live email intake or backend",
-        next2: "Final merch photo swaps",
-        next3: "Printify/server adapter",
-        next4: "Final legal and production QA",
       },
       contact: {
         kicker: "Contact Preview",
@@ -125,7 +107,6 @@
       labels: {
         pricePending: "Price pending",
         comingSoon: "Coming soon",
-        previewOnly: "Preview only",
         readStatus: "Status",
         sourceNote: "Source note",
         mailto: "Open Email Draft",
@@ -224,13 +205,13 @@
         },
       ],
       products: [
-        ["Asc3nd Signature T-shirt", "A clean black and gold launch tee that helps fund mentorship, leadership, and community events.", "Request merch info", "Tee", "$28", "./assets/store-watermarked/tee.png"],
-        ["Asc3nd Crown Hat", "A simple crown-mark cap for everyday visibility and direct mission support.", "Notify me", "Hat", "$30", "./assets/store-watermarked/cap.png"],
-        ["Asc3nd Community Hoodie", "A premium hoodie for mentors, youth leaders, and winter fundraisers that keeps programs moving.", "Sponsor merch launch", "Hoodie", "$58", "./assets/store-watermarked/hoodie.png"],
-        ["Asc3nd Everyday Tote", "A reusable tote for workshops, resource days, and outreach tables that supports local youth work.", "Request merch info", "Tote", "$24", "./assets/store-watermarked/tote-bag.png"],
-        ["Asc3nd Sticker Pack", "Small-format brand pieces for laptops, notebooks, bottles, and event kits that spread the message.", "Notify me", "Stickers", "$12", "./assets/store-watermarked/sticker-pack.png"],
-        ["Asc3nd Wall Print", "A motivational poster concept that keeps the mission visible in homes, offices, and community spaces.", "Sponsor merch launch", "Print", "$34", "./assets/store-watermarked/wall-print.png"],
-        ["Asc3nd Camp Mug or Water Bottle", "A durable everyday item for volunteers, mentors, and program days that funds the next step.", "Notify me", "Bottle", "$32", "./assets/store-watermarked/water-bottle.png"],
+        ["Asc3nd Signature T-shirt", "A clean black/gold launch tee for events, volunteers, and donor thank-yous.", "Request merch info"],
+        ["Asc3nd Crown Hat", "A simple crown-mark cap concept for everyday community visibility.", "Notify me"],
+        ["Asc3nd Community Hoodie", "A premium hoodie concept for mentors, youth leaders, and winter events.", "Sponsor merch launch"],
+        ["Asc3nd Everyday Tote", "A reusable tote concept for workshops, resource days, and outreach tables.", "Request merch info"],
+        ["Asc3nd Sticker Pack", "Small-format brand pieces for laptops, notebooks, bottles, and event kits.", "Notify me"],
+        ["Asc3nd Wall Print", "A motivational poster concept using the Asc3nd message and black/gold identity.", "Sponsor merch launch"],
+        ["Asc3nd Camp Mug or Water Bottle", "A durable everyday item concept for volunteers, mentors, and program days.", "Notify me"],
       ],
       modals: {
         events: {
@@ -284,7 +265,6 @@
         line3: "CREANDO",
         community: "COMUNIDAD.",
         lede: "Damos a la juventud las herramientas, oportunidades y apoyo que necesitan para crecer, liderar y crear el futuro que merecen.",
-        preview: "Ruta preview lista: donar, voluntariado, contacto",
         donate: "Donar Hoy",
         volunteer: "Ser Voluntario",
       },
@@ -314,11 +294,11 @@
       },
       store: {
         kicker: "Preview De Merch",
-        title: "Usa La Mision. Financia El Trabajo.",
-        intro: "Cada producto de esta tienda apoya los programas de mentorias, liderazgo y comunidad de Asc3nd Collective. Checkout, inventario y Printify no estan activos en este preview.",
+        title: "Concepto De Recaudación Con Productos",
+        intro: "Las tarjetas de productos muestran un concepto de recaudación. Checkout, inventario y Printify no están activos en este preview.",
         viewAll: "Ver Tienda Completa",
-        engineTitle: "Por Que Existe Esta Tienda",
-        engineBody: "Esta es la tienda de merch con la marca de Asc3nd Collective. Las imagenes de producto estan listas para revision, mientras checkout, inventario y fulfillment todavia no estan conectados. Cada compra futura esta pensada para apoyar programas juveniles, voluntariado y el trabajo comunitario detras del logo.",
+        engineTitle: "Motor de comercio planeado",
+        engineBody: "Catálogo listo. Adaptador Printify planeado. Se requiere API del servidor. El checkout no está conectado en el preview. Las imágenes reales de productos vienen después.",
       },
       cta: {
         kicker: "Participa",
@@ -326,23 +306,6 @@
         body: "Ya sea que dones, apoyes, seas mentor o voluntario, tu ayuda impulsa a jóvenes y transforma comunidades.",
         donate: "Donar",
         volunteer: "Voluntario",
-      },
-      offer: {
-        kicker: "Oferta Preview",
-        title: "Aprueba El Preview Publico. Luego Construimos El Motor Real.",
-        body: "Este preview estatico prueba la direccion de marca, donaciones, historias, concepto de merch, contacto y archivo legible para IA antes del backend.",
-        primary: "Donar En GiveLively",
-        secondary: "Iniciar Conversacion",
-        nowTitle: "Listo Ahora",
-        now1: "Preview publico fiel al flyer",
-        now2: "Ruta de donacion GiveLively",
-        now3: "Paginas de historias y merch",
-        now4: "Contacto local en modo preview",
-        nextTitle: "Despues De Aprobar",
-        next1: "Intake real por email o backend",
-        next2: "Imagenes reales de merch",
-        next3: "Adaptador Printify/servidor",
-        next4: "Legal final y QA de produccion",
       },
       contact: {
         kicker: "Contacto Preview",
@@ -379,7 +342,6 @@
       labels: {
         pricePending: "Precio pendiente",
         comingSoon: "Muy pronto",
-        previewOnly: "Solo preview",
         readStatus: "Estado",
         sourceNote: "Nota de fuente",
         mailto: "Abrir Borrador",
@@ -478,13 +440,13 @@
         },
       ],
       products: [
-        ["Playera Signature Asc3nd", "Playera negra y dorada que ayuda a financiar mentorias, liderazgo y eventos comunitarios.", "Pedir info", "Playera", "$28", "./assets/store-watermarked/tee.png"],
-        ["Gorra Crown Asc3nd", "Gorra simple con marca de corona para visibilidad diaria y apoyo directo a la mision.", "Avísame", "Gorra", "$30", "./assets/store-watermarked/cap.png"],
-        ["Hoodie Comunidad Asc3nd", "Hoodie premium para mentores, lideres juveniles y recaudaciones de invierno que mantiene los programas en marcha.", "Patrocinar lanzamiento", "Hoodie", "$58", "./assets/store-watermarked/hoodie.png"],
-        ["Tote Asc3nd Diario", "Bolsa reutilizable para talleres, dias de recursos y mesas comunitarias que apoya el trabajo juvenil local.", "Pedir info", "Tote", "$24", "./assets/store-watermarked/tote-bag.png"],
-        ["Sticker Pack Asc3nd", "Piezas pequenas para laptops, cuadernos, botellas y kits de eventos que difunden el mensaje.", "Avísame", "Stickers", "$12", "./assets/store-watermarked/sticker-pack.png"],
-        ["Print De Pared Asc3nd", "Poster motivacional que mantiene la mision visible en casas, oficinas y espacios comunitarios.", "Patrocinar lanzamiento", "Print", "$34", "./assets/store-watermarked/wall-print.png"],
-        ["Taza O Botella Asc3nd", "Articulo diario durable para voluntarios, mentores y dias de programa que financia el siguiente paso.", "Avísame", "Bottle", "$32", "./assets/store-watermarked/water-bottle.png"],
+        ["Playera Signature Asc3nd", "Playera negra/dorada para eventos, voluntarios y agradecimientos a donantes.", "Pedir info"],
+        ["Gorra Crown Asc3nd", "Concepto de gorra con marca de corona para visibilidad comunitaria diaria.", "Avísame"],
+        ["Hoodie Comunidad Asc3nd", "Concepto premium para mentores, líderes juveniles y eventos de invierno.", "Patrocinar lanzamiento"],
+        ["Tote Asc3nd Diario", "Bolsa reutilizable para talleres, días de recursos y mesas comunitarias.", "Pedir info"],
+        ["Sticker Pack Asc3nd", "Piezas pequeñas para laptops, cuadernos, botellas y kits de eventos.", "Avísame"],
+        ["Print De Pared Asc3nd", "Póster motivacional con el mensaje Asc3nd y la identidad negro/dorado.", "Patrocinar lanzamiento"],
+        ["Taza O Botella Asc3nd", "Artículo diario durable para voluntarios, mentores y días de programa.", "Avísame"],
       ],
       modals: {
         events: {
@@ -543,11 +505,7 @@
   const subscribeNote = document.getElementById("subscribe-note");
   const toast = document.getElementById("toast");
 
-  const get = (path) => {
-    const local = path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), content[currentLang]);
-    if (local !== undefined) return local;
-    return path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), content.en);
-  };
+  const get = (path) => path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), content[currentLang]);
 
   const showToast = (message) => {
     if (!toast) return;
@@ -590,7 +548,6 @@
           </article>
         `)
         .join("");
-      productReveals.querySelectorAll(".reveal").forEach((section) => section.classList.add("is-visible"));
     }
 
     const programGrid = document.getElementById("program-grid");
@@ -617,16 +574,11 @@
       blogGrid.innerHTML = list
         .map((post) => `
           <article class="blog-card">
-            <div class="blog-card-top">
-              <span class="blog-meta">${post.date}</span>
-              <span class="blog-category">${post.category}</span>
-            </div>
+            <div class="blog-meta">${post.date} / ${post.category}</div>
             <h3>${post.title}</h3>
             <p>${post.excerpt}</p>
-            <div class="blog-card-proof">
-              <span class="product-status">${post.status}</span>
-              <span class="source-note">${post.source}</span>
-            </div>
+            <span class="product-status">${post.status}</span>
+            <span class="source-note">${post.source}</span>
           </article>
         `)
         .join("");
@@ -637,42 +589,15 @@
       const teaser = parseInt(storeGrid.dataset.teaser || "0", 10);
       const list = teaser > 0 ? c.products.slice(0, teaser) : c.products;
       storeGrid.innerHTML = list
-        .map(([name, description, action, kind, price, image], index) => `
-          <article class="store-card product-${index + 1} has-product-art" data-tilt-card>
-            <div class="product-image" role="img" aria-label="${name}" style="background-image:url('${image}');background-size:contain;background-repeat:no-repeat;background-position:center;background-color:#111;">
-              <span class="product-mock-label">${kind || c.labels.previewOnly}</span>
-            </div>
+        .map(([name, description, action], index) => `
+          <article class="store-card">
+            <div class="product-image" style="background-position:${50 + (index % 3) * 8}% ${48 + (index % 2) * 8}%"></div>
             <div class="product-body">
               <span class="product-status">${c.labels.comingSoon}</span>
               <h3>${name}</h3>
               <p>${description}</p>
-              <div class="product-price">${price || c.labels.pricePending}</div>
+              <div class="product-price">${c.labels.pricePending}</div>
               <button class="product-action" type="button" data-merch-interest="${name}">${action}</button>
-            </div>
-          </article>
-        `)
-        .join("");
-    }
-
-    const productReveals = document.getElementById("product-reveals");
-    if (productReveals) {
-      productReveals.innerHTML = c.products
-        .map(([name, description, action, kind, price, image], index) => `
-          <article class="product-reveal" data-product-reveal>
-            <div class="product-reveal__sticky">
-              <div class="product-reveal__copy" data-parallax-copy>
-                <span class="section-badge">${kind || c.labels.previewOnly}</span>
-                <h2>${name}</h2>
-                <p>${description}</p>
-                <div class="product-reveal__meta">
-                  <strong>${price || c.labels.pricePending}</strong>
-                  <button class="product-action magnetic-target" type="button" data-merch-interest="${name}">${action}</button>
-                </div>
-              </div>
-              <div class="product-reveal__image-wrap" data-parallax-image>
-                <img src="${image}" alt="${name}" loading="lazy" />
-              </div>
-              <span class="product-reveal__index">${String(index + 1).padStart(2, "0")}</span>
             </div>
           </article>
         `)
@@ -729,53 +654,6 @@
       const max = document.documentElement.scrollHeight - window.innerHeight;
       progress.style.width = max > 0 ? `${Math.min(100, (top / max) * 100)}%` : "0%";
     }
-  };
-
-  const prefersReducedMotion = () =>
-    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const updateMotionState = () => {
-    if (prefersReducedMotion()) return;
-    document.querySelectorAll("[data-product-reveal]").forEach((section) => {
-      const rect = section.getBoundingClientRect();
-      const viewport = window.innerHeight || 1;
-      const progress = Math.max(0, Math.min(1, (viewport - rect.top) / (viewport + rect.height)));
-      const image = section.querySelector("[data-parallax-image]");
-      const copy = section.querySelector("[data-parallax-copy]");
-      const imageY = (0.5 - progress) * 88;
-      const copyY = (progress - 0.5) * 46;
-      const scale = 0.95 + Math.sin(progress * Math.PI) * 0.06;
-      section.style.setProperty("--reveal-progress", progress.toFixed(3));
-      if (image) image.style.transform = `translate3d(0, ${imageY}px, 0) scale(${scale.toFixed(3)})`;
-      if (copy) copy.style.transform = `translate3d(0, ${copyY}px, 0)`;
-    });
-  };
-
-  const resetMotionTarget = (target) => {
-    target.style.transform = "";
-    target.style.setProperty("--tilt-x", "0deg");
-    target.style.setProperty("--tilt-y", "0deg");
-  };
-
-  const handleMagneticMove = (event) => {
-    if (prefersReducedMotion()) return;
-    const target = event.target.closest(".magnetic-target, .hp-btn-gold, .hp-btn-dark, .hp-btn-outline, .a3-btn-donate, .product-action");
-    if (!target) return;
-    const rect = target.getBoundingClientRect();
-    const x = (event.clientX - rect.left - rect.width / 2) * 0.14;
-    const y = (event.clientY - rect.top - rect.height / 2) * 0.14;
-    target.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-  };
-
-  const handleTiltMove = (event) => {
-    if (prefersReducedMotion()) return;
-    const card = event.target.closest("[data-tilt-card]");
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    card.style.setProperty("--tilt-y", `${(x * 7).toFixed(2)}deg`);
-    card.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
   };
 
   const closeMobileMenu = () => {
@@ -1008,19 +886,6 @@
 
   window.addEventListener("scroll", updateScrollState, { passive: true });
   window.addEventListener("resize", updateScrollState);
-  window.addEventListener("scroll", updateMotionState, { passive: true });
-  window.addEventListener("resize", updateMotionState);
-  window.addEventListener("pointermove", (event) => {
-    if (prefersReducedMotion()) return;
-    document.documentElement.style.setProperty("--cursor-x", `${event.clientX}px`);
-    document.documentElement.style.setProperty("--cursor-y", `${event.clientY}px`);
-    handleMagneticMove(event);
-    handleTiltMove(event);
-  }, { passive: true });
-  window.addEventListener("pointerout", (event) => {
-    const target = event.target.closest?.(".magnetic-target, .hp-btn-gold, .hp-btn-dark, .hp-btn-outline, .a3-btn-donate, .product-action, [data-tilt-card]");
-    if (target) resetMotionTarget(target);
-  });
 
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -1100,5 +965,4 @@
 
   setText();
   updateScrollState();
-  updateMotionState();
 })();
