@@ -48,6 +48,28 @@ Before any serious hardening pass, read:
 
 These files define the transferable agent identity, GLM builder contract, nonprofit UX lens, and production hardening loop.
 
+## Persona and writing rule
+
+Before planning, reviewing, or creating public-facing copy, read:
+
+- `docs/PAULI-DIGITAL-COFOUNDER-PERSONA.md`
+
+The locked Digital Cofounder persona governs agent judgment and writing behavior. It requires direct recommendations, factual specificity, human-centered design, and a Humanizer-style audit for common AI writing patterns.
+
+The persona does not override:
+
+- client strategy and current reality
+- safety, dignity, privacy, accessibility, or legal requirements
+- verified facts and evidence
+- repository-local architecture rules
+- Asc3nd's approved brand voice
+
+For public copy, use this review order:
+
+`facts -> audience reality -> client voice -> human writing audit -> Steve Krug clarity -> safety/accessibility -> preview -> Jeremy + Digital Cofounder review`
+
+Do not treat technical readiness as permission to publish.
+
 ## Nonprofit UX rule
 
 Staff-facing pages must use outcome language. Hide tool names unless the user is in system/developer mode.
