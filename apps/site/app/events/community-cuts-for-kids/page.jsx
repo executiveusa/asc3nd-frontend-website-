@@ -2,10 +2,22 @@ import Link from 'next/link';
 import { EventInterestForm } from './EventInterestForm';
 import styles from './event.module.css';
 
+const pageTitle = 'Community Cuts for Kids | Asc3nd Collective';
+const pageDescription = 'Community Cuts for Kids is Asc3nd Collective’s back-to-school community event in Everett, Washington, with free haircuts for kids, school supplies, giveaways, food, and community connection.';
+
 export const metadata = {
-  title: 'Community Cuts for Kids | Asc3nd Collective',
-  description:
-    'Community Cuts for Kids is Asc3nd Collective’s back-to-school community event in Everett, Washington, with free haircuts for kids, school supplies, giveaways, food, and community connection.',
+  title: pageTitle,
+  description: pageDescription,
+  openGraph: {
+    title: pageTitle,
+    description: pageDescription,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: pageTitle,
+    description: pageDescription,
+  },
 };
 
 const supplies = [
@@ -77,7 +89,7 @@ export default function CommunityCutsForKidsPage() {
             <a className={styles.secondaryButton} href="#supplies">Help equip a student</a>
           </div>
 
-          <p className={styles.pendingNote}>Start/end time, participation details, and capacity are still being confirmed. We will not guess or publish them early.</p>
+          <p className={styles.pendingNote}>Start/end time, participation details, and capacity are still being finalized. Join the update list for confirmed information as it becomes available.</p>
         </div>
 
         <div className={styles.heroPanel} aria-label="What families can expect">
@@ -183,14 +195,14 @@ export default function CommunityCutsForKidsPage() {
 
       <section className={styles.faq} aria-labelledby="faq-heading">
         <div className={styles.sectionIntro}>
-          <p className={styles.eyebrow}>What we know today</p>
-          <h2 id="faq-heading">Clear facts. No filler.</h2>
+          <p className={styles.eyebrow}>Event details</p>
+          <h2 id="faq-heading">What families and supporters should know.</h2>
         </div>
         <dl>
           <div><dt>When is the event?</dt><dd>Sunday, August 30, 2026. The start and end time still need confirmation.</dd></div>
           <div><dt>Where is it?</dt><dd>Tangles &amp; Locs, 7425 Hardeson Rd, Everett, WA 98203.</dd></div>
           <div><dt>What is confirmed?</dt><dd>Free haircuts for kids, school supplies and giveaways, food, fun, and community.</dd></div>
-          <div><dt>Do families need to RSVP?</dt><dd>The participation model is still being finalized. Use the update form so Asc3nd can send confirmed details instead of guessing.</dd></div>
+          <div><dt>Do families need to RSVP?</dt><dd>The participation model is still being finalized. Use the update form so Asc3nd can send confirmed details as they become available.</dd></div>
           <div><dt>Who can donate supplies?</dt><dd>Community members, businesses, churches, schools, teams, and organizations can express interest now. Drop-off details still need confirmation.</dd></div>
         </dl>
       </section>
