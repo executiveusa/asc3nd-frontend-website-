@@ -11,6 +11,9 @@
     "dev": "npm run dev --workspace @asc3nd/site",
     "build": "npm run build --workspace @asc3nd/site",
     "start": "npm run start --workspace @asc3nd/site",
+    "dev:event": "npm run dev --workspace @asc3nd/event-community-cuts",
+    "build:event": "npm run build --workspace @asc3nd/event-community-cuts",
+    "start:event": "npm run start --workspace @asc3nd/event-community-cuts",
     "test": "vitest run",
     "test:watch": "vitest"
   },
