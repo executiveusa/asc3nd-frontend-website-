@@ -1,4 +1,5 @@
 import { EventInterestForm } from './EventInterestForm';
+import { ThemeToggle } from './ThemeToggle';
 import styles from './event.module.css';
 
 const supplies = [
@@ -33,7 +34,7 @@ const waysToJoin = [
 
 export default function CommunityCutsForKidsPage() {
   return (
-    <main className={styles.page}>
+    <main className={`${styles.page} event-theme-root`}>
       <header className={styles.header}>
         <div className={styles.brand} aria-label="Asc3nd Collective">
           <span className={styles.brandMain}>ASC<span>3</span>ND</span>
@@ -44,6 +45,7 @@ export default function CommunityCutsForKidsPage() {
           <a href="#supplies">Supplies</a>
           <a href="#why">Why Asc3nd</a>
           <a className={styles.navCta} href="#connect">Get updates</a>
+          <ThemeToggle />
         </nav>
       </header>
 
@@ -84,7 +86,7 @@ export default function CommunityCutsForKidsPage() {
           <p>Asc3nd’s school-supply collection runs July 15–August 15, 2026. The goal is simple: gather useful school essentials and put them into the hands of local students and families through the back-to-school campaign.</p>
         </div>
 
-        <div className={styles.supplyGrid}>{supplies.map((item) => <div key={item}>{item}</div>)}</div>
+        <div className={styles.supplyGrid} data-surface="card-grid">{supplies.map((item) => <div key={item}>{item}</div>)}</div>
 
         <div className={styles.callout}>
           <div><p className={styles.eyebrow}>Want to help?</p><h3>Donate supplies, volunteer, sponsor, or partner.</h3></div>
@@ -110,9 +112,9 @@ export default function CommunityCutsForKidsPage() {
         </blockquote>
       </section>
 
-      <section className={styles.section} aria-labelledby="join-heading">
+      <section className={styles.section} data-theme-section="join" aria-labelledby="join-heading">
         <div className={styles.sectionIntro}><p className={styles.eyebrow}>Find your place</p><h2 id="join-heading">There is more than one way to show up.</h2></div>
-        <div className={styles.joinGrid}>{waysToJoin.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}</div>
+        <div className={styles.joinGrid} data-surface="card-grid">{waysToJoin.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}</div>
       </section>
 
       <section className={`${styles.section} ${styles.connect}`} id="connect">
@@ -120,12 +122,12 @@ export default function CommunityCutsForKidsPage() {
           <p className={styles.eyebrow}>Stay connected</p>
           <h2>Get the confirmed event details when they are ready.</h2>
           <p>Tell Asc3nd whether you plan to attend, want to volunteer, can donate supplies, or want to support as a sponsor or community partner. We only ask for the contact information needed to follow up.</p>
-          <div className={styles.privacyNote}><strong>Youth privacy matters.</strong><p>This public form does not ask for a child’s name, age, story, or sensitive personal information. Photo, video, testimonial, and youth participation consent are separate processes.</p></div>
+          <div className={styles.privacyNote} data-surface="note"><strong>Youth privacy matters.</strong><p>This public form does not ask for a child’s name, age, story, or sensitive personal information. Photo, video, testimonial, and youth participation consent are separate processes.</p></div>
         </div>
-        <EventInterestForm />
+        <div data-surface="form"><EventInterestForm /></div>
       </section>
 
-      <section className={styles.faq} aria-labelledby="faq-heading">
+      <section className={styles.faq} data-theme-section="faq" aria-labelledby="faq-heading">
         <div className={styles.sectionIntro}><p className={styles.eyebrow}>Event details</p><h2 id="faq-heading">What families and supporters should know.</h2></div>
         <dl>
           <div><dt>When is the event?</dt><dd>Sunday, August 30, 2026, from 12:00 PM to 3:00 PM.</dd></div>
