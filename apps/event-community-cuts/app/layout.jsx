@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
+import './themes.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -33,9 +34,23 @@ export const viewport = {
   minimumScale: 1,
 };
 
+const themeInitScript = `
+  try {
+    const stored = localStorage.getItem('asc3nd-community-cuts-theme');
+    const theme = stored === 'dark' || stored === 'light' ? stored : 'light';
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  } catch (_) {
+    document.documentElement.dataset.theme = 'light';
+  }
+`;
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );
