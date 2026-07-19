@@ -38,7 +38,7 @@ const supplies = [
 const waysToJoin = [
   {
     title: 'Families',
-    body: 'Come connect with Asc3nd and the Everett community. Event timing, eligibility, and participation details will be posted here as they are confirmed.',
+    body: 'Come connect with Asc3nd and the Everett community. Eligibility and participation details will be posted here as they are confirmed.',
   },
   {
     title: 'Volunteers and mentors',
@@ -78,6 +78,10 @@ export default function CommunityCutsForKidsPage() {
               <strong>Sunday, August 30, 2026</strong>
             </div>
             <div>
+              <span>Time</span>
+              <strong>12:00 PM–3:00 PM</strong>
+            </div>
+            <div>
               <span>Location</span>
               <strong>Tangles &amp; Locs</strong>
               <small>7425 Hardeson Rd, Everett, WA 98203</small>
@@ -89,7 +93,7 @@ export default function CommunityCutsForKidsPage() {
             <a className={styles.secondaryButton} href="#supplies">Help equip a student</a>
           </div>
 
-          <p className={styles.pendingNote}>Start/end time, participation details, and capacity are still being finalized. Join the update list for confirmed information as it becomes available.</p>
+          <p className={styles.pendingNote}>Participation details and capacity are still being finalized. Join the update list for confirmed information as it becomes available.</p>
         </div>
 
         <div className={styles.heroPanel} aria-label="What families can expect">
@@ -199,7 +203,7 @@ export default function CommunityCutsForKidsPage() {
           <h2 id="faq-heading">What families and supporters should know.</h2>
         </div>
         <dl>
-          <div><dt>When is the event?</dt><dd>Sunday, August 30, 2026. The start and end time still need confirmation.</dd></div>
+          <div><dt>When is the event?</dt><dd>Sunday, August 30, 2026, from 12:00 PM to 3:00 PM.</dd></div>
           <div><dt>Where is it?</dt><dd>Tangles &amp; Locs, 7425 Hardeson Rd, Everett, WA 98203.</dd></div>
           <div><dt>What is confirmed?</dt><dd>Free haircuts for kids, school supplies and giveaways, food, fun, and community.</dd></div>
           <div><dt>Do families need to RSVP?</dt><dd>The participation model is still being finalized. Use the update form so Asc3nd can send confirmed details as they become available.</dd></div>
