@@ -32,11 +32,21 @@ export function EventInterestForm() {
     const interest = data.get('interest');
     const groupSize = data.get('groupSize');
     const note = data.get('note');
+    const email = String(data.get('email') || '').trim();
+    const phone = String(data.get('phone') || '').trim();
+
+    if (!email && !phone) {
+      setStatus({
+        type: 'error',
+        message: 'Please provide an email address or phone number so Asc3nd can send event updates.',
+      });
+      return;
+    }
 
     const payload = {
       name: data.get('name'),
-      email: data.get('email'),
-      phone: data.get('phone'),
+      email: email || null,
+      phone: phone || null,
       consent: data.get('consent') === 'on',
       companyWebsite: data.get('companyWebsite'),
       message: [
@@ -81,14 +91,14 @@ export function EventInterestForm() {
         </label>
         <label>
           Email
-          <input name="email" type="email" autoComplete="email" />
+          <input name="email" type="email" autoComplete="email" aria-describedby="contact-method-note" />
         </label>
       </div>
 
       <div className={styles.fieldGrid}>
         <label>
           Phone
-          <input name="phone" type="tel" autoComplete="tel" placeholder="Optional" />
+          <input name="phone" type="tel" autoComplete="tel" placeholder="Optional if you provide email" aria-describedby="contact-method-note" />
         </label>
         <label>
           I’m interested in
@@ -97,6 +107,8 @@ export function EventInterestForm() {
           </select>
         </label>
       </div>
+
+      <p className={styles.formNote} id="contact-method-note">Provide at least one contact method: email or phone.</p>
 
       <label>
         Estimated group size
