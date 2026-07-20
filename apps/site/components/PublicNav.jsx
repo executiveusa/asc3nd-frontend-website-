@@ -9,7 +9,7 @@ export function PublicNav() {
     <nav className="a3-nav" aria-label="Asc3nd Collective navigation">
       <div className="a3-container a3-nav-inner">
         {/* Logo text mark */}
-        <a className="a3-brand" href="#home" aria-label="Asc3nd Collective home">
+        <a className="a3-brand" href="/#home" aria-label="Asc3nd Collective home">
           <div className="a3-logo-mark">
             <span className="a3-logo-main">ASC<span className="a3-logo-3">3</span>ND</span>
             <span className="a3-logo-sub">COLLECTIVE</span>
@@ -19,14 +19,14 @@ export function PublicNav() {
 
         {/* Desktop nav links */}
         <div className="a3-nav-links" role="list">
-          <a href="#home"         className="a3-nav-link a3-nav-active" role="listitem">Home</a>
-          <a href="#mission"      className="a3-nav-link" role="listitem">About Us</a>
-          <a href="#mission"      className="a3-nav-link" role="listitem">Our Mission</a>
-          <a href="#programs"     className="a3-nav-link" role="listitem">Programs</a>
-          <a href="#get-involved" className="a3-nav-link" role="listitem">Get Involved</a>
-          <a href="#events"       className="a3-nav-link" role="listitem">Events</a>
-          <a href="#stories"      className="a3-nav-link" role="listitem">Stories</a>
-          <a href="#contact"      className="a3-nav-link" role="listitem">Contact</a>
+          <a href="/#home"         className="a3-nav-link a3-nav-active" role="listitem">Home</a>
+          <a href="/#mission"      className="a3-nav-link" role="listitem">About Us</a>
+          <a href="/#mission"      className="a3-nav-link" role="listitem">Our Mission</a>
+          <a href="/#programs"     className="a3-nav-link" role="listitem">Programs</a>
+          <a href="/#get-involved" className="a3-nav-link" role="listitem">Get Involved</a>
+          <a href="/events/community-cuts" className="a3-nav-link" role="listitem">Events</a>
+          <a href="/#stories"      className="a3-nav-link" role="listitem">Stories</a>
+          <a href="/#contact"      className="a3-nav-link" role="listitem">Contact</a>
         </div>
 
         {/* Donate CTA */}
@@ -48,14 +48,14 @@ export function PublicNav() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="a3-mobile-menu" role="dialog" aria-label="Mobile navigation">
-          <a href="#home"         onClick={() => setMenuOpen(false)}>Home</a>
-          <a href="#mission"      onClick={() => setMenuOpen(false)}>About Us</a>
-          <a href="#mission"      onClick={() => setMenuOpen(false)}>Our Mission</a>
-          <a href="#programs"     onClick={() => setMenuOpen(false)}>Programs</a>
-          <a href="#get-involved" onClick={() => setMenuOpen(false)}>Get Involved</a>
-          <a href="#events"       onClick={() => setMenuOpen(false)}>Events</a>
-          <a href="#stories"      onClick={() => setMenuOpen(false)}>Stories</a>
-          <a href="#contact"      onClick={() => setMenuOpen(false)}>Contact</a>
+          <a href="/#home"         onClick={() => setMenuOpen(false)}>Home</a>
+          <a href="/#mission"      onClick={() => setMenuOpen(false)}>About Us</a>
+          <a href="/#mission"      onClick={() => setMenuOpen(false)}>Our Mission</a>
+          <a href="/#programs"     onClick={() => setMenuOpen(false)}>Programs</a>
+          <a href="/#get-involved" onClick={() => setMenuOpen(false)}>Get Involved</a>
+          <a href="/events/community-cuts" onClick={() => setMenuOpen(false)}>Events</a>
+          <a href="/#stories"      onClick={() => setMenuOpen(false)}>Stories</a>
+          <a href="/#contact"      onClick={() => setMenuOpen(false)}>Contact</a>
           <a href={tenantSite.donationUrl} className="a3-mobile-donate">♥ DONATE</a>
         </div>
       )}
