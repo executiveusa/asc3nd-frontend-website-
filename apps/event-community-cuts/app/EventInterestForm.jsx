@@ -9,13 +9,13 @@ const tenant = process.env.NEXT_PUBLIC_MISSION_TENANT || 'asc3nd';
 const publicKey = process.env.NEXT_PUBLIC_MISSION_PUBLIC_KEY || '';
 
 const interestOptions = [
-  ['attend', 'Attend with my family'],
-  ['updates', 'Get event updates'],
-  ['volunteer', 'Volunteer'],
-  ['mentor', 'Learn about mentoring'],
-  ['supplies', 'Donate school supplies'],
-  ['sponsor', 'Sponsor or support the event'],
-  ['partner', 'Become a community partner'],
+  ['attend', 'I plan to attend with my family'],
+  ['updates', 'Send me event updates'],
+  ['volunteer', 'I want to volunteer'],
+  ['mentor', 'I want to learn about mentoring'],
+  ['supplies', 'I want to donate school supplies'],
+  ['sponsor', 'I want to sponsor or support the event'],
+  ['partner', 'I want to become a community partner'],
 ];
 
 export function EventInterestForm() {
@@ -31,9 +31,9 @@ export function EventInterestForm() {
     const data = new FormData(form);
     const interest = data.get('interest');
     const groupSize = data.get('groupSize');
-    const note = data.get('note');
     const email = String(data.get('email') || '').trim();
     const phone = String(data.get('phone') || '').trim();
+    const preferences = data.getAll('preferences');
 
     if (!email && !phone) {
       setStatus({
@@ -52,12 +52,14 @@ export function EventInterestForm() {
       message: [
         `Community Cuts for Kids interest: ${interest}`,
         groupSize ? `Estimated group size: ${groupSize}` : '',
-        note ? `Note: ${note}` : '',
+        preferences.length ? `Requested information: ${preferences.join(', ')}` : '',
       ].filter(Boolean).join('\n'),
       metadata: {
         eventSlug: 'community-cuts-for-kids-2026',
         interest,
         groupSize: groupSize || null,
+        preferences,
+        registrationType: 'demand-signal-only',
       },
       sourcePage: typeof window !== 'undefined' ? window.location.href : '/',
     };
@@ -65,18 +67,21 @@ export function EventInterestForm() {
     if (!client) {
       setStatus({
         type: 'error',
-        message: 'Event interest is not connected yet. This preview is waiting on the verified Asc3nd Mission OS public form configuration.',
+        message: 'The event form is temporarily unavailable. Please check back shortly.',
       });
       return;
     }
 
-    setStatus({ type: 'loading', message: 'Sending…' });
+    setStatus({ type: 'loading', message: 'Sending your response…' });
     try {
       const result = await client.event.rsvp(payload);
       form.reset();
-      setStatus({ type: 'success', message: result?.receipt?.message || 'Received. Asc3nd staff will follow up.' });
+      setStatus({
+        type: 'success',
+        message: result?.receipt?.message || 'Thank you. Asc3nd received your response and will send event updates using the contact information you provided.',
+      });
     } catch (error) {
-      setStatus({ type: 'error', message: error?.message || 'We could not send this yet. Please try again.' });
+      setStatus({ type: 'error', message: error?.message || 'We could not send your response. Please try again.' });
     }
   }
 
@@ -102,7 +107,7 @@ export function EventInterestForm() {
         </label>
         <label>
           I’m interested in
-          <select name="interest" defaultValue="updates" required>
+          <select name="interest" defaultValue="attend" required>
             {interestOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
           </select>
         </label>
@@ -115,22 +120,44 @@ export function EventInterestForm() {
         <input name="groupSize" inputMode="numeric" pattern="[0-9]*" placeholder="Optional — no names or ages needed" />
       </label>
 
-      <label>
-        Anything Asc3nd should know?
-        <textarea name="note" rows="4" placeholder="Optional" />
-      </label>
+      <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
+        <legend style={{ fontSize: '0.88rem', fontWeight: 800, marginBottom: '10px' }}>Send me information about</legend>
+        <div style={{ display: 'grid', gap: '10px' }}>
+          <label className={styles.consent}>
+            <input name="preferences" type="checkbox" value="accessibility" />
+            <span>Accessibility and arrival information</span>
+          </label>
+          <label className={styles.consent}>
+            <input name="preferences" type="checkbox" value="spanish" />
+            <span>Spanish-language updates</span>
+          </label>
+          <label className={styles.consent}>
+            <input name="preferences" type="checkbox" value="volunteer" />
+            <span>Volunteer opportunities</span>
+          </label>
+          <label className={styles.consent}>
+            <input name="preferences" type="checkbox" value="supplies" />
+            <span>School-supply donation details</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div style={{ borderLeft: '3px solid #f5a617', padding: '14px 16px', background: '#fff8e9', color: '#3b3328', lineHeight: 1.55 }}>
+        <strong>This is an interest form, not a reservation.</strong>
+        <div>Haircuts, supplies, food, and giveaways are first come, first served and available while capacity and supplies last.</div>
+      </div>
 
       <label className={styles.consent}>
         <input name="consent" type="checkbox" required />
-        <span>I agree that Asc3nd Collective may contact me about this event and related ways to get involved.</span>
+        <span>I agree that Asc3nd Collective may contact me about this event and the participation option I selected.</span>
       </label>
 
       <button className={styles.primaryButton} type="submit" disabled={status.type === 'loading'}>
-        {status.type === 'loading' ? 'Sending…' : 'Get event updates'}
+        {status.type === 'loading' ? 'Sending…' : 'Tell Asc3nd I’m interested'}
       </button>
 
-      <p className={styles.formNote}>This form does not ask for children’s names, ages, stories, or other sensitive youth information.</p>
-      {status.message ? <p className={`${styles.status} ${styles[status.type] || ''}`} role="status">{status.message}</p> : null}
+      <p className={styles.formNote}>Do not enter a child’s name, age, school, health information, story, or other sensitive personal information. Youth participation and media consent are handled separately.</p>
+      {status.message ? <p className={`${styles.status} ${styles[status.type] || ''}`} role="status" aria-live="polite">{status.message}</p> : null}
     </form>
   );
 }
