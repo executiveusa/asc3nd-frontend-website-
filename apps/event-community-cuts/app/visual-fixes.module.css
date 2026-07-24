@@ -8,12 +8,63 @@
   box-shadow: 0 26px 70px rgba(0, 0, 0, 0.28);
 }
 
-.heroImage {
+.venueMap {
   display: block;
   width: 100%;
   min-height: 420px;
   height: 100%;
-  object-fit: cover;
+  border: 0;
+  background: #ece7dd;
+}
+
+.venueActions {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  background: #111;
+}
+
+.venuePrimary,
+.venueSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  padding: 14px 18px;
+  border-radius: 5px;
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: none;
+}
+
+.venuePrimary {
+  background: #f5a617;
+  color: #111;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: .035em;
+}
+
+.venueSecondaryRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.venueSecondary {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: #1b1b1b;
+  color: #fff;
+  font-size: .95rem;
+}
+
+.venueAddress {
+  margin: 0;
+  color: rgba(255,255,255,.72);
+  font-size: .92rem;
+  line-height: 1.45;
+  text-align: center;
 }
 
 .expectGrid {
@@ -33,63 +84,23 @@
   box-shadow: 0 14px 34px rgba(31, 24, 13, 0.06);
 }
 
-.expectCard h3 {
-  margin: 0 0 14px;
-  color: #0b0b0b;
-  font-size: clamp(1.28rem, 1.7vw, 1.65rem);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-}
-
-.expectCard p {
-  margin: 0;
-  color: #4f4a42;
-  font-size: 1rem;
-  line-height: 1.65;
-}
+.expectCard h3 { margin: 0 0 14px; color: #0b0b0b; font-size: clamp(1.28rem, 1.7vw, 1.65rem); line-height: 1.08; letter-spacing: -0.025em; }
+.expectCard p { margin: 0; color: #4f4a42; font-size: 1rem; line-height: 1.65; }
 
 @media (max-width: 980px) {
-  .heroFigure {
-    align-self: stretch;
-  }
-
-  .expectGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .heroFigure { align-self: stretch; }
+  .expectGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 720px) {
-  .heroFigure {
-    border-radius: 20px;
-  }
-
-  .heroImage {
-    min-height: 320px;
-    aspect-ratio: 4 / 3;
-  }
-
-  .expectGrid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    margin-top: 32px;
-  }
-
-  .expectCard {
-    padding: 24px;
-  }
+  .heroFigure { border-radius: 20px; }
+  .venueMap { min-height: 330px; aspect-ratio: 4 / 3; }
+  .venueActions { padding: 16px; }
+  .venueSecondaryRow { grid-template-columns: 1fr; }
+  .expectGrid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
+  .expectCard { padding: 24px; }
 }
 
-:global(html[data-theme='dark']) .expectCard {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: #171717;
-  color: #fff;
-  box-shadow: none;
-}
-
-:global(html[data-theme='dark']) .expectCard h3 {
-  color: #fff;
-}
-
-:global(html[data-theme='dark']) .expectCard p {
-  color: rgba(255, 255, 255, 0.76);
-}
+:global(html[data-theme='dark']) .expectCard { border-color: rgba(255, 255, 255, 0.14); background: #171717; color: #fff; box-shadow: none; }
+:global(html[data-theme='dark']) .expectCard h3 { color: #fff; }
+:global(html[data-theme='dark']) .expectCard p { color: rgba(255, 255, 255, 0.76); }
