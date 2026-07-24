@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import { Barlow, Barlow_Condensed } from 'next/font/google';
 import './globals.css';
 
@@ -22,10 +23,7 @@ export const metadata = {
   metadataBase: new URL('https://asc3nd-frontend.vercel.app'),
   title,
   description,
-  alternates: {
-    canonical: '/',
-    languages: { en: '/', es: '/es' },
-  },
+  alternates: { canonical: '/', languages: { en: '/', es: '/es' } },
   openGraph: { title, description, type: 'website', url: '/' },
   twitter: { card: 'summary', title, description },
 };
@@ -37,16 +35,11 @@ export const viewport = {
   minimumScale: 1,
 };
 
-const languageInitScript = `
-  try {
-    document.documentElement.lang = location.pathname.startsWith('/es') ? 'es' : 'en';
-  } catch (_) {}
-`;
-
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const requestHeaders = await headers();
+  const locale = requestHeaders.get('x-page-locale') === 'es' ? 'es' : 'en';
   return (
-    <html lang="en" className={`${barlow.variable} ${barlowCondensed.variable}`} suppressHydrationWarning>
-      <head><script dangerouslySetInnerHTML={{ __html: languageInitScript }} /></head>
+    <html lang={locale} className={`${barlow.variable} ${barlowCondensed.variable}`}>
       <body>{children}</body>
     </html>
   );
