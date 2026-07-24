@@ -8,15 +8,21 @@
   box-shadow: 0 26px 70px rgba(0, 0, 0, 0.28);
 }
 
-.venuePhoto {
+.venuePhotoStack {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
-  min-height: 420px;
-  max-height: 640px;
-  object-fit: cover;
-  object-position: center;
+  overflow: hidden;
   background: #111;
+  line-height: 0;
+}
+
+.venuePhotoStack img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .venueActions {
@@ -91,13 +97,11 @@
 
 @media (max-width: 980px) {
   .heroFigure { align-self: stretch; }
-  .venuePhoto { aspect-ratio: 16 / 10; max-height: none; object-position: center 42%; }
   .expectGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 720px) {
   .heroFigure { border-radius: 20px; }
-  .venuePhoto { min-height: 330px; aspect-ratio: 4 / 5; object-position: center; }
   .venueActions { padding: 16px; }
   .venueSecondaryRow { grid-template-columns: 1fr; }
   .expectGrid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
