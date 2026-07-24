@@ -1,12 +1,19 @@
-import { Inter } from 'next/font/google';
+import { Barlow, Barlow_Condensed } from 'next/font/google';
 import './globals.css';
 import './themes.css';
 
-const inter = Inter({
+const barlow = Barlow({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-barlow',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800', '900'],
+});
+
+const barlowCondensed = Barlow_Condensed({
+  subsets: ['latin'],
+  variable: '--font-barlow-condensed',
+  display: 'swap',
+  weight: ['500', '600', '700', '800', '900'],
 });
 
 const title = 'Community Cuts for Kids | Asc3nd Collective';
@@ -47,7 +54,7 @@ const themeInitScript = `
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${barlow.variable} ${barlowCondensed.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
