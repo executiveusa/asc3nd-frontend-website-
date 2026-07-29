@@ -1,103 +1,74 @@
-# AGENTS.md — Asc3nd Social Purpose OS
+# AGENTS.md — Asc3nd Frontend Repo
+> READ THIS FIRST before editing any file in this repo.
 
-## Product architecture rule
+---
 
-The backend is reusable product infrastructure. Do not customize backend code for a single client unless the change improves the shared product.
+## ⚠️ THERE ARE TWO SEPARATE REPOS. DO NOT CONFUSE THEM.
 
-Customize tenants through:
+| Repo | Purpose | Local Path |
+|------|---------|------------|
+| **asc3nd-frontend-website** (THIS REPO) | Public-facing website + event pages | `E:\ACTIVE PROJECTS-PIPELINE\...\asc3nd-frontend-website--main` |
+| **ascend-social-purpose-agentic-systems** | Agentic OS / backend / ICM system | `E:\ACTIVE PROJECTS-PIPELINE\...\ascend-social-purpose-agentic-systems--main(1)` |
 
-- public frontend copy/theme/assets
-- `llms.txt`
-- onboarding profile
-- ICM `_config` files
-- ICM stage references
+**Never edit the agentic systems repo when working on the landing page or event pages.**
 
-## ICM rule
+---
 
-Do not replace ICM with a hidden swarm. The operating system is the folder structure:
+## This Repo Contains Two Separate Apps
 
-- `AGENT.md`
-- `CONTEXT.md`
-- numbered `stages/*/CONTEXT.md`
-- `_config` reference files
-- `output` working artifacts
+### App 1 — `apps/site/` — Asc3nd Collective Main Website
+- **What it is:** The public nonprofit homepage for Asc3nd Collective
+- **URL:** https://asc3nd-frontend-website.vercel.app
+- **Vercel project:** `asc3nd-frontend-website` (team: `the-pauli-effect`)
+- **Stack:** Next.js 16, Vanilla CSS, Google Fonts (Barlow), NO Tailwind
+- **Brand:** Black `#000`, Gold `#F5A617`, White `#fff`
+- **Key files:**
+  - `apps/site/app/page.jsx` — Homepage
+  - `apps/site/app/globals.css` — Full design system
+  - `apps/site/components/PublicNav.jsx` — Sticky nav
+  - `apps/site/public/images/` — Site images
+- **DO NOT** put Community Cuts event content here
 
-## Safety rule
+---
 
-No automated red/orange action without human approval. Youth, grant submissions, public claims, donor outreach, legal/financial work, outbound calls, and browser applications are approval-gated.
+### App 2 — `apps/event-community-cuts/` — Community Cuts for Kids Event Page
+- **What it is:** Standalone event landing page for the Community Cuts for Kids back-to-school event
+- **Event:** Sunday, August 30, 2026 · 12–3PM · Tangles & Locs, 7425 Hardeson Rd, Everett WA
+- **Key files:**
+  - `apps/event-community-cuts/app/page.jsx` — Event landing page
+  - `apps/event-community-cuts/app/event.module.css` — Event styles
+  - `apps/event-community-cuts/app/visual-fixes.module.css` — Venue photo stack CSS
+  - `apps/event-community-cuts/app/EventInterestForm.jsx` — RSVP form
+  - `apps/event-community-cuts/public/images/` — Event venue images
+    - `tangles-locs-exterior.jpg` — Main venue exterior photo (Tangles & Locs salon)
+    - `tangles-locs-01.webp` through `tangles-locs-04.webp` — Additional venue shots
+- **DO NOT** put nonprofit org content here
 
-## Coding loop
+---
 
-1. Read docs and existing conventions.
-2. Add or update a failing test.
-3. Implement in `packages/core` first when possible.
-4. Wire API in `services/mission-api`.
-5. Wire UI in `apps/site`.
-6. Run `npm test` and smoke tests.
-7. Update docs and ICM template.
+## Deploy Rules (CRITICAL)
 
-## Architect prompt layer
+```
+# Deploy from repo ROOT, not from apps/site:
+cd "E:\ACTIVE PROJECTS-PIPELINE\...\asc3nd-frontend-website--main"
+npx vercel --prod
 
-Before any serious hardening pass, read:
+# DO NOT run from apps/site — doubles the path and breaks the build
+```
 
-- `HEART_AND_SOUL.md`
-- `prompts/ASC3ND_ARCHITECT_SYSTEM_PROMPT.md`
-- `prompts/GLM_5_2_BUILDER_MASTER_PROMPT.md`
-- `docs/SKILL-MAP-AND-OPERATING-LOOP.md`
-- `docs/SITE-AUDIT-AND-GAPS-2026-06-26.md`
+- Vercel auto-deploys `apps/site` on push to `main`
+- The `apps/event-community-cuts` app is separate — check its deployment status
 
-These files define the transferable agent identity, GLM builder contract, nonprofit UX lens, and production hardening loop.
+---
 
-## Persona and writing rule
+## Image Swap Protocol
+When a user provides a new image to replace an existing one:
+1. Identify WHICH app the image belongs to (`apps/site` or `apps/event-community-cuts`)
+2. Copy the image to that app's `public/images/` folder
+3. Update only that app's `page.jsx` reference
+4. Never cross-pollinate images between apps
 
-Before planning, reviewing, or creating public-facing copy, read:
+---
 
-- `docs/PAULI-DIGITAL-COFOUNDER-PERSONA.md`
-
-The locked Digital Cofounder persona governs agent judgment and writing behavior. It requires direct recommendations, factual specificity, human-centered design, and a Humanizer-style audit for common AI writing patterns.
-
-The persona does not override:
-
-- client strategy and current reality
-- safety, dignity, privacy, accessibility, or legal requirements
-- verified facts and evidence
-- repository-local architecture rules
-- Asc3nd's approved brand voice
-
-For public copy, use this review order:
-
-`facts -> audience reality -> client voice -> human writing audit -> Steve Krug clarity -> safety/accessibility -> preview -> Jeremy + Digital Cofounder review`
-
-Do not treat technical readiness as permission to publish.
-
-## Nonprofit UX rule
-
-Staff-facing pages must use outcome language. Hide tool names unless the user is in system/developer mode.
-
-Preferred labels:
-
-- Find Funding
-- Prepare Application
-- Grow Donors
-- Coordinate Volunteers
-- Report Impact
-- Review Before Sending
-- Publish Story
-- Prepare Board Update
-
-Avoid staff-facing labels such as Pi, MCP, Sandcastle, Absurd, vector DB, model routing, and flywheel except in System Health.
-
-## Review loop
-
-Every change must be reviewed through these lenses:
-
-1. correctness
-2. security
-3. tenant isolation
-4. youth/privacy safety
-5. Steve Krug usability
-6. Apple-level restraint
-7. nonprofit pain point solved
-8. ICM integrity
-9. repeatable deployment
-10. Hostinger/flywheel readiness
+## Branch: `review/glm-turbo-krug-spanish-routes`
+Contains pending work on Spanish routes and page stubs — not merged to main yet.
