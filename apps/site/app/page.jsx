@@ -88,11 +88,12 @@ export default function HomePage() {
         {/* ── WHO WE ARE ── */}
         <section className="hp-section hp-who" id="mission" aria-labelledby="who-heading">
           <div className="hp-container hp-split">
-            <div className="hp-who-image">
+            <div className="hp-who-image" style={{ overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img
-                src="/images/asc3nd-site-reference.jpg"
-                alt="Asc3nd Collective youth working together — Leaders Create, Dream Plan ASC3ND"
+                src="/images/tangles-and-locs-salon.jpg"
+                alt="Tangles & Locs Salon and Spa — Event Venue at 2253 S 123rd St, Seattle WA"
                 loading="lazy"
+                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
               />
             </div>
             <div className="hp-who-copy">
