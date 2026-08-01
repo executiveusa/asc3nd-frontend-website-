@@ -33,22 +33,6 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
   const selectedInterest = normalizeParticipation(initialInterest);
   const isSpanish = locale === 'es';
 
-  const essentials = isSpanish
-    ? [
-      { label: 'Cuándo', value: 'Domingo, 30 de agosto', detail: '12:00–3:00 PM' },
-      { label: 'Dónde', value: 'Tangles & Locs', detail: '7425 Hardeson Rd, Everett' },
-      { label: 'Costo', value: 'Gratis', detail: 'Mientras haya cupo y existencias' },
-    ]
-    : [
-      { label: 'When', value: 'Sunday, August 30', detail: '12:00–3:00 PM' },
-      { label: 'Where', value: 'Tangles & Locs', detail: '7425 Hardeson Rd, Everett' },
-      { label: 'Cost', value: 'Free', detail: 'While capacity and supplies last' },
-    ];
-
-  const heroLead = isSpanish
-    ? 'Cortes de cabello, útiles escolares, comida y apoyo comunitario gratuitos para ayudar a los estudiantes a comenzar el año con confianza.'
-    : 'Free haircuts, school supplies, food, and community support to help students start the school year with confidence.';
-
   return (
     <main className={styles.page}>
       <header className={styles.header}>
@@ -63,6 +47,7 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
           />
         </a>
         <nav className={styles.nav} aria-label={content.nav.aria}>
+          <a href="#event">{content.nav.event}</a>
           <a href="#before">{content.nav.before}</a>
           <a href="#supplies">{content.nav.supplies}</a>
           <a className={styles.navCta} href={interestHref(locale, 'attend')}>
@@ -83,7 +68,17 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
             <span className={styles.titleBottom}>{content.hero.titleBottom}</span>
           </h1>
           <p className={styles.campaignLine}>{content.hero.campaignLine}</p>
-          <p className={styles.heroLead}>{heroLead}</p>
+          <p className={styles.heroLead}>{content.hero.description}</p>
+
+          <div className={styles.heroFacts}>
+            {content.hero.facts.map((fact) => (
+              <div key={fact.label}>
+                <span>{fact.label}</span>
+                <strong>{fact.value}</strong>
+                {fact.detail ? <small>{fact.detail}</small> : null}
+              </div>
+            ))}
+          </div>
 
           <div className={styles.heroActions}>
             <a className={styles.primaryButton} href={interestHref(locale, 'attend')}>
@@ -96,9 +91,7 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
 
           <p className={styles.availabilityNote}>
             <strong>{content.hero.goodToKnowTitle}</strong>{' '}
-            {isSpanish
-              ? 'Los servicios se ofrecen por orden de llegada. Tu confirmación nos ayuda a prepararnos, pero no reserva un lugar.'
-              : 'Services are first come, first served. Your RSVP helps us prepare but does not reserve a place in line.'}
+            {content.hero.goodToKnow}
           </p>
         </div>
 
@@ -125,45 +118,76 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
         ))}
       </div>
 
+      <section className={styles.expect} aria-labelledby="expect-heading">
+        <div className={styles.sectionHeading}>
+          <p className={styles.eyebrow}>{content.expect.eyebrow}</p>
+          <h2 id="expect-heading">{content.expect.headline}</h2>
+          <p>{content.expect.body}</p>
+        </div>
+        <div className={styles.expectGrid}>
+          {content.expect.items.map((item, index) => (
+            <article key={item.title}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className={styles.essentials} id="before" aria-labelledby="before-heading">
         <div className={styles.sectionHeading}>
           <p className={styles.eyebrow}>{content.before.eyebrow}</p>
-          <h2 id="before-heading">{isSpanish ? 'Lo esencial. Sin sorpresas.' : 'The essentials. No surprises.'}</h2>
-          <p>{isSpanish
-            ? 'Todo lo que necesitas para decidir, planificar tu llegada y disfrutar el evento.'
-            : 'Everything you need to decide, plan your arrival, and enjoy the event.'}</p>
+          <h2 id="before-heading">{content.before.headline}</h2>
+          <p>{content.before.body}</p>
         </div>
 
-        <div className={styles.essentialGrid}>
-          {essentials.map((item) => (
-            <article key={item.label}>
-              <span>{item.label}</span>
-              <strong>{item.value}</strong>
-              <p>{item.detail}</p>
+        <div className={styles.detailGrid}>
+          {content.before.facts.map((fact) => (
+            <article key={fact.label}>
+              <span>{fact.label}</span>
+              <strong>{fact.value}</strong>
+              {fact.detail ? <p>{fact.detail}</p> : null}
             </article>
           ))}
         </div>
 
-        <div className={styles.arrivalPanel}>
-          <div>
-            <h3>{isSpanish ? 'Llega temprano' : 'Arrive early'}</h3>
-            <p>{isSpanish
-              ? 'Los cortes de cabello y los útiles se entregan por orden de llegada mientras haya capacidad y existencias.'
-              : 'Haircuts and school supplies are available first come, first served while capacity and supplies last.'}</p>
-          </div>
-          <a className={styles.secondaryButton} href={googleDirections} target="_blank" rel="noreferrer">
-            {content.before.directionAction}
-          </a>
+        <a className={styles.secondaryButton} href={googleDirections} target="_blank" rel="noreferrer">
+          {content.before.directionAction}
+        </a>
+      </section>
+
+      <section className={styles.familyBridge} aria-labelledby="family-heading">
+        <div>
+          <p className={styles.eyebrow}>{content.family.eyebrow}</p>
+          <h2 id="family-heading">{content.family.headline}</h2>
+          <p>{content.family.body}</p>
+        </div>
+        <a className={styles.primaryButton} href={interestHref(locale, 'attend')}>{content.family.action}</a>
+      </section>
+
+      <section className={styles.join} id="join" aria-labelledby="join-heading">
+        <div className={styles.sectionHeading}>
+          <p className={styles.eyebrow}>{content.join.eyebrow}</p>
+          <h2 id="join-heading">{content.join.headline}</h2>
+        </div>
+        <div className={styles.joinGrid}>
+          {content.join.cards.map((card) => (
+            <article key={card.title}>
+              <span>{card.title}</span>
+              <h3>{card.actionTitle}</h3>
+              <p>{card.body}</p>
+              <a href={interestHref(locale, card.intent)}>{card.button}</a>
+            </article>
+          ))}
         </div>
       </section>
 
       <section className={styles.connect} id="connect" aria-labelledby="connect-heading">
         <div className={styles.connectCopy}>
-          <p className={styles.eyebrow}>{isSpanish ? 'CONFIRMA TU ASISTENCIA' : 'RSVP FOR YOUR FAMILY'}</p>
-          <h2 id="connect-heading">{isSpanish ? 'Avísanos que vienes.' : 'Let us know you’re coming.'}</h2>
-          <p>{isSpanish
-            ? 'Tu respuesta ayuda a The Asc3nd Collective a prepararse para servir a tantas familias como sea posible.'
-            : 'Your response helps The Asc3nd Collective prepare to serve as many families as possible.'}</p>
+          <p className={styles.eyebrow}>{content.formIntro.eyebrow}</p>
+          <h2 id="connect-heading">{content.formIntro.headline}</h2>
+          <p>{content.formIntro.body}</p>
           <div className={styles.privacyNote}>
             <strong>{content.formIntro.privacyTitle}</strong>
             <p>{content.formIntro.privacyBody}</p>
@@ -183,7 +207,7 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
         <div className={styles.sectionHeading}>
           <p className={styles.eyebrow}>{content.supplies.eyebrow}</p>
           <h2 id="supplies-heading">{content.supplies.headline}</h2>
-          <p>{content.supplies.body[0]}</p>
+          {content.supplies.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
 
         <div className={styles.supportGrid}>
@@ -211,8 +235,19 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
       </section>
 
       <section className={styles.mission} aria-labelledby="mission-heading">
-        <p className={styles.eyebrow}>{content.mission.eyebrow}</p>
-        <h2 id="mission-heading">{isSpanish ? 'Este evento es parte de algo más grande.' : 'This event is part of something bigger.'}</h2>
+        <div className={styles.sectionHeading}>
+          <p className={styles.eyebrow}>{content.mission.eyebrow}</p>
+          <h2 id="mission-heading">{content.mission.headline}</h2>
+        </div>
+        <div className={styles.missionGrid}>
+          {content.mission.items.map((item) => (
+            <article key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+        <p className={styles.missionTie}>{content.mission.tie}</p>
         <blockquote>{content.mission.founderStory}</blockquote>
       </section>
 
