@@ -1,19 +1,8 @@
 import { LOCKED_CLIENT_COPY_EN as client } from './client-feedback-copy.js';
 
-// The form collects only a broad school-stage group. Qualifying "age" as
-// "exact age" keeps the client's privacy promise truthful without requesting
-// any additional youth information.
-const privacyBodyWithExactAge = client.privacyBody.replace(
-  "a child's name, school",
-  "a child's name, exact age, school",
-);
-const faqsWithExactAge = client.faqs.map((item) => {
+const faqsWithEmphasis = client.faqs.map((item) => {
   if (item.question === 'Does submitting this form reserve a haircut?') {
     return Object.freeze({ ...item, emphasis: 'first-come, first-served basis' });
-  }
-
-  if (item.question === 'Should I enter information about my child?') {
-    return Object.freeze({ ...item, answer: item.answer.replace("a child's name, age", "a child's name, exact age") });
   }
 
   return item;
@@ -110,7 +99,7 @@ const english = {
     headline: client.formHeading,
     body: client.formBody,
     privacyTitle: client.privacyTitle,
-    privacyBody: privacyBodyWithExactAge,
+    privacyBody: client.privacyBody,
   },
   form: {
     name: 'Your name',
@@ -178,7 +167,7 @@ const english = {
   faq: {
     eyebrow: client.faqEyebrow,
     headline: client.faqHeadline,
-    items: faqsWithExactAge,
+    items: faqsWithEmphasis,
   },
   footer: {
     tagline: 'Empower youth. Elevate futures. Build community.',
@@ -302,7 +291,7 @@ const spanish = {
     headline: 'Ya sea que asistas, seas voluntario o colabores—nos encantará saber de ti.',
     body: 'Tu respuesta ayuda a The Asc3nd Collective a prepararse para las familias, los voluntarios y los socios comunitarios, para que podamos crear la mejor experiencia posible.',
     privacyTitle: 'La Privacidad de los Jóvenes Importa',
-    privacyBody: 'La privacidad de tu familia es importante para nosotros. Este formulario público no solicita el nombre, la edad exacta, la escuela, información médica, historia personal ni otros datos sensibles de un menor. Los permisos para fotos, videos, testimonios o participación juvenil se gestionan mediante formularios de consentimiento separados.',
+    privacyBody: 'La privacidad de tu familia es importante para nosotros. Este formulario público no solicita el nombre, la escuela, información médica, historia personal ni otros datos sensibles de un menor. Los permisos para fotos, videos, testimonios o participación juvenil se gestionan mediante formularios de consentimiento separados.',
   },
   form: {
     name: 'Tu nombre',
@@ -381,7 +370,7 @@ const spanish = {
       { question: '¿Dónde es el evento?', answer: 'Tangles & Locs\n7425 Hardeson Rd., Everett, WA 98203\n\nUsa el botón “Llévame Allí” junto a la foto del lugar para obtener indicaciones paso a paso.' },
       { question: '¿Qué incluye?', answer: 'Cortes de cabello gratuitos para niños, útiles escolares, obsequios, comida, actividades para toda la familia y oportunidades para conectar con la comunidad.' },
       { question: '¿Enviar este formulario reserva un corte de cabello?', answer: 'No. El formulario ayuda a The Asc3nd Collective a estimar la asistencia y prepararse para el evento. Los cortes de cabello, útiles escolares, comida y obsequios están disponibles por orden de llegada mientras duren las existencias y haya capacidad en el evento.', emphasis: 'por orden de llegada' },
-      { question: '¿Debo ingresar información sobre mi hijo/a?', answer: 'No. Para proteger la privacidad de tu familia, no incluyas el nombre, la edad exacta, la escuela, información médica, historia personal ni otros datos sensibles de un menor. La participación juvenil y el consentimiento para medios se gestionan por separado.' },
+      { question: '¿Debo ingresar información sobre mi hijo/a?', answer: 'No. Para proteger la privacidad de tu familia, no incluyas el nombre, la edad, la escuela, información médica, historia personal ni otros datos sensibles de un menor. La participación juvenil y el consentimiento para medios se gestionan por separado.' },
       { question: '¿Dónde puedo donar útiles escolares?', answer: 'Estamos finalizando los lugares públicos de entrega y las instrucciones para donar. Si deseas donar, envía el formulario de interés y te contactaremos en cuanto esos detalles estén disponibles.' },
       { question: '¿Quién puede asistir?', answer: 'El evento está abierto a estudiantes y familias locales que se preparan para el nuevo año escolar. ¡Todos son bienvenidos!' },
       { question: '¿Cuánto cuesta?', answer: 'Todo lo que se ofrece durante Fresh Fade, Fresh Grade es gratuito mientras duren las existencias y haya capacidad en el evento.' },
