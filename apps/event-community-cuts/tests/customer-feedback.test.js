@@ -93,19 +93,14 @@ describe('customer feedback fidelity', () => {
     expect(page.form.privacyFooter).toBe(LOCKED_CLIENT_COPY_EN.privacyFooter);
     expect(page.faq.eyebrow).toBe(LOCKED_CLIENT_COPY_EN.faqEyebrow);
     expect(page.faq.headline).toBe(LOCKED_CLIENT_COPY_EN.faqHeadline);
-    expect(page.formIntro.privacyBody).toBe(
-      LOCKED_CLIENT_COPY_EN.privacyBody.replace(
-        "a child's name, school",
-        "a child's name, exact age, school",
-      ),
-    );
+    expect(page.formIntro.privacyBody).toBe(LOCKED_CLIENT_COPY_EN.privacyBody);
     expect(page.faq.items.map((item) => item.question)).toEqual(
       LOCKED_CLIENT_COPY_EN.faqs.map((item) => item.question),
     );
     expect(page.faq.items[3].answer).toBe(LOCKED_CLIENT_COPY_EN.faqs[3].answer);
     expect(page.faq.items[3].emphasis).toBe('first-come, first-served basis');
     expect(EVENT_CONTENT.es.faq.items[3].emphasis).toBe('por orden de llegada');
-    expect(page.faq.items[4].answer).toContain("a child's name, exact age, school");
+    expect(page.faq.items[4].answer).toBe(LOCKED_CLIENT_COPY_EN.faqs[4].answer);
   });
 
   it('keeps English and Spanish content structurally identical', () => {
