@@ -1,19 +1,8 @@
 import { LOCKED_CLIENT_COPY_EN as client } from './client-feedback-copy.js';
 
-// The form collects only a broad school-stage group. Qualifying "age" as
-// "exact age" keeps the client's privacy promise truthful without requesting
-// any additional youth information.
-const privacyBodyWithExactAge = client.privacyBody.replace(
-  "a child's name, school",
-  "a child's name, exact age, school",
-);
-const faqsWithExactAge = client.faqs.map((item) => {
+const faqsWithEmphasis = client.faqs.map((item) => {
   if (item.question === 'Does submitting this form reserve a haircut?') {
     return Object.freeze({ ...item, emphasis: 'first-come, first-served basis' });
-  }
-
-  if (item.question === 'Should I enter information about my child?') {
-    return Object.freeze({ ...item, answer: item.answer.replace("a child's name, age", "a child's name, exact age") });
   }
 
   return item;
@@ -110,7 +99,7 @@ const english = {
     headline: client.formHeading,
     body: client.formBody,
     privacyTitle: client.privacyTitle,
-    privacyBody: privacyBodyWithExactAge,
+    privacyBody: client.privacyBody,
   },
   form: {
     name: 'Your name',
@@ -178,7 +167,7 @@ const english = {
   faq: {
     eyebrow: client.faqEyebrow,
     headline: client.faqHeadline,
-    items: faqsWithExactAge,
+    items: faqsWithEmphasis,
   },
   footer: {
     tagline: 'Empower youth. Elevate futures. Build community.',
