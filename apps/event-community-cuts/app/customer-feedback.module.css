@@ -197,11 +197,28 @@
 
   .campaignTitle {
     max-width: 100% !important;
-    font-size: clamp(3.75rem, 18vw, 5.75rem) !important;
+    font-size: clamp(3.45rem, 18vw, 5.75rem) !important;
   }
 
   .helpCallout {
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 359px) {
+  .campaignTitle {
+    font-size: 3.2rem !important;
+  }
+
+  .feature,
+  .feature + .feature {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .feature > span {
+    width: 42px;
+    height: 42px;
   }
 }
 

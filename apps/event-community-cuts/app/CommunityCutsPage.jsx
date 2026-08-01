@@ -2,41 +2,10 @@ import Image from 'next/image';
 import { EventInterestForm } from './EventInterestForm.jsx';
 import { normalizeParticipation } from './event-form-contract.js';
 import { getEventContent } from './event-content.js';
-import styles from './event.module.css';
-import premium from './premium.module.css';
-import visualStyles from './visual-fixes.module.css';
-import campaign from './customer-feedback.module.css';
+import styles from './event-page.module.css';
 
 const googleDirections = 'https://www.google.com/maps/dir/?api=1&destination=7425+Hardeson+Rd%2C+Everett%2C+WA+98203';
-const appleDirections = 'https://maps.apple.com/?daddr=7425+Hardeson+Rd%2C+Everett%2C+WA+98203&dirflg=d';
 const supplyLists = 'https://www.everettsd.org/families/school-supply-lists';
-
-function EventIcon({ name }) {
-  if (name === 'scissors') {
-    return (
-      <svg viewBox="0 0 48 48" aria-hidden="true">
-        <circle cx="12" cy="34" r="6" />
-        <circle cx="12" cy="14" r="6" />
-        <path d="m17 18 23 14M17 30 40 16M21 24h9" />
-      </svg>
-    );
-  }
-  if (name === 'backpack') {
-    return (
-      <svg viewBox="0 0 48 48" aria-hidden="true">
-        <path d="M15 15a9 9 0 0 1 18 0v4M12 18h24v24H12zM17 25h14v10H17zM8 24v12M40 24v12" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 48 48" aria-hidden="true">
-      <circle cx="24" cy="14" r="6" />
-      <circle cx="10" cy="20" r="5" />
-      <circle cx="38" cy="20" r="5" />
-      <path d="M13 40v-5a11 11 0 0 1 22 0v5M3 40v-4a8 8 0 0 1 9-8M45 40v-4a8 8 0 0 0-9-8" />
-    </svg>
-  );
-}
 
 function interestHref(locale, intent) {
   const pathname = locale === 'es' ? '/es' : '/';
@@ -62,9 +31,26 @@ function renderFaqAnswer(item) {
 export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' }) {
   const content = getEventContent(locale);
   const selectedInterest = normalizeParticipation(initialInterest);
+  const isSpanish = locale === 'es';
+
+  const essentials = isSpanish
+    ? [
+      { label: 'Cuándo', value: 'Domingo, 30 de agosto', detail: '12:00–3:00 PM' },
+      { label: 'Dónde', value: 'Tangles & Locs', detail: '7425 Hardeson Rd, Everett' },
+      { label: 'Costo', value: 'Gratis', detail: 'Mientras haya cupo y existencias' },
+    ]
+    : [
+      { label: 'When', value: 'Sunday, August 30', detail: '12:00–3:00 PM' },
+      { label: 'Where', value: 'Tangles & Locs', detail: '7425 Hardeson Rd, Everett' },
+      { label: 'Cost', value: 'Free', detail: 'While capacity and supplies last' },
+    ];
+
+  const heroLead = isSpanish
+    ? 'Cortes de cabello, útiles escolares, comida y apoyo comunitario gratuitos para ayudar a los estudiantes a comenzar el año con confianza.'
+    : 'Free haircuts, school supplies, food, and community support to help students start the school year with confidence.';
 
   return (
-    <main className={`${styles.page} ${premium.pagePremium} ${campaign.page}`}>
+    <main className={styles.page}>
       <header className={styles.header}>
         <a className={styles.brand} href="#event" aria-label={content.brandAria}>
           <Image
@@ -73,215 +59,117 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
             alt="The Asc3nd Collective"
             width={512}
             height={512}
+            priority
           />
         </a>
         <nav className={styles.nav} aria-label={content.nav.aria}>
-          <a href="#event">{content.nav.event}</a>
           <a href="#before">{content.nav.before}</a>
           <a href="#supplies">{content.nav.supplies}</a>
-          <a className={`${styles.navCta} ${premium.navAction}`} href={interestHref(locale, 'attend')}>
+          <a className={styles.navCta} href={interestHref(locale, 'attend')}>
             {content.nav.attend}
           </a>
-          <a className={`${premium.languageLink} ${styles.languageToggle}`} href={content.languageHref} lang={locale === 'es' ? 'en' : 'es'}>
+          <a className={styles.languageToggle} href={content.languageHref} lang={isSpanish ? 'en' : 'es'}>
             {content.languageLabel}
           </a>
         </nav>
       </header>
 
-      <section className={`${styles.hero} ${premium.heroPremium} ${campaign.hero}`} id="event" aria-labelledby="event-title">
+      <section className={styles.hero} id="event" aria-labelledby="event-title">
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>{content.hero.eyebrow}</p>
-          <h1 className={campaign.campaignTitle} id="event-title">
-            <span>{content.hero.titleCommunity}</span>{' '}
-            <span className={campaign.cuts}>{content.hero.titleCuts}</span>
-            <span className={campaign.forKids}>{content.hero.titleBottom}</span>
+          <h1 id="event-title">
+            <span>{content.hero.titleCommunity}</span>
+            <span className={styles.titleCuts}>{content.hero.titleCuts}</span>
+            <span className={styles.titleBottom}>{content.hero.titleBottom}</span>
           </h1>
-          <p className={`${premium.heroPromise} ${campaign.campaignLine}`}>{content.hero.campaignLine}</p>
-          <p className={styles.heroLead}>{content.hero.description}</p>
-
-          <div className={campaign.featureStrip} role="list" aria-label={locale === 'es' ? 'Aspectos destacados del evento' : 'Event highlights'}>
-            {content.hero.features.map((feature, index) => (
-              <div className={campaign.feature} role="listitem" key={feature.label}>
-                <span className={campaign[`featureIcon${index + 1}`]}><EventIcon name={feature.icon} /></span>
-                <strong>{feature.label}</strong>
-              </div>
-            ))}
-          </div>
-
-          <div className={styles.eventFacts}>
-            {content.hero.facts.map((fact) => (
-              <div key={fact.label}>
-                <span>{fact.label}</span>
-                <strong>{fact.value}</strong>
-                {fact.detail ? <small>{fact.detail}</small> : null}
-              </div>
-            ))}
-          </div>
+          <p className={styles.campaignLine}>{content.hero.campaignLine}</p>
+          <p className={styles.heroLead}>{heroLead}</p>
 
           <div className={styles.heroActions}>
-            <a className={`${styles.primaryButton} ${premium.primaryAction}`} href={interestHref(locale, 'attend')}>
+            <a className={styles.primaryButton} href={interestHref(locale, 'attend')}>
               {content.hero.primaryAction}
             </a>
-            <a className={`${styles.secondaryButton} ${premium.secondaryAction}`} href="#join">
-              {content.hero.secondaryAction}
+            <a className={styles.textAction} href={googleDirections} target="_blank" rel="noreferrer">
+              {content.hero.navigate} <span aria-hidden="true">↗</span>
             </a>
           </div>
-          <p className={`${styles.pendingNote} ${campaign.goodToKnow}`}>
-            <strong>{content.hero.goodToKnowTitle}</strong> {content.hero.goodToKnow}
+
+          <p className={styles.availabilityNote}>
+            <strong>{content.hero.goodToKnowTitle}</strong>{' '}
+            {isSpanish
+              ? 'Los servicios se ofrecen por orden de llegada. Tu confirmación nos ayuda a prepararnos, pero no reserva un lugar.'
+              : 'Services are first come, first served. Your RSVP helps us prepare but does not reserve a place in line.'}
           </p>
         </div>
 
-        <figure className={visualStyles.heroFigure}>
-          <div className={visualStyles.venuePhotoStack}>
-            <Image
-              src="/images/tangles-locs-exterior.jpg"
-              alt={content.hero.venueAlt}
-              width={815}
-              height={1024}
-              sizes="(max-width: 980px) 100vw, 42vw"
-              preload
-            />
-          </div>
-          <figcaption className={visualStyles.venueActions}>
-            <a className={visualStyles.venuePrimary} href={googleDirections} target="_blank" rel="noreferrer">
-              {content.hero.navigate}
-            </a>
-            <div className={visualStyles.venueSecondaryRow}>
-              <a className={visualStyles.venueSecondary} href={googleDirections} target="_blank" rel="noreferrer">
-                {content.hero.googleMaps}
-              </a>
-              <a className={visualStyles.venueSecondary} href={appleDirections} target="_blank" rel="noreferrer">
-                {content.hero.appleMaps}
-              </a>
-            </div>
-            <p className={visualStyles.venueAddress}>{content.hero.venueAddress}</p>
+        <figure className={styles.venueFigure}>
+          <Image
+            src="/images/tangles-locs-exterior.jpg"
+            alt={content.hero.venueAlt}
+            width={815}
+            height={1024}
+            sizes="(max-width: 900px) 100vw, 42vw"
+            priority
+          />
+          <figcaption className={styles.venueCaption}>
+            <span>{isSpanish ? 'Lugar del evento' : 'Event venue'}</span>
+            <strong>Tangles & Locs</strong>
+            <small>7425 Hardeson Rd · Everett, WA</small>
           </figcaption>
         </figure>
       </section>
 
-      <section className={`${styles.section} ${premium.expectSection}`} aria-labelledby="expect-heading">
-        <div className={`${styles.sectionIntro} ${premium.sectionHeading}`}>
-          <p className={styles.eyebrow}>{content.expect.eyebrow}</p>
-          <h2 id="expect-heading">{content.expect.headline}</h2>
-          <p>{content.expect.body}</p>
-        </div>
-        <div className={premium.expectEditorial}>
-          <div aria-hidden="true" />
-          <div>
-            {content.expect.items.map((item, index) => (
-              <article className={premium.expectItem} key={item.title}>
-                <span className={premium.expectNumber}>{String(index + 1).padStart(2, '0')}</span>
-                <div><h3>{item.title}</h3><p>{item.body}</p></div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className={styles.serviceStrip} role="list" aria-label={isSpanish ? 'Servicios del evento' : 'Event services'}>
+        {content.hero.features.map((feature) => (
+          <p role="listitem" key={feature.label}>{feature.label}</p>
+        ))}
+      </div>
 
-      <section className={`${styles.section} ${premium.beforeSection}`} id="before" aria-labelledby="before-heading">
-        <div className={`${styles.sectionIntro} ${premium.sectionHeading}`}>
+      <section className={styles.essentials} id="before" aria-labelledby="before-heading">
+        <div className={styles.sectionHeading}>
           <p className={styles.eyebrow}>{content.before.eyebrow}</p>
-          <h2 id="before-heading">{content.before.headline}</h2>
-          <p>{content.before.body}</p>
+          <h2 id="before-heading">{isSpanish ? 'Lo esencial. Sin sorpresas.' : 'The essentials. No surprises.'}</h2>
+          <p>{isSpanish
+            ? 'Todo lo que necesitas para decidir, planificar tu llegada y disfrutar el evento.'
+            : 'Everything you need to decide, plan your arrival, and enjoy the event.'}</p>
         </div>
-        <div className={premium.beforeGrid}>
-          {content.before.facts.map((fact) => (
-            <div key={fact.label}>
-              <span>{fact.label}</span>
-              <strong>{fact.value}</strong>
-              {fact.detail ? <small>{fact.detail}</small> : null}
-            </div>
-          ))}
-        </div>
-        <a className={`${styles.primaryButton} ${premium.directionAction}`} href={googleDirections} target="_blank" rel="noreferrer">
-          {content.before.directionAction}
-        </a>
-      </section>
 
-      <section className={premium.conversionBridge} aria-labelledby="family-heading">
-        <div>
-          <p className={styles.eyebrow}>{content.family.eyebrow}</p>
-          <h2 id="family-heading">{content.family.headline}</h2>
-          <p className={campaign.bridgeBody}>{content.family.body}</p>
-        </div>
-        <a className={`${styles.primaryButton} ${premium.primaryAction}`} href={interestHref(locale, 'attend')}>{content.family.action}</a>
-      </section>
-
-      <section className={styles.section} id="supplies" aria-labelledby="supplies-heading">
-        <div className={`${styles.sectionIntro} ${premium.sectionHeading} ${premium.supplyIntro}`}>
-          <p className={styles.eyebrow}>{content.supplies.eyebrow}</p>
-          <h2 id="supplies-heading">{content.supplies.headline}</h2>
-          {content.supplies.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-          <p>
-            <a className={premium.inlineLink} href={supplyLists} target="_blank" rel="noreferrer">
-              {content.supplies.supplyLink}
-            </a>
-          </p>
-        </div>
-        <div className={premium.supplyGroups}>
-          {content.supplies.groups.map((group) => (
-            <article className={premium.supplyGroup} key={group.title}>
-              <h3>{group.title}</h3>
-              <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
+        <div className={styles.essentialGrid}>
+          {essentials.map((item) => (
+            <article key={item.label}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+              <p>{item.detail}</p>
             </article>
           ))}
         </div>
-        <aside className={`${styles.callout} ${campaign.helpCallout}`}>
+
+        <div className={styles.arrivalPanel}>
           <div>
-            <p className={styles.eyebrow}>{content.supplies.helpEyebrow}</p>
-            <h3>{content.supplies.helpHeadline}</h3>
-            <p>{content.supplies.helpBody}</p>
+            <h3>{isSpanish ? 'Llega temprano' : 'Arrive early'}</h3>
+            <p>{isSpanish
+              ? 'Los cortes de cabello y los útiles se entregan por orden de llegada mientras haya capacidad y existencias.'
+              : 'Haircuts and school supplies are available first come, first served while capacity and supplies last.'}</p>
           </div>
-          <a className={styles.primaryButton} href={interestHref(locale, 'general')}>{content.supplies.helpButton}</a>
-        </aside>
-      </section>
-
-      <section className={`${styles.section} ${styles.why}`} id="mission" aria-labelledby="mission-heading">
-        <div className={`${styles.sectionIntro} ${premium.sectionHeading}`}>
-          <p className={styles.eyebrow}>{content.mission.eyebrow}</p>
-          <h2 id="mission-heading">{content.mission.headline}</h2>
-        </div>
-        <div className={premium.missionEditorial}>
-          {content.mission.items.map((item) => (
-            <article className={premium.missionItem} key={item.title}>
-              <h3>{item.title}</h3><p>{item.body}</p>
-            </article>
-          ))}
-        </div>
-        <p className={campaign.missionTie}>{content.mission.tie}</p>
-        <blockquote className={`${styles.founderStory} ${premium.founderQuote}`}>
-          <p>{content.mission.founderStory}</p>
-        </blockquote>
-      </section>
-
-      <section className={styles.section} id="join" aria-labelledby="join-heading">
-        <div className={`${styles.sectionIntro} ${premium.sectionHeading}`}>
-          <p className={styles.eyebrow}>{content.join.eyebrow}</p>
-          <h2 id="join-heading">{content.join.headline}</h2>
-        </div>
-        <div className={premium.joinEditorial}>
-          {content.join.cards.map((card) => (
-            <article className={premium.joinItem} key={card.title}>
-              <p className={campaign.cardLabel}>{card.title}</p>
-              <h3>{card.actionTitle}</h3>
-              <p>{card.body}</p>
-              <a className={premium.cardAction} href={interestHref(locale, card.intent)}>{card.button}</a>
-            </article>
-          ))}
+          <a className={styles.secondaryButton} href={googleDirections} target="_blank" rel="noreferrer">
+            {content.before.directionAction}
+          </a>
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.connect}`} id="connect" aria-labelledby="connect-heading">
+      <section className={styles.connect} id="connect" aria-labelledby="connect-heading">
         <div className={styles.connectCopy}>
-          <p className={styles.eyebrow}>{content.formIntro.eyebrow}</p>
-          <h2 id="connect-heading">{content.formIntro.headline}</h2>
-          <p>{content.formIntro.body}</p>
-          <div className={styles.privacyNote} data-surface="note">
+          <p className={styles.eyebrow}>{isSpanish ? 'CONFIRMA TU ASISTENCIA' : 'RSVP FOR YOUR FAMILY'}</p>
+          <h2 id="connect-heading">{isSpanish ? 'Avísanos que vienes.' : 'Let us know you’re coming.'}</h2>
+          <p>{isSpanish
+            ? 'Tu respuesta ayuda a The Asc3nd Collective a prepararse para servir a tantas familias como sea posible.'
+            : 'Your response helps The Asc3nd Collective prepare to serve as many families as possible.'}</p>
+          <div className={styles.privacyNote}>
             <strong>{content.formIntro.privacyTitle}</strong>
             <p>{content.formIntro.privacyBody}</p>
           </div>
         </div>
-        <div className={premium.formSurface} data-surface="form">
+        <div className={styles.formSurface}>
           <EventInterestForm
             key={selectedInterest}
             copy={content.form}
@@ -291,19 +179,56 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
         </div>
       </section>
 
+      <section className={styles.support} id="supplies" aria-labelledby="supplies-heading">
+        <div className={styles.sectionHeading}>
+          <p className={styles.eyebrow}>{content.supplies.eyebrow}</p>
+          <h2 id="supplies-heading">{content.supplies.headline}</h2>
+          <p>{content.supplies.body[0]}</p>
+        </div>
+
+        <div className={styles.supportGrid}>
+          <div className={styles.supplyList}>
+            {content.supplies.groups.map((group) => (
+              <article key={group.title}>
+                <h3>{group.title}</h3>
+                <p>{group.items.join(' · ')}</p>
+              </article>
+            ))}
+            <a className={styles.textActionDark} href={supplyLists} target="_blank" rel="noreferrer">
+              {content.supplies.supplyLink} <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <aside className={styles.helpPanel}>
+            <p className={styles.eyebrow}>{content.supplies.helpEyebrow}</p>
+            <h3>{content.supplies.helpHeadline}</h3>
+            <p>{content.supplies.helpBody}</p>
+            <a className={styles.lightButton} href={interestHref(locale, 'general')}>
+              {content.supplies.helpButton}
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <section className={styles.mission} aria-labelledby="mission-heading">
+        <p className={styles.eyebrow}>{content.mission.eyebrow}</p>
+        <h2 id="mission-heading">{isSpanish ? 'Este evento es parte de algo más grande.' : 'This event is part of something bigger.'}</h2>
+        <blockquote>{content.mission.founderStory}</blockquote>
+      </section>
+
       <section className={styles.faq} aria-labelledby="faq-heading">
-        <div className={`${styles.sectionIntro} ${premium.sectionHeading}`}>
+        <div className={styles.sectionHeading}>
           <p className={styles.eyebrow}>{content.faq.eyebrow}</p>
           <h2 id="faq-heading">{content.faq.headline}</h2>
         </div>
-        <dl>
-          {content.faq.items.map((item) => (
-            <div key={item.question}>
-              <dt>{item.question}</dt>
-              <dd className={campaign.faqAnswer}>{renderFaqAnswer(item)}</dd>
-            </div>
+        <div className={styles.faqList}>
+          {content.faq.items.map((item, index) => (
+            <details key={item.question} open={index === 0}>
+              <summary>{item.question}</summary>
+              <p>{renderFaqAnswer(item)}</p>
+            </details>
           ))}
-        </dl>
+        </div>
       </section>
 
       <footer className={styles.footer}>
@@ -317,10 +242,12 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
           />
           <p>{content.footer.tagline}</p>
         </div>
-        <span className={styles.footerNote}>{content.footer.note}</span>
+        <span>{content.footer.note}</span>
       </footer>
 
-      <a className={premium.mobileStickyCta} href={interestHref(locale, 'attend')}>{content.mobileAction}</a>
+      <a className={styles.mobileStickyCta} href={interestHref(locale, 'attend')}>
+        {content.mobileAction}
+      </a>
     </main>
   );
 }

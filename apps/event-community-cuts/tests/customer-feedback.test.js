@@ -171,3 +171,20 @@ describe('event intake payloads', () => {
     });
   });
 });
+
+describe('responsive layout safeguards', () => {
+  it('keeps mobile actions usable across narrow screens and device safe areas', () => {
+    const eventStyles = fs.readFileSync(
+      new URL('../app/event-page.module.css', import.meta.url),
+      'utf8',
+    );
+
+    expect(eventStyles).toContain('@media (max-width: 820px)');
+    expect(eventStyles).toContain('grid-template-columns: 1fr;');
+    expect(eventStyles).toContain('min-height: 44px;');
+    expect(eventStyles).toContain('@media (max-width: 359px)');
+    expect(eventStyles).toContain('env(safe-area-inset-bottom)');
+    expect(eventStyles).toContain('env(safe-area-inset-left)');
+    expect(eventStyles).toContain('env(safe-area-inset-right)');
+  });
+});

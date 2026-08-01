@@ -110,7 +110,7 @@
 
 @media (max-width: 720px) {
   .heroFigure { margin-top: 0; border-radius: 20px; }
-  .venueActions { padding: 16px; }
+  .venueActions { padding: 16px 14px; }
   .venueSecondaryRow { grid-template-columns: 1fr; }
   .expectGrid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
   .expectCard { padding: 24px; }
