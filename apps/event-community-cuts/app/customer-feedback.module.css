@@ -28,6 +28,10 @@
   white-space: nowrap;
 }
 
+.campaignTitle > span:first-child {
+  letter-spacing: -0.025em;
+}
+
 .cuts {
   color: var(--campaign-orange);
 }
