@@ -9,7 +9,7 @@
     "start": "next start -p 3001"
   },
   "dependencies": {
-    "@asc3nd/mission-sdk-js": "0.5.0",
+    "@asc3nd/mission-sdk-js": "file:../../packages/mission-sdk-js",
     "next": "16.2.12",
     "react": "19.2.7",
     "react-dom": "19.2.7"
