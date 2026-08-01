@@ -1,71 +1,308 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { MissionClient } from '@asc3nd/mission-sdk-js';
+import { useState } from 'react';
+import {
+  buildAttendancePayload,
+  buildSupporterPayload,
+  normalizeParticipation,
+} from './event-form-contract.js';
 import styles from './event.module.css';
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_MISSION_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
-const tenant = process.env.NEXT_PUBLIC_MISSION_TENANT || 'asc3nd';
-const publicKey = process.env.NEXT_PUBLIC_MISSION_PUBLIC_KEY || '';
+const apiFieldToControl = Object.freeze({
+  guardian_name: 'name',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  children_count: 'childrenCount',
+  age_range: 'ageGroup',
+  arrival_window: 'arrivalWindow',
+  participation: 'participation',
+  consent: 'consent',
+});
 
-const copy = {
-  en: {
-    interests: [['attend','I plan to attend with my family'],['updates','Send me event updates'],['volunteer','I want to volunteer'],['mentor','I want to learn about mentoring'],['supplies','I want to donate school supplies'],['sponsor','I want to sponsor or support the event'],['partner','I want to become a community partner']],
-    name:'Your name', email:'Email', phone:'Phone', phonePlaceholder:'Optional if you provide email', interested:'I’m interested in', contactNote:'Provide at least one contact method: email or phone.', children:'Number of children attending', ages:'General age range', arrival:'Expected arrival', unsure:'Not sure yet', info:'Send me information about', accessibility:'Accessibility and arrival information', spanish:'Spanish-language updates', volunteer:'Volunteer opportunities', supplies:'School-supply donation details', noticeTitle:'Your RSVP helps Asc3nd plan. It does not reserve a haircut.', notice:'Haircuts, supplies, food, and giveaways remain first come, first served while capacity and supplies last.', consent:'I agree that Asc3nd Collective may contact me about this event and the participation option I selected.', submitLabels:{attend:'Send My RSVP',volunteer:'Become a Volunteer',supplies:'I’m Donating Supplies',partner:'Partner With Us',default:'Submit My Response'}, sending:'Sending…', privacy:'Do not enter a child’s name, school, health information, story, or other sensitive personal information. Youth participation and media consent are handled separately.', contactError:'Please provide an email address or phone number so Asc3nd can contact you.', childrenError:'Please enter the number of children you expect to bring.', genericError:'We could not send your response. Please try again.', attendanceError:'We could not record your RSVP. Please try again.', attendanceSuccess:'RSVP received. Asc3nd can now include your family in its event planning. This does not reserve a haircut or supplies.', confirmationCode:'Save this confirmation code', followupUnavailable:'This follow-up form is temporarily unavailable. Please check back shortly.', followupSuccess:'Thank you. Asc3nd received your response and will follow up using the contact information you provided.'
-  },
-  es: {
-    interests: [['attend','Planeo asistir con mi familia'],['updates','Envíenme actualizaciones del evento'],['volunteer','Quiero ser voluntario/a'],['mentor','Quiero conocer oportunidades de mentoría'],['supplies','Quiero donar útiles escolares'],['sponsor','Quiero patrocinar o apoyar el evento'],['partner','Quiero ser socio comunitario']],
-    name:'Tu nombre', email:'Correo electrónico', phone:'Teléfono', phonePlaceholder:'Opcional si proporcionas correo electrónico', interested:'Me interesa', contactNote:'Proporciona al menos un medio de contacto: correo electrónico o teléfono.', children:'Número de niños que asistirán', ages:'Rango general de edades', arrival:'Hora aproximada de llegada', unsure:'Aún no estoy seguro/a', info:'Envíenme información sobre', accessibility:'Accesibilidad e información de llegada', spanish:'Actualizaciones en español', volunteer:'Oportunidades de voluntariado', supplies:'Detalles para donar útiles escolares', noticeTitle:'Tu confirmación ayuda a Asc3nd a planear. No reserva un corte de cabello.', notice:'Los cortes de cabello, útiles, comida y obsequios siguen siendo por orden de llegada y mientras haya capacidad y existencias.', consent:'Acepto que Asc3nd Collective me contacte sobre este evento y la opción de participación que seleccioné.', submitLabels:{attend:'Confirmar mi asistencia',volunteer:'Ser voluntario/a',supplies:'Voy a donar útiles',partner:'Colaborar con Asc3nd',default:'Enviar mi respuesta'}, sending:'Enviando…', privacy:'No ingreses el nombre, escuela, información médica, historia personal ni otros datos sensibles de un menor. El consentimiento para participación juvenil, fotos y video se maneja por separado.', contactError:'Proporciona un correo electrónico o teléfono para que Asc3nd pueda contactarte.', childrenError:'Indica cuántos niños esperas traer.', genericError:'No pudimos enviar tu respuesta. Inténtalo de nuevo.', attendanceError:'No pudimos registrar tu confirmación. Inténtalo de nuevo.', attendanceSuccess:'Confirmación recibida. Asc3nd ahora puede incluir a tu familia en la planificación del evento. Esto no reserva un corte de cabello ni útiles.', confirmationCode:'Guarda este código de confirmación', followupUnavailable:'Este formulario de seguimiento no está disponible temporalmente. Inténtalo nuevamente más tarde.', followupSuccess:'Gracias. Asc3nd recibió tu respuesta y dará seguimiento usando la información de contacto que proporcionaste.'
+function fieldErrorId(name) {
+  return `${name}-error`;
+}
+
+function describedBy(...ids) {
+  return ids.filter(Boolean).join(' ') || undefined;
+}
+
+function focusFirstInvalid(form, controlNames) {
+  const firstName = controlNames.find(Boolean);
+  if (!firstName) return;
+  requestAnimationFrame(() => form.elements.namedItem(firstName)?.focus());
+}
+
+function mapServerErrors(fields, t) {
+  const errors = {};
+  for (const issue of fields || []) {
+    const control = apiFieldToControl[issue?.field];
+    if (!control || errors[control]) continue;
+    if (control === 'name') errors[control] = t.errors.name;
+    else if (control === 'email' && issue.code === 'invalid') errors[control] = t.errors.email;
+    else if (control === 'phone' && issue.code === 'invalid') errors[control] = t.errors.phone;
+    else if (control === 'email' || control === 'phone') errors[control] = t.errors.contact;
+    else if (control === 'childrenCount') errors[control] = t.errors.children;
+    else if (control === 'ageGroup') errors[control] = t.errors.ageGroup;
+    else if (control === 'consent') errors[control] = t.errors.consent;
+    else errors[control] = t.errors.generic;
   }
-};
+  return errors;
+}
 
-export function EventInterestForm({ locale = 'en', initialInterest = 'attend' }) {
-  const t = copy[locale] || copy.en;
-  const allowedInterests = new Set(t.interests.map(([value]) => value));
-  const [status, setStatus] = useState({ type: 'idle', message: '' });
-  const [interest, setInterest] = useState(allowedInterests.has(initialInterest) ? initialInterest : 'attend');
-  const client = useMemo(() => publicKey ? new MissionClient({ apiBaseUrl, tenant, publicKey }) : null, []);
-  const submitLabel = t.submitLabels[interest] || t.submitLabels.default;
+function FieldError({ name, message }) {
+  if (!message) return null;
+  return <span className={styles.fieldError} id={fieldErrorId(name)}>⚠ {message}</span>;
+}
 
-  async function submitAttendance(data, form) {
-    const preferences = data.getAll('preferences');
-    const response = await fetch('/api/rsvp', { method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({ guardian_name:data.get('name'), email:String(data.get('email')||'').trim()||null, phone:String(data.get('phone')||'').trim()||null, children_count:Number(data.get('childrenCount')||0), age_range:data.get('ageRange')||null, requested_service:'haircut', arrival_window:data.get('arrivalWindow')||null, preferred_language:locale === 'es' ? 'es' : (preferences.includes('spanish') ? 'es' : 'en'), accessibility_contact:preferences.includes('accessibility'), contact_privately:false, company_website:data.get('companyWebsite') }) });
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok || result.ok === false) throw new Error(result.message || result.error || t.attendanceError);
-    const confirmation = result.confirmation_code
-      ? `${t.confirmationCode}: ${result.confirmation_code}.`
-      : '';
-    form.reset();
-    setInterest('attend');
-    setStatus({type:'success',message:[t.attendanceSuccess, confirmation].filter(Boolean).join(' ')});
-  }
+export function EventInterestForm({ copy: t, locale = 'en', initialInterest = 'attend' }) {
+  const [participation, setParticipation] = useState(() => normalizeParticipation(initialInterest));
+  const [status, setStatus] = useState({ type: 'idle', message: '', confirmationCode: null });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const isAttendance = participation === 'attend';
 
-  async function submitCommunityInterest(data, form) {
-    const email=String(data.get('email')||'').trim(); const phone=String(data.get('phone')||'').trim(); const preferences=data.getAll('preferences');
-    if (!client) throw new Error(t.followupUnavailable);
-    const result=await client.event.rsvp({name:data.get('name'),email:email||null,phone:phone||null,consent:data.get('consent')==='on',companyWebsite:data.get('companyWebsite'),message:[`Community Cuts for Kids interest: ${interest}`,preferences.length?`Requested information: ${preferences.join(', ')}`:''].filter(Boolean).join('\n'),metadata:{eventSlug:'community-cuts-for-kids-2026',interest,preferences,preferredLanguage:locale,registrationType:'community-follow-up'},sourcePage:typeof window!=='undefined'?window.location.href:'/'});
-    form.reset(); setInterest('attend'); setStatus({type:'success',message:result?.receipt?.message || t.followupSuccess});
+  function selectParticipation(event) {
+    setParticipation(normalizeParticipation(event.target.value));
+    setStatus({ type: 'idle', message: '', confirmationCode: null });
+    setFieldErrors({});
   }
 
   async function onSubmit(event) {
-    event.preventDefault(); const form=event.currentTarget; const data=new FormData(form); const email=String(data.get('email')||'').trim(); const phone=String(data.get('phone')||'').trim();
-    if (!email && !phone) return setStatus({type:'error',message:t.contactError});
-    if (interest==='attend' && Number(data.get('childrenCount')||0)<1) return setStatus({type:'error',message:t.childrenError});
-    setStatus({type:'loading',message:t.sending});
-    try { if (interest==='attend') await submitAttendance(data,form); else await submitCommunityInterest(data,form); }
-    catch(error){ setStatus({type:'error',message:error?.message || t.genericError}); }
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const nextErrors = {};
+    const email = String(data.get('email') || '').trim();
+    const phone = String(data.get('phone') || '').trim();
+
+    if (!String(data.get('name') || '').trim()) nextErrors.name = t.errors.name;
+    if (!email && !phone) {
+      nextErrors.email = t.errors.contact;
+      nextErrors.phone = t.errors.contact;
+    }
+    if (isAttendance && Number(data.get('childrenCount') || 0) < 1) {
+      nextErrors.childrenCount = t.errors.children;
+    }
+    if (isAttendance && !data.get('ageGroup')) nextErrors.ageGroup = t.errors.ageGroup;
+    if (data.get('consent') !== 'on') nextErrors.consent = t.errors.consent;
+
+    if (Object.keys(nextErrors).length) {
+      setFieldErrors(nextErrors);
+      setStatus({ type: 'error', message: t.errors.review, confirmationCode: null });
+      focusFirstInvalid(form, Object.keys(nextErrors));
+      return;
+    }
+
+    setFieldErrors({});
+    setStatus({ type: 'loading', message: t.sending, confirmationCode: null });
+
+    const endpoint = isAttendance ? '/api/rsvp' : '/api/participation';
+    const payload = isAttendance
+      ? buildAttendancePayload(data, locale)
+      : buildSupporterPayload(
+        data,
+        locale,
+        `${window.location.pathname}${window.location.search}`,
+      );
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || result.ok === false) {
+        const serverErrors = mapServerErrors(result.fields, t);
+        setFieldErrors(serverErrors);
+        if (Object.keys(serverErrors).length) {
+          focusFirstInvalid(form, Object.keys(serverErrors));
+        }
+        const unavailable = ['supporter_service_unavailable', 'supporter_submission_failed'].includes(result.error);
+        setStatus({
+          type: 'error',
+          message: unavailable ? t.errors.unavailable : t.errors.generic,
+          confirmationCode: null,
+        });
+        return;
+      }
+
+      form.reset();
+      setParticipation(isAttendance ? 'attend' : participation);
+      setFieldErrors({});
+      setStatus({
+        type: 'success',
+        message: isAttendance ? t.success.attendance : t.success.supporter,
+        confirmationCode: isAttendance ? result.confirmation_code || null : null,
+      });
+    } catch {
+      setStatus({
+        type: 'error',
+        message: isAttendance ? t.errors.generic : t.errors.unavailable,
+        confirmationCode: null,
+      });
+    }
   }
 
-  return <form className={styles.form} onSubmit={onSubmit}>
-    <input className={styles.honeypot} type="text" name="companyWebsite" tabIndex="-1" autoComplete="off" aria-hidden="true" />
-    <div className={styles.fieldGrid}><label>{t.name}<input name="name" required autoComplete="name" /></label><label>{t.email}<input name="email" type="email" autoComplete="email" aria-describedby="contact-method-note" /></label></div>
-    <div className={styles.fieldGrid}><label>{t.phone}<input name="phone" type="tel" autoComplete="tel" placeholder={t.phonePlaceholder} aria-describedby="contact-method-note" /></label><label>{t.interested}<select name="interest" value={interest} onChange={(e)=>setInterest(e.target.value)} required>{t.interests.map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label></div>
-    <p className={styles.formNote} id="contact-method-note">{t.contactNote}</p>
-    {interest==='attend' ? <div className={styles.fieldGrid}><label>{t.children}<input name="childrenCount" type="number" inputMode="numeric" min="1" max="10" required /></label><label>{t.ages}<select name="ageRange" defaultValue="5-8"><option value="0-4">0–4</option><option value="5-8">5–8</option><option value="9-12">9–12</option><option value="13-17">13–17</option></select></label><label>{t.arrival}<select name="arrivalWindow" defaultValue="12-1"><option value="12-1">12:00–1:00 PM</option><option value="1-2">1:00–2:00 PM</option><option value="2-3">2:00–3:00 PM</option><option value="unsure">{t.unsure}</option></select></label></div> : null}
-    <fieldset style={{border:0,padding:0,margin:0}}><legend style={{fontSize:'1rem',fontWeight:800,marginBottom:'10px'}}>{t.info}</legend><div style={{display:'grid',gap:'10px'}}><label className={styles.consent}><input name="preferences" type="checkbox" value="accessibility"/><span>{t.accessibility}</span></label><label className={styles.consent}><input name="preferences" type="checkbox" value="spanish"/><span>{t.spanish}</span></label><label className={styles.consent}><input name="preferences" type="checkbox" value="volunteer"/><span>{t.volunteer}</span></label><label className={styles.consent}><input name="preferences" type="checkbox" value="supplies"/><span>{t.supplies}</span></label></div></fieldset>
-    <div style={{borderLeft:'3px solid #f5a617',padding:'14px 16px',background:'#fff8e9',color:'#3b3328',lineHeight:1.55}}><strong>{t.noticeTitle}</strong><div>{t.notice}</div></div>
-    <label className={styles.consent}><input name="consent" type="checkbox" required/><span>{t.consent}</span></label>
-    <button className={styles.primaryButton} type="submit" disabled={status.type==='loading'}>{status.type==='loading'?t.sending:submitLabel}</button>
-    <p className={styles.formNote}>{t.privacy}</p>{status.message?<p className={`${styles.status} ${styles[status.type]||''}`} role="status" aria-live="polite">{status.message}</p>:null}
-  </form>;
+  return (
+    <form className={styles.form} onSubmit={onSubmit} noValidate>
+      <input
+        className={styles.honeypot}
+        type="text"
+        name="companyWebsite"
+        tabIndex="-1"
+        autoComplete="off"
+        aria-hidden="true"
+      />
+
+      <div className={styles.fieldGrid}>
+        <label>
+          {t.name}
+          <input
+            name="name"
+            required
+            autoComplete="name"
+            aria-invalid={Boolean(fieldErrors.name)}
+            aria-describedby={fieldErrors.name ? fieldErrorId('name') : undefined}
+          />
+          <FieldError name="name" message={fieldErrors.name} />
+        </label>
+        <label>
+          {t.email}
+          <input
+            name="email"
+            type="email"
+            autoComplete="email"
+            aria-invalid={Boolean(fieldErrors.email)}
+            aria-describedby={describedBy('contact-method-note', fieldErrors.email && fieldErrorId('email'))}
+          />
+          <FieldError name="email" message={fieldErrors.email} />
+        </label>
+      </div>
+
+      <div className={styles.fieldGrid}>
+        <label>
+          {t.phone}
+          <input
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            placeholder={t.phonePlaceholder}
+            aria-invalid={Boolean(fieldErrors.phone)}
+            aria-describedby={describedBy('contact-method-note', fieldErrors.phone && fieldErrorId('phone'))}
+          />
+          <FieldError name="phone" message={fieldErrors.phone} />
+        </label>
+        <label>
+          {t.participation}
+          <select name="participation" value={participation} onChange={selectParticipation}>
+            {t.participationOptions.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <p className={styles.formNote} id="contact-method-note">{t.contactHelp}</p>
+
+      {isAttendance ? (
+        <fieldset className={styles.formGroup}>
+          <legend className={styles.srOnly}>{t.familyGroupLegend}</legend>
+          <div className={styles.fieldGrid}>
+            <label>
+              {t.children}
+              <input
+                name="childrenCount"
+                type="number"
+                inputMode="numeric"
+                min="1"
+                max="10"
+                required
+                aria-invalid={Boolean(fieldErrors.childrenCount)}
+                aria-describedby={fieldErrors.childrenCount ? fieldErrorId('childrenCount') : undefined}
+              />
+              <FieldError name="childrenCount" message={fieldErrors.childrenCount} />
+            </label>
+            <label>
+              {t.ageGroup}
+              <select
+                name="ageGroup"
+                defaultValue="mixed-ages"
+                required
+                aria-invalid={Boolean(fieldErrors.ageGroup)}
+                aria-describedby={fieldErrors.ageGroup ? fieldErrorId('ageGroup') : undefined}
+              >
+                {t.ageGroupOptions.map((option) => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              <FieldError name="ageGroup" message={fieldErrors.ageGroup} />
+            </label>
+          </div>
+          <label>
+            {t.arrival}
+            <select name="arrivalWindow" defaultValue="12-1" aria-describedby="arrival-help">
+              {t.arrivalOptions.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </label>
+          <p className={styles.formNote} id="arrival-help">{t.arrivalHelp}</p>
+        </fieldset>
+      ) : null}
+
+      <fieldset className={styles.formGroup}>
+        <legend>{t.updates}</legend>
+        <div className={styles.checkboxGrid}>
+          {t.updateOptions.map((option) => (
+            <label className={styles.consent} key={option.value}>
+              <input name="updates" type="checkbox" value={option.value} />
+              <span>{option.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div className={styles.formNotice}>
+        <strong>{t.reservationTitle}</strong>
+        <p>{t.reservationBody}</p>
+      </div>
+
+      <label className={styles.consent}>
+        <input
+          name="consent"
+          type="checkbox"
+          required
+          aria-invalid={Boolean(fieldErrors.consent)}
+          aria-describedby={fieldErrors.consent ? fieldErrorId('consent') : undefined}
+        />
+        <span>
+          {t.consent}
+          <FieldError name="consent" message={fieldErrors.consent} />
+        </span>
+      </label>
+
+      <button className={styles.primaryButton} type="submit" disabled={status.type === 'loading'}>
+        {status.type === 'loading' ? t.sending : t.submitLabels[participation]}
+      </button>
+
+      <p className={styles.formNote}>{t.privacyFooter}</p>
+      {status.message ? (
+        <div
+          className={`${styles.status} ${styles[status.type] || ''}`}
+          role={status.type === 'error' ? 'alert' : 'status'}
+          aria-live={status.type === 'error' ? 'assertive' : 'polite'}
+          tabIndex={status.type === 'success' ? '-1' : undefined}
+        >
+          <strong>{status.message}</strong>
+          {status.confirmationCode ? (
+            <span className={styles.confirmationCode}>
+              {t.success.confirmationCode}: {status.confirmationCode}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+    </form>
+  );
 }
