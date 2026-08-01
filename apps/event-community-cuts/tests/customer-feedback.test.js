@@ -93,19 +93,52 @@ describe('customer feedback fidelity', () => {
     expect(page.form.privacyFooter).toBe(LOCKED_CLIENT_COPY_EN.privacyFooter);
     expect(page.faq.eyebrow).toBe(LOCKED_CLIENT_COPY_EN.faqEyebrow);
     expect(page.faq.headline).toBe(LOCKED_CLIENT_COPY_EN.faqHeadline);
-    expect(page.formIntro.privacyBody).toBe(
-      LOCKED_CLIENT_COPY_EN.privacyBody.replace(
-        "a child's name, school",
-        "a child's name, exact age, school",
-      ),
-    );
+    expect(page.formIntro.privacyBody).toBe(LOCKED_CLIENT_COPY_EN.privacyBody);
     expect(page.faq.items.map((item) => item.question)).toEqual(
       LOCKED_CLIENT_COPY_EN.faqs.map((item) => item.question),
     );
     expect(page.faq.items[3].answer).toBe(LOCKED_CLIENT_COPY_EN.faqs[3].answer);
     expect(page.faq.items[3].emphasis).toBe('first-come, first-served basis');
     expect(EVENT_CONTENT.es.faq.items[3].emphasis).toBe('por orden de llegada');
-    expect(page.faq.items[4].answer).toContain("a child's name, exact age, school");
+    expect(page.faq.items[4].answer).toBe(LOCKED_CLIENT_COPY_EN.faqs[4].answer);
+  });
+
+  it('renders every locked customer-copy group instead of merely storing it', () => {
+    const pageSource = fs.readFileSync(
+      new URL('../app/CommunityCutsPage.jsx', import.meta.url),
+      'utf8',
+    );
+    const requiredRenderBindings = [
+      'content.hero.description',
+      'content.hero.goodToKnow',
+      'content.expect.eyebrow',
+      'content.expect.headline',
+      'content.expect.body',
+      'content.expect.items.map',
+      'content.before.body',
+      'content.before.facts.map',
+      'content.family.eyebrow',
+      'content.family.headline',
+      'content.family.body',
+      'content.family.action',
+      'content.supplies.body.map',
+      'content.supplies.groups.map',
+      'content.supplies.helpBody',
+      'content.mission.headline',
+      'content.mission.items.map',
+      'content.mission.tie',
+      'content.mission.founderStory',
+      'content.join.headline',
+      'content.join.cards.map',
+      'content.formIntro.headline',
+      'content.formIntro.body',
+      'content.formIntro.privacyBody',
+      'content.faq.items.map',
+    ];
+
+    for (const binding of requiredRenderBindings) {
+      expect(pageSource, `missing rendered binding: ${binding}`).toContain(binding);
+    }
   });
 
   it('keeps English and Spanish content structurally identical', () => {
