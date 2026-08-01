@@ -1,7 +1,7 @@
 {
   "version": 2,
   "framework": "nextjs",
-  "installCommand": "cd ../.. && npm install",
-  "buildCommand": "npm run build",
+  "installCommand": "npm install --workspace=@asc3nd/event-community-cuts --include-workspace-root",
+  "buildCommand": "next build",
   "outputDirectory": ".next"
 }
