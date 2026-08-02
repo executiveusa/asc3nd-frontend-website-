@@ -106,7 +106,7 @@ export const LOCKED_CLIENT_COPY_EN = Object.freeze({
     'Your response helps The Asc3nd Collective prepare for families, volunteers, and community partners so we can create the best experience possible.',
   privacyTitle: 'Youth Privacy Matters',
   privacyBody:
-    "Your family's privacy is important to us. This public form does not ask for a child's name, school, medical information, personal story, or other sensitive information. Any photo, video, testimonial, or youth participation permissions are handled through separate consent forms.",
+    "Your family's privacy is important to us. This public RSVP form does not ask for a child's name, school, medical information, personal story, or other sensitive information.\n\nDuring this event, our nonprofit may take photos and video to celebrate and share the impact of our programs. Images and recordings may be used on our website, social media channels, newsletters, annual reports, and other promotional or fundraising materials.\n\nAny required permissions for youth photography, video recording, testimonials, or participation will be obtained through separate parent or guardian consent forms, where applicable.",
   participationLabel: 'How would you like to participate?',
   childrenLabel: 'How many children are attending?',
   ageGroupLabel: 'Age group(s) attending',

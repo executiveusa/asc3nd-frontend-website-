@@ -92,9 +92,18 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>{content.hero.eyebrow}</p>
           <h1 className={campaign.campaignTitle} id="event-title">
-            <span>{content.hero.titleCommunity}</span>{' '}
-            <span className={campaign.cuts}>{content.hero.titleCuts}</span>
-            <span className={campaign.forKids}>{content.hero.titleBottom}</span>
+            <Image
+              className={campaign.campaignTitleArtwork}
+              src={locale === 'es'
+                ? '/images/cortes-comunitarios-para-ninos.png'
+                : '/images/community-cuts-for-kids.png'}
+              alt={locale === 'es' ? 'Cortes Comunitarios para Niños' : 'Community Cuts for Kids'}
+              width={1200}
+              height={896}
+              sizes="(max-width: 720px) calc(100vw - 40px), 50vw"
+              priority
+              unoptimized
+            />
           </h1>
           <p className={`${premium.heroPromise} ${campaign.campaignLine}`}>{content.hero.campaignLine}</p>
           <p className={styles.heroLead}>{content.hero.description}</p>
@@ -278,7 +287,9 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
           <p>{content.formIntro.body}</p>
           <div className={styles.privacyNote} data-surface="note">
             <strong>{content.formIntro.privacyTitle}</strong>
-            <p>{content.formIntro.privacyBody}</p>
+            {content.formIntro.privacyBody.split('\n\n').map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
         </div>
         <div className={premium.formSurface} data-surface="form">
