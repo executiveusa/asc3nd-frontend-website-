@@ -51,6 +51,7 @@ describe('customer feedback fidelity', () => {
     );
     expect(pageSource).toContain('src="/images/community-cuts-for-kids.png"');
     expect(pageSource).toContain('alt="Community Cuts for Kids"');
+    expect(pageSource).toContain('unoptimized');
     expect(pageSource.match(/<h1/g)).toHaveLength(1);
   });
 

@@ -101,6 +101,7 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
                 height={896}
                 sizes="(max-width: 720px) calc(100vw - 40px), 50vw"
                 priority
+                unoptimized
               />
             ) : (
               <>
