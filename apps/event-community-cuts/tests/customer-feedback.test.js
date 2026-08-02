@@ -49,8 +49,26 @@ describe('customer feedback fidelity', () => {
       new URL('../app/CommunityCutsPage.jsx', import.meta.url),
       'utf8',
     );
-    expect(pageSource).toContain('src="/images/community-cuts-for-kids.png"');
-    expect(pageSource).toContain('alt="Community Cuts for Kids"');
+    expect(pageSource).toContain("'/images/community-cuts-for-kids.png'");
+    expect(pageSource).toContain("'Community Cuts for Kids'");
+    expect(pageSource).toContain('unoptimized');
+    expect(pageSource.match(/<h1/g)).toHaveLength(1);
+  });
+
+  it('uses the approved Spanish artwork as the accessible Spanish hero heading', () => {
+    const artwork = fs.readFileSync(
+      new URL('../public/images/cortes-comunitarios-para-ninos.png', import.meta.url),
+    );
+    expect(crypto.createHash('sha256').update(artwork).digest('hex')).toBe(
+      '5572b8f34afdb3340aeeed3b8fe3067a13b2dec95c6da18b5f26ea9777405bf9',
+    );
+
+    const pageSource = fs.readFileSync(
+      new URL('../app/CommunityCutsPage.jsx', import.meta.url),
+      'utf8',
+    );
+    expect(pageSource).toContain("'/images/cortes-comunitarios-para-ninos.png'");
+    expect(pageSource).toContain("'Cortes Comunitarios para Niños'");
     expect(pageSource).toContain('unoptimized');
     expect(pageSource.match(/<h1/g)).toHaveLength(1);
   });

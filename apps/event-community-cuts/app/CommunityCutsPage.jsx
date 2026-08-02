@@ -92,24 +92,18 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>{content.hero.eyebrow}</p>
           <h1 className={campaign.campaignTitle} id="event-title">
-            {locale === 'en' ? (
-              <Image
-                className={campaign.campaignTitleArtwork}
-                src="/images/community-cuts-for-kids.png"
-                alt="Community Cuts for Kids"
-                width={1200}
-                height={896}
-                sizes="(max-width: 720px) calc(100vw - 40px), 50vw"
-                priority
-                unoptimized
-              />
-            ) : (
-              <>
-                <span>{content.hero.titleCommunity}</span>{' '}
-                <span className={campaign.cuts}>{content.hero.titleCuts}</span>
-                <span className={campaign.forKids}>{content.hero.titleBottom}</span>
-              </>
-            )}
+            <Image
+              className={campaign.campaignTitleArtwork}
+              src={locale === 'es'
+                ? '/images/cortes-comunitarios-para-ninos.png'
+                : '/images/community-cuts-for-kids.png'}
+              alt={locale === 'es' ? 'Cortes Comunitarios para Niños' : 'Community Cuts for Kids'}
+              width={1200}
+              height={896}
+              sizes="(max-width: 720px) calc(100vw - 40px), 50vw"
+              priority
+              unoptimized
+            />
           </h1>
           <p className={`${premium.heroPromise} ${campaign.campaignLine}`}>{content.hero.campaignLine}</p>
           <p className={styles.heroLead}>{content.hero.description}</p>
