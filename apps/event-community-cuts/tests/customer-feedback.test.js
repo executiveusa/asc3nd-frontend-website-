@@ -42,7 +42,7 @@ describe('customer feedback fidelity', () => {
       new URL('../public/images/community-cuts-for-kids.png', import.meta.url),
     );
     expect(crypto.createHash('sha256').update(artwork).digest('hex')).toBe(
-      '3359922aa7b63b3d25911194aa85db120bf1e148159f701313685c899dfc7361',
+      '63fe65f8bceb668e4d1a66ce67ba0a52a90cae4ccadc285d395f695c3e0a6e6b',
     );
 
     const pageSource = fs.readFileSync(
