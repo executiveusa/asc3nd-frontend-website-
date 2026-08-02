@@ -287,7 +287,9 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
           <p>{content.formIntro.body}</p>
           <div className={styles.privacyNote} data-surface="note">
             <strong>{content.formIntro.privacyTitle}</strong>
-            <p>{content.formIntro.privacyBody}</p>
+            {content.formIntro.privacyBody.split('\\n\\n').map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
         </div>
         <div className={premium.formSurface} data-surface="form">
