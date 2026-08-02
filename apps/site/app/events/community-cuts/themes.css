@@ -1,0 +1,144 @@
+html {
+  background: #f7f3ea;
+}
+
+html[data-theme='dark'] {
+  background: #0b0b0b;
+}
+
+body,
+.event-theme-root,
+.event-theme-root section,
+.event-theme-root footer,
+.event-theme-root form,
+.event-theme-root input,
+.event-theme-root select,
+.event-theme-root textarea {
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.themeToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.themeToggleButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.68);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.themeToggleButton svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.themeToggleButton[data-active='true'] {
+  background: #f7f3ea;
+  color: #111;
+}
+
+[data-theme='dark'] .themeToggleButton[data-active='true'] {
+  background: #f5a617;
+  color: #111;
+}
+
+[data-theme='dark'] .event-theme-root {
+  background: #0c0c0c !important;
+  color: #f5f1e8 !important;
+}
+
+[data-theme='dark'] #supplies,
+[data-theme='dark'] [data-theme-section='join'],
+[data-theme='dark'] [data-theme-section='faq'] {
+  background: #0c0c0c !important;
+  color: #f5f1e8 !important;
+}
+
+[data-theme='dark'] #connect {
+  background: #151515 !important;
+  color: #f5f1e8 !important;
+}
+
+[data-theme='dark'] .event-theme-root [data-surface='card-grid'] {
+  background: #343434 !important;
+  border-color: #343434 !important;
+}
+
+[data-theme='dark'] .event-theme-root [data-surface='card-grid'] > * {
+  background: #171717 !important;
+  border-color: #333 !important;
+  color: #f5f1e8 !important;
+}
+
+[data-theme='dark'] .event-theme-root [data-surface='card-grid'] p,
+[data-theme='dark'] #connect p,
+[data-theme='dark'] [data-theme-section='faq'] dd {
+  color: #b8b1a5 !important;
+}
+
+[data-theme='dark'] .event-theme-root [data-surface='form'],
+[data-theme='dark'] .event-theme-root [data-surface='form'] form {
+  background: #101010 !important;
+  color: #f5f1e8 !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28) !important;
+}
+
+[data-theme='dark'] .event-theme-root [data-surface='form'] input,
+[data-theme='dark'] .event-theme-root [data-surface='form'] select,
+[data-theme='dark'] .event-theme-root [data-surface='form'] textarea {
+  background: #181818 !important;
+  color: #f5f1e8 !important;
+  border-color: #3a3a3a !important;
+}
+
+[data-theme='dark'] .event-theme-root [data-surface='note'] {
+  background: rgba(255, 255, 255, 0.045) !important;
+}
+
+[data-theme='dark'] [data-theme-section='faq'] dl > div {
+  border-color: #343434 !important;
+}
+
+@media (max-width: 860px) {
+  .themeToggleButton span {
+    display: none;
+  }
+
+  .themeToggleButton {
+    padding: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .event-theme-root,
+  .event-theme-root section,
+  .event-theme-root footer,
+  .event-theme-root form,
+  .event-theme-root input,
+  .event-theme-root select,
+  .event-theme-root textarea {
+    transition: none;
+  }
+}
