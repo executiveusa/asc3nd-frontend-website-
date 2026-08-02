@@ -1,11 +1,16 @@
-import { CommunityCutsPage } from './community-cuts/CommunityCutsPage.jsx';
+import { PublicNav } from '../../components/PublicNav';
 
-export const metadata = {
-  title: 'Community Cuts for Kids | The Asc3nd Collective',
-  description: 'Fresh Fade, Fresh Grade is a free back-to-school community event in Everett with haircuts, school supplies, food, and community support.',
-};
-
-export default async function EventsPage({ searchParams }) {
-  const params = await searchParams;
-  return <CommunityCutsPage locale="en" initialInterest={params?.intent} />;
-}
+export default function StubPage() {
+  return (
+    <>
+      <PublicNav />
+      <main className="hp-section">
+        <div className="hp-container">
+          <h1 style={{color: '#F5A617', margin: '100px 0 20px'}}>PAGE UNDER CONSTRUCTION</h1>
+          <p style={{color: '#fff'}}>This route is being updated. Please check back later.</p>
+          <a href="/" className="hp-btn-outline" style={{marginTop: '20px', display: 'inline-block'}}>RETURN HOME</a>
+        </div>
+      </main>
+    </>
+  );
+}
