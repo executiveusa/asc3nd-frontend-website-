@@ -9,7 +9,7 @@ import {
   buildSupporterPayload,
 } from '../app/event-form-contract.js';
 
-const lockedCopyHash = '3e3d8715cb9d3564020ff320e6379be77a7b75df3a2d0942ec1d896c15d55317';
+const lockedCopyHash = 'b2beedaa2a0f335e208cee2dea94b417c62e8daeaf80d8ed1b3825194b052024';
 
 function shape(value) {
   if (Array.isArray(value)) return value.map(shape);
