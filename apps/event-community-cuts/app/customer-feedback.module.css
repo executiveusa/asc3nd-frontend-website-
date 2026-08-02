@@ -22,6 +22,12 @@
   letter-spacing: -0.065em !important;
 }
 
+.campaignTitleArtwork {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .campaignTitle > span:first-child,
 .cuts {
   display: block;

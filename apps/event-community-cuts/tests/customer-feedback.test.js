@@ -37,6 +37,23 @@ describe('customer feedback fidelity', () => {
     expect(pageSource).not.toContain('/images/asc3nd-client-wordmark.png');
   });
 
+  it('uses the approved artwork as the accessible English hero heading', () => {
+    const artwork = fs.readFileSync(
+      new URL('../public/images/community-cuts-for-kids.png', import.meta.url),
+    );
+    expect(crypto.createHash('sha256').update(artwork).digest('hex')).toBe(
+      '9718251ee3e235233270512797b9d080894f7e7e4345cfaf44b33c518b32d619',
+    );
+
+    const pageSource = fs.readFileSync(
+      new URL('../app/CommunityCutsPage.jsx', import.meta.url),
+      'utf8',
+    );
+    expect(pageSource).toContain('src="/images/community-cuts-for-kids.png"');
+    expect(pageSource).toContain('alt="Community Cuts for Kids"');
+    expect(pageSource.match(/<h1/g)).toHaveLength(1);
+  });
+
   it('locks the customer-authorized English copy against paraphrasing', () => {
     const actual = crypto
       .createHash('sha256')
