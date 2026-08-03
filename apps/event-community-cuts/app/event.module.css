@@ -242,7 +242,7 @@
 
 .section,
 .faq {
-  padding: clamp(64px, 9vw, 112px) clamp(20px, 6vw, 92px);
+  padding: clamp(40px, 6vw, 72px) clamp(20px, 6vw, 92px);
 }
 
 .sectionIntro {

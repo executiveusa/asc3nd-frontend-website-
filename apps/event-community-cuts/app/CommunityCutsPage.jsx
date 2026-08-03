@@ -168,25 +168,6 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
         </figure>
       </section>
 
-      <section className={`${styles.section} ${premium.expectSection}`} aria-labelledby="expect-heading">
-        <div className={`${styles.sectionIntro} ${premium.sectionHeading}`}>
-          <p className={styles.eyebrow}>{content.expect.eyebrow}</p>
-          <h2 id="expect-heading">{content.expect.headline}</h2>
-          <p>{content.expect.body}</p>
-        </div>
-        <div className={premium.expectEditorial}>
-          <div aria-hidden="true" />
-          <div>
-            {content.expect.items.map((item, index) => (
-              <article className={premium.expectItem} key={item.title}>
-                <span className={premium.expectNumber}>{String(index + 1).padStart(2, '0')}</span>
-                <div><h3>{item.title}</h3><p>{item.body}</p></div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className={`${styles.section} ${premium.beforeSection}`} id="before" aria-labelledby="before-heading">
         <div className={`${styles.sectionIntro} ${premium.sectionHeading}`}>
           <p className={styles.eyebrow}>{content.before.eyebrow}</p>
@@ -205,6 +186,25 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
         <a className={`${styles.primaryButton} ${premium.directionAction}`} href={googleDirections} target="_blank" rel="noreferrer">
           {content.before.directionAction}
         </a>
+      </section>
+
+      <section className={`${styles.section} ${premium.expectSection}`} aria-labelledby="expect-heading">
+        <div className={`${styles.sectionIntro} ${premium.sectionHeading}`}>
+          <p className={styles.eyebrow}>{content.expect.eyebrow}</p>
+          <h2 id="expect-heading">{content.expect.headline}</h2>
+          <p>{content.expect.body}</p>
+        </div>
+        <div className={premium.expectEditorial}>
+          <div aria-hidden="true" />
+          <div>
+            {content.expect.items.map((item, index) => (
+              <article className={premium.expectItem} key={item.title}>
+                <span className={premium.expectNumber}>{String(index + 1).padStart(2, '0')}</span>
+                <div><h3>{item.title}</h3><p>{item.body}</p></div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className={premium.conversionBridge} aria-labelledby="family-heading">
