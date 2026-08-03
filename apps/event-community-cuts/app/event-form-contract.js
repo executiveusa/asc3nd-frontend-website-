@@ -41,7 +41,7 @@ function getAllowedValues(data, key, allowed) {
   return data.getAll(key).map(String).filter((value) => allowed.includes(value));
 }
 
-export function buildAttendancePayload(data, locale = 'en') {
+export function buildAttendancePayload(data, locale = 'en', idempotencyKey = null) {
   const preferences = getAllowedValues(data, 'updates', UPDATE_VALUES);
   const ageGroup = getString(data, 'ageGroup');
   const arrivalWindow = getString(data, 'arrivalWindow');
@@ -58,10 +58,11 @@ export function buildAttendancePayload(data, locale = 'en') {
     accessibility_contact: preferences.includes('accessibility'),
     contact_privately: false,
     company_website: getString(data, 'companyWebsite'),
+    idempotency_key: idempotencyKey,
   };
 }
 
-export function buildSupporterPayload(data, locale = 'en', sourcePath = '/') {
+export function buildSupporterPayload(data, locale = 'en', sourcePath = '/', idempotencyKey = null) {
   return {
     name: getString(data, 'name'),
     email: getString(data, 'email') || null,
@@ -72,5 +73,6 @@ export function buildSupporterPayload(data, locale = 'en', sourcePath = '/') {
     consent: data.get('consent') === 'on',
     company_website: getString(data, 'companyWebsite'),
     source_path: String(sourcePath || '/').slice(0, 500),
+    idempotency_key: idempotencyKey,
   };
 }
