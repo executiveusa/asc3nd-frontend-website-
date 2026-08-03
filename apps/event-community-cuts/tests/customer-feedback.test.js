@@ -177,6 +177,7 @@ describe('event intake payloads', () => {
       accessibility_contact: true,
       contact_privately: false,
       company_website: '',
+      idempotency_key: null,
     });
   });
 
@@ -199,6 +200,7 @@ describe('event intake payloads', () => {
       consent: true,
       company_website: '',
       source_path: '/es?intent=volunteer',
+      idempotency_key: null,
     });
   });
 });

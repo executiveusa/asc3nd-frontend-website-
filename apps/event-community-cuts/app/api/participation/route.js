@@ -4,6 +4,12 @@ import {
   SUPPORTER_PARTICIPATION_VALUES,
   UPDATE_VALUES,
 } from '../../event-form-contract.js';
+import {
+  insertSupporter,
+  findSupporterByIdempotencyKey,
+  generateConfirmationCode,
+} from '../../../lib/supabase-server.js';
+import { sendAttendeeConfirmation, sendStaffNotification } from '../../../lib/email.js';
 
 export const runtime = 'nodejs';
 
@@ -17,6 +23,7 @@ const allowedFields = new Set([
   'consent',
   'company_website',
   'source_path',
+  'idempotency_key',
 ]);
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,40 +36,6 @@ function json(body, status) {
   });
 }
 
-function readConfig() {
-  const apiUrl = String(
-    process.env.MISSION_API_URL
-      || process.env.NEXT_PUBLIC_MISSION_API_URL
-      || process.env.NEXT_PUBLIC_API_URL
-      || '',
-  ).replace(/\/$/, '');
-  const tenant = String(
-    process.env.MISSION_TENANT
-      || process.env.NEXT_PUBLIC_MISSION_TENANT
-      || process.env.DEFAULT_TENANT
-      || 'asc3nd',
-  ).trim();
-  const publicKey = String(
-    process.env.MISSION_PUBLIC_KEY || process.env.NEXT_PUBLIC_MISSION_PUBLIC_KEY || '',
-  ).trim();
-
-  if (!apiUrl || !tenant || !publicKey) return null;
-
-  let parsed;
-  try {
-    parsed = new URL(apiUrl);
-  } catch {
-    return null;
-  }
-
-  const localDevelopment = parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1';
-  if (process.env.NODE_ENV === 'production' && parsed.protocol !== 'https:' && !localDevelopment) {
-    return null;
-  }
-
-  return { apiUrl, tenant, publicKey };
-}
-
 function normalize(input) {
   const updates = Array.isArray(input.updates)
     ? input.updates.map(String).filter((value) => UPDATE_VALUES.includes(value))
@@ -70,8 +43,8 @@ function normalize(input) {
 
   return {
     name: String(input.name || '').trim().slice(0, 160),
-    email: String(input.email || '').trim().toLowerCase().slice(0, 180),
-    phone: String(input.phone || '').trim().slice(0, 40),
+    email: String(input.email || '').trim().toLowerCase().slice(0, 180) || null,
+    phone: String(input.phone || '').trim().slice(0, 40) || null,
     participation: String(input.participation || '').trim(),
     updates,
     preferredLanguage: input.preferred_language === 'es' ? 'es' : 'en',
@@ -101,15 +74,6 @@ function validate(submission) {
   return fields;
 }
 
-function resolveSourcePage(origin, sourcePath) {
-  try {
-    const requestedSource = new URL(sourcePath || '/', origin);
-    return requestedSource.origin === origin ? requestedSource.toString() : `${origin}/`;
-  } catch {
-    return `${origin}/`;
-  }
-}
-
 export async function POST(request) {
   let input;
   try {
@@ -129,7 +93,6 @@ export async function POST(request) {
 
   const submission = normalize(input);
 
-  // Silently accept honeypot traffic without creating a Mission OS record.
   if (submission.honeypot) return json({ ok: true }, 200);
 
   const fields = validate(submission);
@@ -137,63 +100,68 @@ export async function POST(request) {
     return json({ ok: false, error: 'validation_failed', fields }, 422);
   }
 
-  const config = readConfig();
-  if (!config) {
-    return json({ ok: false, error: 'supporter_service_unavailable' }, 503);
-  }
+  const idempotencyKey = String(input.idempotency_key || '').trim() || null;
+  const confirmationCode = generateConfirmationCode();
 
-  const kind = SUPPORTER_KIND_BY_PARTICIPATION[submission.participation];
-  const origin = request.nextUrl.origin;
-  const sourcePage = resolveSourcePage(origin, submission.sourcePath);
-  const payload = {
+  const insertPayload = {
     name: submission.name,
     email: submission.email,
     phone: submission.phone,
-    message: [
-      `Community Cuts participation: ${submission.participation}`,
-      `Requested updates: ${submission.updates.join(', ') || 'none'}`,
-      `Preferred language: ${submission.preferredLanguage}`,
-    ].join('\n'),
-    sourcePage,
+    participation: submission.participation,
+    updates: submission.updates,
+    preferred_language: submission.preferredLanguage,
     consent: submission.consent,
-    companyWebsite: '',
-    metadata: {
-      campaign: 'fresh-fade-fresh-grade-2026',
-      participation: submission.participation,
-      updates: submission.updates,
-      preferredLanguage: submission.preferredLanguage,
-    },
+    confirmation_code: confirmationCode,
+    idempotency_key: idempotencyKey,
+    source_path: submission.sourcePath,
+    raw_payload: input,
   };
 
   try {
-    const upstream = await fetch(
-      `${config.apiUrl}/api/public/${encodeURIComponent(config.tenant)}/${kind}`,
-      {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          'x-mission-public-key': config.publicKey,
-          'x-idempotency-key': crypto.randomUUID(),
-          origin,
-          referer: sourcePage,
-        },
-        body: JSON.stringify(payload),
-        cache: 'no-store',
-        signal: AbortSignal.timeout(8000),
-      },
-    );
-    const body = await upstream.json().catch(() => ({}));
+    const result = await insertSupporter(insertPayload);
 
-    if (!upstream.ok || body.ok === false) {
-      const status = upstream.status >= 400 && upstream.status < 500 ? upstream.status : 502;
-      return json({ ok: false, error: 'supporter_submission_failed' }, status);
+    if (result.duplicate && idempotencyKey) {
+      const existing = await findSupporterByIdempotencyKey(idempotencyKey);
+      return json({
+        ok: true,
+        receipt_id: existing?.confirmation_code || confirmationCode,
+        is_duplicate: true,
+      }, 200);
+    }
+
+    const row = result.row;
+    const fullSubmission = {
+      ...submission,
+      confirmation_code: row?.confirmation_code || confirmationCode,
+    };
+
+    const emailTo = submission.email;
+    if (emailTo) {
+      try {
+        await sendAttendeeConfirmation({
+          to: emailTo,
+          locale: submission.preferredLanguage,
+          submission: fullSubmission,
+          confirmationCode: fullSubmission.confirmation_code,
+          type: 'supporter',
+        });
+      } catch {
+      }
+    }
+
+    try {
+      await sendStaffNotification({ submission: fullSubmission, type: 'supporter' });
+    } catch {
     }
 
     return json({
       ok: true,
-      receipt_id: body.receipt?.id || null,
+      receipt_id: fullSubmission.confirmation_code,
     }, 200);
-  } catch {
-    return json({ ok: false, error: 'supporter_service_unavailable' }, 502);
+  } catch (err) {
+    if (err.code === 'supabase_not_configured') {
+      return json({ ok: false, error: 'supporter_service_unavailable' }, 503);
+    }
+    return json({ ok: false, error: 'supporter_submission_failed' }, 502);
   }
 }

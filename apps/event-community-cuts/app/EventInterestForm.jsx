@@ -60,6 +60,7 @@ export function EventInterestForm({ copy: t, locale = 'en', initialInterest = 'a
   const [participation, setParticipation] = useState(() => normalizeParticipation(initialInterest));
   const [status, setStatus] = useState({ type: 'idle', message: '', confirmationCode: null });
   const [fieldErrors, setFieldErrors] = useState({});
+  const [idempotencyKey] = useState(() => (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `k-${Date.now()}-${Math.random().toString(36).slice(2)}`));
   const isAttendance = participation === 'attend';
 
   function selectParticipation(event) {
@@ -99,11 +100,12 @@ export function EventInterestForm({ copy: t, locale = 'en', initialInterest = 'a
 
     const endpoint = isAttendance ? '/api/rsvp' : '/api/participation';
     const payload = isAttendance
-      ? buildAttendancePayload(data, locale)
+      ? buildAttendancePayload(data, locale, idempotencyKey)
       : buildSupporterPayload(
         data,
         locale,
         `${window.location.pathname}${window.location.search}`,
+        idempotencyKey,
       );
 
     try {

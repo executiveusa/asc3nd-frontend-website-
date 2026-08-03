@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import { AGE_GROUP_VALUES, ARRIVAL_WINDOW_VALUES } from '../../event-form-contract.js';
+import {
+  insertRsvp,
+  findRsvpByIdempotencyKey,
+  generateConfirmationCode,
+} from '../../../lib/supabase-server.js';
+import { sendAttendeeConfirmation, sendStaffNotification } from '../../../lib/email.js';
 
-const CANONICAL_RSVP_URL = process.env.ASC3ND_WORKBOOK_RSVP_URL || 'https://asc3nd-interactive-document.vercel.app/api/rsvp';
-const WORKBOOK_ORIGIN = 'https://asc3nd-interactive-document.vercel.app';
+export const runtime = 'nodejs';
 
 const allowedFields = new Set([
   'guardian_name',
@@ -16,6 +21,7 @@ const allowedFields = new Set([
   'accessibility_contact',
   'contact_privately',
   'company_website',
+  'idempotency_key',
 ]);
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,6 +51,9 @@ export async function POST(request) {
     return json({ ok: false, error: 'unexpected_fields' }, 400);
   }
 
+  const honeypot = String(input.company_website || '').trim();
+  if (honeypot) return json({ ok: true }, 200);
+
   const payload = {
     guardian_name: String(input.guardian_name || '').trim(),
     email: String(input.email || '').trim() || null,
@@ -56,8 +65,9 @@ export async function POST(request) {
     preferred_language: String(input.preferred_language || 'en').trim(),
     accessibility_contact: Boolean(input.accessibility_contact),
     contact_privately: Boolean(input.contact_privately),
-    company_website: String(input.company_website || '').trim(),
+    company_website: honeypot,
   };
+  const idempotencyKey = String(input.idempotency_key || '').trim() || null;
 
   const fields = [];
   if (!payload.guardian_name || payload.guardian_name.length > 120) {
@@ -98,24 +108,75 @@ export async function POST(request) {
     }, 422);
   }
 
+  const confirmationCode = generateConfirmationCode();
+
+  const insertPayload = {
+    guardian_name: payload.guardian_name,
+    email: payload.email,
+    phone: payload.phone,
+    children_count: payload.children_count,
+    age_range: payload.age_range,
+    requested_service: payload.requested_service,
+    arrival_window: payload.arrival_window,
+    preferred_language: payload.preferred_language,
+    accessibility_contact: payload.accessibility_contact,
+    contact_privately: payload.contact_privately,
+    confirmation_code: confirmationCode,
+    idempotency_key: idempotencyKey,
+    contact_consent: true,
+    raw_payload: input,
+  };
+
   try {
-    const upstream = await fetch(CANONICAL_RSVP_URL, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        origin: WORKBOOK_ORIGIN,
-        referer: `${WORKBOOK_ORIGIN}/event/community-cuts`,
-      },
-      body: JSON.stringify(payload),
-      cache: 'no-store',
-    });
+    const result = await insertRsvp(insertPayload);
 
-    const text = await upstream.text();
-    let body;
-    try { body = JSON.parse(text); } catch { body = { ok: false, error: 'invalid_upstream_response' }; }
+    if (result.duplicate && idempotencyKey) {
+      const existing = await findRsvpByIdempotencyKey(idempotencyKey);
+      return json({
+        ok: true,
+        confirmation_code: existing?.confirmation_code || confirmationCode,
+        is_duplicate: true,
+      }, 200);
+    }
 
-    return json(body, upstream.status);
-  } catch {
+    const row = result.row;
+    const submission = {
+      ...payload,
+      confirmation_code: row?.confirmation_code || confirmationCode,
+    };
+
+    const emailTo = payload.email;
+    if (emailTo) {
+      try {
+        await sendAttendeeConfirmation({
+          to: emailTo,
+          locale: payload.preferred_language,
+          submission,
+          confirmationCode: submission.confirmation_code,
+          type: 'rsvp',
+        });
+      } catch {
+      }
+    }
+
+    try {
+      await sendStaffNotification({ submission, type: 'rsvp' });
+    } catch {
+    }
+
+    return json({
+      ok: true,
+      confirmation_code: submission.confirmation_code,
+      is_duplicate: false,
+    }, 200);
+  } catch (err) {
+    if (err.code === 'supabase_not_configured') {
+      return json({
+        ok: false,
+        error: 'rsvp_service_unavailable',
+        message: 'The RSVP service is not configured. Please try again later.',
+      }, 503);
+    }
     return json({
       ok: false,
       error: 'rsvp_service_unavailable',
