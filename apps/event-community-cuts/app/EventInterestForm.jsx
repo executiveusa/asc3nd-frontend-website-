@@ -309,7 +309,7 @@ export function EventInterestForm({ copy: t, locale = 'en', initialInterest = 'a
                   1. Save your confirmation code.<br />
                   2. Arrive at Tangles &amp; Locs on Sunday, August 30 — doors open at 12:00 PM.<br />
                   3. Check in at the ASC3ND welcome table. Show your code or your email.<br />
-                  4. Receive your child's haircut and school supplies. Bring the whole family!<br />
+                  4. Come in and meet The Asc3nd Collective. Enjoy the event!<br />
                   <br />
                   Check your email for a full confirmation. Questions? Email social@asc3nd.org.
                 </span>
