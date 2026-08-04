@@ -1,61 +1,86 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+/**
+ * Supabase Auth via raw REST API (no @supabase/supabase-js dependency).
+ *
+ * Uses fetch() to call Supabase's auth endpoints directly.
+ * The anon key is safe for client-side auth.
+ * The service_role key is used only server-side for admin operations.
+ */
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+
+function authHeaders(key) {
+  return {
+    'apikey': key,
+    'Authorization': `Bearer ${key}`,
+    'Content-Type': 'application/json',
+  };
+}
 
 /**
- * Server-side Supabase client for auth sessions.
- * Reads/refreshes the auth cookie from Next.js headers.
+ * Sign in with email + password. Returns session + user.
  */
-export async function createAuthClient() {
-  const cookieStore = await cookies();
+export async function signInWithEmail(email, password) {
+  const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+    method: 'POST',
+    headers: authHeaders(ANON_KEY),
+    body: JSON.stringify({ email, password }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    return { error: 'invalid_credentials', status: res.status };
+  }
+  return res.json(); // { access_token, refresh_token, user, ... }
+}
 
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll();
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options),
-            );
-          } catch {
-            // Called from a Server Component — session refresh happens in middleware
-          }
-        },
-      },
-    },
+/**
+ * Get user by access token (from the session cookie).
+ */
+export async function getUserByToken(accessToken) {
+  const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+    headers: authHeaders(accessToken),
+  });
+  if (!res.ok) return null;
+  return res.json();
+}
+
+/**
+ * Check if a user has a staff profile.
+ * Uses the service_role key (server-side only).
+ */
+export async function getStaffProfile(userId) {
+  if (!SERVICE_KEY) return null;
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/staff_profiles?id=eq.${userId}&select=role,full_name&limit=1`,
+    { headers: authHeaders(SERVICE_KEY) },
   );
+  if (!res.ok) return null;
+  const rows = await res.json();
+  return rows[0] || null;
 }
 
 /**
- * Get the current authenticated user (or null).
- * Use this in any server component or route to check auth.
+ * Get the full staff session from a request's cookies.
+ * The auth cookie is named 'sb-access-token' (set by the login route).
+ * Returns { user, isStaff, isAdmin, fullName } or { user: null, isStaff: false }.
  */
-export async function getCurrentUser() {
-  const supabase = await createAuthClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
-}
+export async function getStaffSession(request) {
+  const cookieHeader = request.headers.get('cookie') || '';
+  const cookies = Object.fromEntries(
+    cookieHeader.split(';').map(c => {
+      const [k, ...v] = c.trim().split('=');
+      return [k, v.join('=')];
+    }).filter(([k]) => k)
+  );
 
-/**
- * Check if the current user is staff (has a staff_profiles row).
- * Returns { user, isStaff, isAdmin } or { user: null, isStaff: false }.
- */
-export async function getStaffSession() {
-  const user = await getCurrentUser();
+  const token = cookies['sb-access-token'];
+  if (!token) return { user: null, isStaff: false, isAdmin: false };
+
+  const user = await getUserByToken(token);
   if (!user) return { user: null, isStaff: false, isAdmin: false };
 
-  // Check if user has a staff profile
-  const supabase = await createAuthClient();
-  const { data: profile } = await supabase
-    .from('staff_profiles')
-    .select('role, full_name')
-    .eq('id', user.id)
-    .single();
-
+  const profile = await getStaffProfile(user.id);
   if (!profile) return { user, isStaff: false, isAdmin: false };
 
   return {
