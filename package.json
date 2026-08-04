@@ -24,8 +24,6 @@
     "node": ">=20.11.0"
   },
   "dependencies": {
-    "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "^2",
     "framer-motion": "^12.42.0",
     "lenis": "^1.3.25",
     "react": "^19.2.7"
