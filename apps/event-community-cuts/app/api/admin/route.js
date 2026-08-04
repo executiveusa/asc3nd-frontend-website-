@@ -1,6 +1,6 @@
 /**
  * Admin API — POST handles all admin actions via a JSON body action field.
- * Password-protected via ADMIN_PASSWORD env var (passed as ?p= or Authorization header).
+ * Session-protected via HttpOnly cookie + CSRF origin check.
  *
  * Actions:
  *   { action: "delete", id, confirmName }     — delete RSVP (double verification)
@@ -18,6 +18,7 @@ import {
   findRsvpsByName,
   countByStatus,
 } from '../../../lib/supabase-server.js';
+import { validateSession, checkOrigin } from '../../../lib/admin-auth.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -26,18 +27,15 @@ function json(body, status) {
   return Response.json(body, { status, headers: { 'cache-control': 'no-store' } });
 }
 
-function checkAuth(request) {
-  const adminPassword = process.env.ADMIN_PASSWORD;
-  if (!adminPassword) return false;
-  const url = new URL(request.url);
-  if (url.searchParams.get('p') === adminPassword) return true;
-  const auth = request.headers.get('authorization');
-  if (auth === `Bearer ${adminPassword}`) return true;
-  return false;
-}
-
 export async function POST(request) {
-  if (!checkAuth(request)) return json({ ok: false, error: 'unauthorized' }, 401);
+  // Auth: session cookie only (no password in URL/JS)
+  if (!validateSession(request.headers.get('cookie'))) {
+    return json({ ok: false, error: 'unauthorized' }, 401);
+  }
+  // CSRF: verify same-origin
+  if (!checkOrigin(request)) {
+    return json({ ok: false, error: 'forbidden' }, 403);
+  }
 
   let input;
   try {
@@ -121,6 +119,9 @@ export async function POST(request) {
         return json({ ok: false, error: 'unknown_action' }, 400);
     }
   } catch (err) {
-    return json({ ok: false, error: err.message || 'server_error' }, 500);
+    // Sanitize: don't leak internal error details to the client
+    const safeErrors = ['invalid_status', 'update_failed', 'delete_failed', 'not_found'];
+    const error = safeErrors.includes(err.message) ? err.message : 'server_error';
+    return json({ ok: false, error }, 500);
   }
 }

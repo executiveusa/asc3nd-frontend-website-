@@ -1,20 +1,16 @@
 /**
  * Staff dashboard — /admin
  *
- * Password-protected via the ADMIN_PASSWORD env var.
+ * Session-token protected (HttpOnly cookie). Password is NEVER sent to browser.
  * Shows RSVP + supporter counts, recent submissions, and CSV export links.
- * Server-rendered (no client JS needed). Minimal inline styles using the
- * locked ASC3ND color tokens.
- *
- * Access: /admin?p=<ADMIN_PASSWORD> or enter the password in the form.
  */
 import { listRsvps, listSupporters, countRsvps } from '../../lib/supabase-server.js';
 import { checkEventStatus, EVENT_CONFIG } from '../../lib/event-config.js';
+import { validateSession, destroySession } from '../../lib/admin-auth.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-/** HTML-escape user-provided values to prevent stored XSS in the dashboard */
 function esc(value) {
   if (value === null || value === undefined) return '';
   return String(value)
@@ -25,33 +21,10 @@ function esc(value) {
     .replace(/'/g, '&#39;');
 }
 
-function parseCookies(cookieHeader) {
-  const cookies = {};
-  if (!cookieHeader) return cookies;
-  for (const part of cookieHeader.split(';')) {
-    const [key, ...rest] = part.trim().split('=');
-    if (key) cookies[key] = decodeURIComponent(rest.join('='));
-  }
-  return cookies;
-}
-
 function checkAuth(request) {
-  const adminPassword = process.env.ADMIN_PASSWORD;
-  if (!adminPassword) return { authed: false, reason: 'no_password_set' };
-
-  // Check query param ?p= (for direct links)
-  const url = new URL(request.url);
-  const queryP = url.searchParams.get('p');
-  if (queryP === adminPassword) {
-    return { authed: true, setCookie: `asc3nd_admin=${encodeURIComponent(adminPassword)}; HttpOnly; Secure; SameSite=Strict; Max-Age=86400; Path=/` };
-  }
-
-  // Check cookie
-  const cookies = parseCookies(request.headers.get('cookie'));
-  if (cookies.asc3nd_admin === adminPassword) {
+  if (validateSession(request.headers.get('cookie'))) {
     return { authed: true };
   }
-
   return { authed: false };
 }
 
@@ -64,53 +37,60 @@ function csvEscape(value) {
   return str;
 }
 
-function rsvpsToCsv(rsvps) {
-  const headers = ['confirmation_code', 'guardian_name', 'email', 'phone', 'children_count', 'age_range', 'arrival_window', 'preferred_language', 'updates', 'accessibility_contact', 'status', 'created_at'];
-  const rows = rsvps.map(r => [
-    r.confirmation_code, r.guardian_name, r.email, r.phone, r.children_count,
-    r.age_range, r.arrival_window, r.preferred_language,
-    Array.isArray(r.updates) ? r.updates.join('; ') : '',
-    r.accessibility_contact, r.status, r.created_at
-  ].map(csvEscape).join(','));
-  return [headers.join(','), ...rows].join('\n');
-}
-
-function supportersToCsv(supporters) {
-  const headers = ['confirmation_code', 'name', 'email', 'phone', 'participation', 'updates', 'preferred_language', 'created_at'];
-  const rows = supporters.map(s => [
-    s.confirmation_code, s.name, s.email, s.phone, s.participation,
-    Array.isArray(s.updates) ? s.updates.join('; ') : '',
-    s.preferred_language, s.created_at
-  ].map(csvEscape).join(','));
-  return [headers.join(','), ...rows].join('\n');
-}
-
 export async function GET(request) {
   const auth = checkAuth(request);
+  const headers = { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' };
 
-  const headers = {
-    'content-type': 'text/html; charset=utf-8',
-    'cache-control': 'no-store',
-  };
-  if (auth.setCookie) headers['set-cookie'] = auth.setCookie;
+  // Handle logout
+  const url = new URL(request.url);
+  if (url.searchParams.get('logout')) {
+    const clearCookie = destroySession(request.headers.get('cookie'));
+    headers['set-cookie'] = clearCookie;
+    return new Response('<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=/admin"></head><body>Logging out...</body></html>', { headers });
+  }
 
-  // Login form
+  // Login form (no password ever sent to browser)
   if (!auth.authed) {
-    const noPassword = auth.reason === 'no_password_set';
     return new Response(`<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ASC3ND Admin</title>
-<style>body{font-family:system-ui,sans-serif;background:#F5F1E8;color:#050505;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
-.box{max-width:360px;width:90%;padding:32px;background:#fff;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-h1{font-size:20px;margin:0 0 8px}p{font-size:14px;color:#666;margin:0 0 20px}
-input{width:100%;padding:12px;border:1px solid #ccc;border-radius:6px;font-size:16px;margin-bottom:12px}
-button{width:100%;padding:12px;background:#F5A617;color:#050505;border:none;border-radius:6px;font-size:16px;font-weight:700;cursor:pointer}
-.alert{background:#fee;color:#c00;padding:12px;border-radius:6px;font-size:13px;margin-bottom:16px}
+<style>body{font-family:system-ui,sans-serif;background:#050505;color:#F5F1E8;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+.box{max-width:360px;width:90%;padding:32px}
+h1{font-size:20px;margin:0 0 8px;color:#F5A617}p{font-size:14px;color:#888;margin:0 0 20px}
+input{width:100%;padding:14px;border:1px solid #333;border-radius:6px;font-size:16px;background:#111;color:#fff;margin-bottom:12px}
+button{width:100%;padding:14px;background:#F5A617;color:#050505;border:none;border-radius:6px;font-size:16px;font-weight:700;cursor:pointer}
+.error{color:#c55;font-size:13px;margin-bottom:12px}
 </style></head>
 <body><div class="box">
 <h1>ASC3ND Staff</h1>
-${noPassword ? '<div class="alert">ADMIN_PASSWORD env var is not set. Set it in Vercel to enable the dashboard.</div>' : '<p>Enter the staff password to view submissions.</p>'}
-${noPassword ? '' : `<form method="GET" action="/admin"><input type="password" name="p" placeholder="Password" autofocus><button type="submit">Login</button></form>`}
-</div></body></html>`, { headers });
+<p>Enter the staff password to view submissions.</p>
+<form id="login-form">
+<input type="password" id="password" placeholder="Password" autofocus>
+<button type="submit">Login</button>
+</form>
+<div id="error"></div>
+</div>
+<script>
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const pw = document.getElementById('password').value;
+  const errDiv = document.getElementById('error');
+  errDiv.textContent = '';
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: {'content-type':'application/json'},
+      body: JSON.stringify({password: pw})
+    });
+    if (res.ok) {
+      window.location.reload();
+    } else {
+      const data = await res.json();
+      errDiv.textContent = data.error === 'invalid_password' ? 'Wrong password.' : 'Login failed.';
+    }
+  } catch { errDiv.textContent = 'Connection error.'; }
+});
+</script>
+</body></html>`, { headers });
   }
 
   // Authed — load data
@@ -123,7 +103,6 @@ ${noPassword ? '' : `<form method="GET" action="/admin"><input type="password" n
   const eventStatus = checkEventStatus();
   const capacity = EVENT_CONFIG.maxRsvps;
   const remaining = capacity ? Math.max(0, capacity - totalCount) : 'unlimited';
-
   const totalChildren = rsvps.reduce((sum, r) => sum + (r.children_count || 0), 0);
   const languageCounts = rsvps.reduce((acc, r) => {
     acc[r.preferred_language] = (acc[r.preferred_language] || 0) + 1;
@@ -156,7 +135,7 @@ ${noPassword ? '' : `<form method="GET" action="/admin"><input type="password" n
     <td>${esc(r.phone)}</td>
     <td style="text-align:center">${r.children_count || 0}</td>
     <td>${esc(r.age_range)}</td>
-    <td>${esc(r.arrival_window) || '—'}</td>
+    <td>${esc(r.arrival_window) || '\u2014'}</td>
     <td>${esc(r.preferred_language) || 'en'}</td>
     <td>${Array.isArray(r.updates) ? esc(r.updates.join(', ')) : ''}</td>
     <td><select class="status-select" data-id="${esc(r.id)}" style="background:${statusColor};color:${statusFg};border:none;border-radius:4px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer">
@@ -203,7 +182,7 @@ th{text-align:left;padding:8px 12px;background:#F5F1E8;font-weight:600;white-spa
 td{padding:8px 12px;border-top:1px solid #eee}
 tr:hover{background:#fafafa}
 .tag{display:inline-block;padding:2px 8px;background:#F5A617;color:#050505;border-radius:3px;font-size:11px;font-weight:600}
-.export-btn{display:inline-block;padding:8px 16px;background:#050505;color:#F5F1E8;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;margin-top:12px}
+.export-btn{display:inline-block;padding:8px 16px;background:#050505;color:#F5F1E8;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;margin-top:12px;cursor:pointer;border:none}
 .export-btn:hover{background:#333}
 .mini-stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .mini-stat{background:#F5F1E8;padding:6px 12px;border-radius:4px;font-size:13px}
@@ -214,25 +193,22 @@ tr:hover{background:#fafafa}
 </style></head>
 <body>
 <div class="header">
-  <h1>ASC3ND — Community Cuts Dashboard</h1>
+  <h1>ASC3ND \u2014 Community Cuts Dashboard</h1>
   <div style="display:flex;gap:16px;align-items:center">
-    <a href="/admin/checkin?p=${process.env.ADMIN_PASSWORD || ''}" style="background:#F5A617;color:#050505;padding:6px 14px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none">Check-in Mode</a>
+    <a href="/admin/checkin" style="background:#F5A617;color:#050505;padding:6px 14px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none">Check-in Mode</a>
     <a href="/admin?logout=1" style="color:#888;font-size:13px">Logout</a>
   </div>
 </div>
 <div class="container">
-
   <div class="event-status ${eventStatus.open ? 'event-open' : 'event-closed'}">
-    ${eventStatus.open ? '✓ RSVP OPEN' : '✗ RSVP CLOSED'} · Capacity: ${totalCount}/${capacity || '∞'} · ${remaining} spots remaining
+    ${eventStatus.open ? '\u2713 RSVP OPEN' : '\u2717 RSVP CLOSED'} \u00b7 Capacity: ${totalCount}/${capacity || '\u221e'} \u00b7 ${remaining} spots remaining
   </div>
-
   <div class="stats">
     <div class="stat"><div class="num">${totalCount}</div><div class="label">Family RSVPs</div></div>
     <div class="stat"><div class="num">${totalChildren}</div><div class="label">Children Expected</div></div>
     <div class="stat"><div class="num">${supporters.length}</div><div class="label">Supporters</div></div>
     <div class="stat"><div class="num">${remaining}</div><div class="label">Spots Left</div></div>
   </div>
-
   <div class="section">
     <h2>Family RSVPs (${rsvps.length})</h2>
     <div class="mini-stats">
@@ -244,9 +220,8 @@ tr:hover{background:#fafafa}
       <thead><tr><th>Code</th><th>Name</th><th>Email</th><th>Phone</th><th>Kids</th><th>Age</th><th>Arrival</th><th>Lang</th><th>Updates</th><th>Status</th><th>Notes</th><th>Received</th><th>Actions</th></tr></thead>
       <tbody>${rsvpRows || '<tr><td colspan="13" style="text-align:center;color:#999;padding:24px">No RSVPs yet</td></tr>'}</tbody>
     </table>
-    <a class="export-btn" href="/admin/export?type=rsvps&p=${process.env.ADMIN_PASSWORD || ''}">Export RSVPs as CSV</a>
+    <button class="export-btn" onclick="window.location.href='/admin/export?type=rsvps'">Export RSVPs as CSV</button>
   </div>
-
   <div class="section">
     <h2>Supporter Interest (${supporters.length})</h2>
     <div class="mini-stats">
@@ -256,75 +231,27 @@ tr:hover{background:#fafafa}
       <thead><tr><th>Code</th><th>Name</th><th>Email</th><th>Phone</th><th>Type</th><th>Updates</th><th>Received</th></tr></thead>
       <tbody>${supporterRows || '<tr><td colspan="7" style="text-align:center;color:#999;padding:24px">No supporters yet</td></tr>'}</tbody>
     </table>
-    <a class="export-btn" href="/admin/export?type=supporters&p=${process.env.ADMIN_PASSWORD || ''}">Export Supporters as CSV</a>
+    <button class="export-btn" onclick="window.location.href='/admin/export?type=supporters'">Export Supporters as CSV</button>
   </div>
-
 </div>
 <script>
-const ADMIN_PASS = ${JSON.stringify(process.env.ADMIN_PASSWORD || '')};
-const API = '/api/admin?p=' + ADMIN_PASS;
-
-// ── Status dropdowns ──
+const API = '/api/admin';
+// Status dropdowns
 document.querySelectorAll('.status-select').forEach(sel => {
   sel.addEventListener('change', async (e) => {
-    const id = e.target.dataset.id;
-    const status = e.target.value;
+    const id = e.target.dataset.id, status = e.target.value;
     e.target.style.opacity = '0.5';
-    const res = await fetch(API, { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({action:'status', id, status}) });
+    const res = await fetch(API, {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'status',id,status})});
     const data = await res.json();
     e.target.style.opacity = '1';
-    if (data.ok) {
-      // Update color
-      const colors = { ATTENDED:['#1a5c2e','#7eea9f'], NO_SHOW:['#5c1a1a','#e88'], CANCELLED:['#555','#aaa'], RECEIVED:['#333','#aaa'], CONFIRMED:['#333','#aaa'] };
-      const [bg,fg] = colors[status] || ['#333','#aaa'];
-      e.target.style.background = bg; e.target.style.color = fg;
-    } else { alert('Failed to update status'); }
+    if(data.ok){const c={ATTENDED:['#1a5c2e','#7eea9f'],NO_SHOW:['#5c1a1a','#e88'],CANCELLED:['#555','#aaa'],RECEIVED:['#333','#aaa'],CONFIRMED:['#333','#aaa']};const[bg,fg]=c[status]||['#333','#aaa'];e.target.style.background=bg;e.target.style.color=fg;}else{alert('Failed');}
   });
 });
-
-// ── Notes auto-save (debounced) ──
-let notesTimer;
-document.querySelectorAll('.notes-input').forEach(inp => {
-  inp.addEventListener('input', (e) => {
-    clearTimeout(notesTimer);
-    const id = e.target.dataset.id;
-    const notes = e.target.value;
-    notesTimer = setTimeout(async () => {
-      e.target.style.borderColor = '#F5A617';
-      await fetch(API, { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({action:'notes', id, notes}) });
-      e.target.style.borderColor = '#ddd';
-    }, 800);
-  });
-});
-
-// ── Delete with double verification ──
-document.querySelectorAll('.delete-btn').forEach(btn => {
-  btn.addEventListener('click', async (e) => {
-    const id = e.target.dataset.id;
-    const name = e.target.dataset.name;
-    // Step 1: confirm dialog
-    if (!confirm('Delete RSVP for "' + name + '"?\\nThis cannot be undone.')) return;
-    // Step 2: type the name to confirm
-    const typed = prompt('Type the guardian name to confirm deletion:');
-    if (typed === null) return;
-    if (typed.trim().toLowerCase() !== name.trim().toLowerCase()) {
-      alert('Name does not match. Deletion cancelled.');
-      return;
-    }
-    // Delete
-    e.target.textContent = 'Deleting...'; e.target.disabled = true;
-    const res = await fetch(API, { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({action:'delete', id, confirmName: typed}) });
-    const data = await res.json();
-    if (data.ok) {
-      const row = document.querySelector('tr[data-id="' + id + '"]');
-      if (row) row.style.transition='opacity 0.3s'; if (row) row.style.opacity='0';
-      setTimeout(() => { if (row) row.remove(); }, 300);
-    } else {
-      alert('Delete failed: ' + (data.message || data.error));
-      e.target.textContent = 'Delete'; e.target.disabled = false;
-    }
-  });
-});
+// Notes auto-save
+let nt;
+document.querySelectorAll('.notes-input').forEach(inp=>{inp.addEventListener('input',e=>{clearTimeout(nt);const id=e.target.dataset.id,notes=e.target.value;nt=setTimeout(async()=>{e.target.style.borderColor='#F5A617';await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'notes',id,notes})});e.target.style.borderColor='#ddd';},800);});});
+// Delete with double verification
+document.querySelectorAll('.delete-btn').forEach(btn=>{btn.addEventListener('click',async e=>{const id=e.target.dataset.id,name=e.target.dataset.name;if(!confirm('Delete RSVP for "'+name+'"?\\nThis cannot be undone.'))return;const typed=prompt('Type the guardian name to confirm:');if(typed===null)return;if(typed.trim().toLowerCase()!==name.trim().toLowerCase()){alert('Name mismatch.');return;}e.target.textContent='Deleting...';e.target.disabled=true;const res=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'delete',id,confirmName:typed})});const data=await res.json();if(data.ok){const row=document.querySelector('tr[data-id="'+id+'"]');if(row){row.style.transition='opacity .3s';row.style.opacity='0';setTimeout(()=>{if(row)row.remove();},300);}}else{alert('Failed: '+(data.message||data.error));e.target.textContent='Delete';e.target.disabled=false;}});});
 </script>
 </body></html>`, { headers });
 }
