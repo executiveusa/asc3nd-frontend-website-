@@ -6,6 +6,27 @@
   min-height: 100vh;
   background: var(--paper);
   color: var(--ink);
+  scroll-behavior: smooth;
+}
+
+/* Anchor offset so sections aren't hidden behind the sticky header */
+.page section[id],
+.page div[id] {
+  scroll-margin-top: 96px;
+}
+
+@media (max-width: 1199px) {
+  .page section[id],
+  .page div[id] {
+    scroll-margin-top: 84px;
+  }
+}
+
+@media (max-width: 767px) {
+  .page section[id],
+  .page div[id] {
+    scroll-margin-top: 76px;
+  }
 }
 
 .header {
