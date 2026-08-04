@@ -12,7 +12,12 @@ export const dynamic = 'force-dynamic';
 export async function GET(request) {
   const headers = { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' };
 
-  const staffSession = await getStaffSession();
+  let staffSession = { user: null, isStaff: false, isAdmin: false, fullName: null };
+  try {
+    staffSession = await getStaffSession(request);
+  } catch {
+    // Supabase auth not configured — fall through to shared password
+  }
   const sharedAuthed = validateSession(request.headers.get('cookie'));
   if (!staffSession.isStaff && !sharedAuthed) {
     return new Response('<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=/auth/login"></head></html>', { status: 302, headers });

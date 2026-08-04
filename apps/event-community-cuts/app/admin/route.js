@@ -29,7 +29,12 @@ export async function GET(request) {
   }
 
   // Auth check: Supabase Auth OR shared password session
-  const staffSession = await getStaffSession();
+  let staffSession = { user: null, isStaff: false, isAdmin: false };
+  try {
+    staffSession = await getStaffSession(request);
+  } catch {
+    // Supabase auth not configured or unreachable — fall through to shared password
+  }
   const sharedAuthed = validateSession(request.headers.get('cookie'));
   const authed = staffSession.isStaff || sharedAuthed;
 
