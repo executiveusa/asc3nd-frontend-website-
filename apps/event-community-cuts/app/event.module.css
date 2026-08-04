@@ -672,6 +672,11 @@
     padding-inline: 20px;
   }
 
+  /* Show the mobile nav toggle below 720px */
+  .mobileNavToggle {
+    display: inline-flex !important;
+  }
+
   .nav a:not(.languageToggle) {
     display: none;
   }
