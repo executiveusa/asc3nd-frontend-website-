@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { EventInterestForm } from './EventInterestForm.jsx';
+import { MobileNav } from './MobileNav.jsx';
 import { normalizeParticipation } from './event-form-contract.js';
 import { getEventContent } from './event-content.js';
 import styles from './event.module.css';
@@ -86,6 +87,17 @@ export function CommunityCutsPage({ locale = 'en', initialInterest = 'attend' })
             {content.languageLabel}
           </a>
         </nav>
+        <MobileNav
+          links={[
+            { label: content.nav.event, href: '#event' },
+            { label: content.nav.before, href: '#before' },
+            { label: content.nav.supplies, href: '#supplies' },
+          ]}
+          ctaLabel={content.nav.attend}
+          ctaHref={interestHref(locale, 'attend')}
+          languageLabel={content.languageLabel}
+          languageHref={content.languageHref}
+        />
       </header>
 
       <section className={`${styles.hero} ${premium.heroPremium} ${campaign.hero}`} id="event" aria-labelledby="event-title">
