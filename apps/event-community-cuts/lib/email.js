@@ -49,7 +49,7 @@ function attendeeHtmlEN(submission, confirmationCode) {
           <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>1.</strong> Save this email or write down your confirmation code.</p>
           <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>2.</strong> Arrive at Tangles &amp; Locs on <strong>Sunday, August 30</strong>. Doors open at <strong>12:00 PM</strong>.</p>
           <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>3.</strong> Check in at the ASC3ND welcome table. Show your confirmation code (or this email on your phone).</p>
-          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>4.</strong> Receive your child's haircut and school supplies. Bring the whole family!</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;"><strong>4.</strong> Come in and meet The Asc3nd Collective. Enjoy the event!</p>
           <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;"><strong>5.</strong> Questions? Email <a href="mailto:social@asc3nd.org" style="color:#f5aa17;">social@asc3nd.org</a> or reply to this email.</p>
         </div>
         <div style="background:#1a1500;border-left:4px solid #f5aa17;padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;">
@@ -94,7 +94,7 @@ function attendeeTextEN(submission, confirmationCode) {
     '1. Save this email or write down your confirmation code.',
     '2. Arrive at Tangles & Locs on Sunday, August 30. Doors open at 12:00 PM.',
     '3. Check in at the ASC3ND welcome table — show your code or this email.',
-    '4. Receive your child\'s haircut and school supplies. Bring the whole family!',
+    '4. Come in and meet The Asc3nd Collective. Enjoy the event!',
     '5. Questions? Email social@asc3nd.org or reply to this email.',
     '',
     'IMPORTANT:',
@@ -136,7 +136,7 @@ function attendeeHtmlES(submission, confirmationCode) {
           <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>1.</strong> Guarda este correo o anota tu código de confirmación.</p>
           <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>2.</strong> Llega a Tangles &amp; Locs el <strong>domingo 30 de agosto</strong>. Abrimos a las <strong>12:00 PM</strong>.</p>
           <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>3.</strong> Regístrate en la mesa de ASC3ND. Muestra tu código (o este correo en tu teléfono).</p>
-          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>4.</strong> Recibe el corte de cabello y los útiles escolares. ¡Trae a toda la familia!</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>4.</strong> Entra y conoce a The Asc3nd Collective. ¡Disfruta el evento!</p>
           <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;"><strong>5.</strong> ¿Preguntas? Escribe a <a href="mailto:social@asc3nd.org" style="color:#f5aa17;">social@asc3nd.org</a> o responde a este correo.</p>
         </div>
         <div style="background:#1a1500;border-left:4px solid #f5aa17;padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;">
@@ -182,7 +182,7 @@ function attendeeTextES(submission, confirmationCode) {
     '1. Guarda este correo o anota tu código de confirmación.',
     '2. Llega a Tangles & Locs el domingo 30 de agosto. Abrimos a las 12:00 PM.',
     '3. Regístrate en la mesa de ASC3ND — muestra tu código o este correo.',
-    '4. Recibe el corte de cabello y los útiles escolares. ¡Trae a toda la familia!',
+    '4. Entra y conoce a The Asc3nd Collective. ¡Disfruta el evento!',
     '5. ¿Preguntas? Escribe a social@asc3nd.org o responde a este correo.',
     '',
     'INFORMACIÓN IMPORTANTE:',
