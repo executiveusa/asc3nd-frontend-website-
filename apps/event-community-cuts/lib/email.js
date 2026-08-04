@@ -226,6 +226,7 @@ function staffNotificationText(submission, type) {
       `Age range: ${submission.age_range}`,
       `Arrival window: ${submission.arrival_window || '(not specified)'}`,
       `Preferred language: ${submission.preferred_language}`,
+      `Updates requested: ${(submission.updates || []).join(', ') || 'none'}`,
       `Accessibility contact requested: ${submission.accessibility_contact ? 'YES' : 'no'}`,
       `Confirmation code: ${submission.confirmation_code}`,
     );
