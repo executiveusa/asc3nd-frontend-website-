@@ -118,6 +118,20 @@ export async function POST(request) {
   };
 
   try {
+    // Pre-insert dedup: check for an existing supporter with the same idempotency
+    // key BEFORE attempting the insert. Same fix as the RSVP route — the unique
+    // constraint alone was unreliable with a nullable column.
+    if (idempotencyKey) {
+      const existing = await findSupporterByIdempotencyKey(idempotencyKey);
+      if (existing) {
+        return json({
+          ok: true,
+          receipt_id: existing.confirmation_code || confirmationCode,
+          is_duplicate: true,
+        }, 200);
+      }
+    }
+
     const result = await insertSupporter(insertPayload);
 
     if (result.duplicate && idempotencyKey) {
