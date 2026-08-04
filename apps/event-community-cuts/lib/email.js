@@ -19,6 +19,17 @@ const ATTENDEE_SUBJECT = {
   es: 'Confirmación recibida — Community Cuts for Kids (30 de agosto)',
 };
 
+/** HTML-escape user-provided values to prevent XSS in email templates */
+function esc(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function attendeeHtmlEN(submission, confirmationCode) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -32,7 +43,7 @@ function attendeeHtmlEN(submission, confirmationCode) {
       <div style="padding:32px 24px;">
         <h2 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#f5aa17;">RSVP Received</h2>
         <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#fff;">
-          Thank you, ${submission.guardian_name}. We received your RSVP for <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
+          Thank you, ${esc(submission.guardian_name)}. We received your RSVP for <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
         </p>
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">EVENT DETAILS</p>
@@ -119,7 +130,7 @@ function attendeeHtmlES(submission, confirmationCode) {
       <div style="padding:32px 24px;">
         <h2 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#f5aa17;">Confirmación Recibida</h2>
         <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#fff;">
-          Gracias, ${submission.guardian_name}. Hemos recibido tu confirmación para <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
+          Gracias, ${esc(submission.guardian_name)}. Hemos recibido tu confirmación para <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
         </p>
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">DETALLES DEL EVENTO</p>
@@ -211,7 +222,7 @@ function supporterHtmlEN(submission, confirmationCode) {
         <h1 style="margin:0;font-size:18px;font-weight:900;color:#000;">ASC3ND COLLECTIVE</h1>
       </div>
       <div style="padding:32px 24px;">
-        <h2 style="margin:0 0 8px;font-size:24px;color:#f5aa17;">Thank You, ${submission.name}</h2>
+        <h2 style="margin:0 0 8px;font-size:24px;color:#f5aa17;">Thank You, ${esc(submission.name)}</h2>
         <p style="margin:0 0 20px;font-size:16px;line-height:1.6;">
           We received your response for <strong>${SUPPORTER_SUBJECT[submission.participation] || 'Community Cuts for Kids'}</strong>.
           The Asc3nd Collective will follow up using the contact information you provided.
