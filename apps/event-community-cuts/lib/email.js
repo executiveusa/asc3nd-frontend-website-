@@ -102,9 +102,9 @@ function attendeeHtmlES(submission, confirmationCode) {
         <h1 style="margin:0;font-size:18px;font-weight:900;color:#000;letter-spacing:0.05em;">ASC3ND COLLECTIVE</h1>
       </div>
       <div style="padding:32px 24px;">
-        <h2 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#f5aa17;">Confirmacion Recibida</h2>
+        <h2 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#f5aa17;">Confirmación Recibida</h2>
         <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#fff;">
-          Gracias, ${submission.guardian_name}. Hemos recibido tu confirmacion para <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
+          Gracias, ${submission.guardian_name}. Hemos recibido tu confirmación para <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
         </p>
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">DETALLES DEL EVENTO</p>
@@ -113,22 +113,22 @@ function attendeeHtmlES(submission, confirmationCode) {
           <p style="margin:0;font-size:15px;color:#fff;"><strong>Lugar:</strong> ${EVENT_DETAILS.venue}, ${EVENT_DETAILS.address}</p>
         </div>
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
-          <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">TU CODIGO DE CONFIRMACION</p>
+          <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">TU CÓDIGO DE CONFIRMACIÓN</p>
           <p style="margin:0;font-size:22px;font-weight:900;color:#fff;letter-spacing:0.1em;font-family:monospace;">${confirmationCode}</p>
         </div>
         <div style="background:#1a1500;border-left:4px solid #f5aa17;padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;">
-          <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">INFORMACION IMPORTANTE</p>
+          <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">INFORMACIÓN IMPORTANTE</p>
           <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;">
-            Tu confirmacion nos ayuda a prepararnos para todas las personas que asistiran y a servir a tantas familias
-            como sea posible. Los cortes de cabello gratuitos y los utiles escolares se entregaran por
+            Tu confirmación nos ayuda a prepararnos para todas las personas que asistirán y a servir a tantas familias
+            como sea posible. Los cortes de cabello gratuitos y los útiles escolares se entregarán por
             <strong>orden de llegada</strong> mientras duren las existencias y haya citas disponibles.
-            Te recomendamos llegar temprano. Una confirmacion no reserva un corte de cabello, utiles escolares
-            ni una hora especifica de llegada.
+            Te recomendamos llegar temprano. Una confirmación no reserva un corte de cabello, útiles escolares
+            ni una hora específica de llegada.
           </p>
         </div>
         <p style="margin:0;font-size:13px;line-height:1.5;color:#999;">
-          Esta confirmacion se envio porque alguien envio una confirmacion en asc3nd.org. Si no enviaste esto,
-          responde a este correo para que podamos eliminar tu informacion.
+          Esta confirmación se envió porque alguien envió una confirmación en asc3nd.org. Si no enviaste esto,
+          responde a este correo para que podamos eliminar tu información.
         </p>
       </div>
       <div style="padding:16px 24px;background:#111;border-top:1px solid #222;">
@@ -144,20 +144,20 @@ function attendeeHtmlES(submission, confirmationCode) {
 
 function attendeeTextES(submission, confirmationCode) {
   return [
-    'ASC3ND COLLECTIVE - CONFIRMACION RECIBIDA',
+    'ASC3ND COLLECTIVE - CONFIRMACIÓN RECIBIDA',
     '',
-    `Gracias, ${submission.guardian_name}. Hemos recibido tu confirmacion para Community Cuts for Kids - Fresh Fade, Fresh Grade.`,
+    `Gracias, ${submission.guardian_name}. Hemos recibido tu confirmación para Community Cuts for Kids - Fresh Fade, Fresh Grade.`,
     '',
     'DETALLES DEL EVENTO',
     `Fecha: ${EVENT_DETAILS.date}`,
     `Hora: ${EVENT_DETAILS.time}`,
     `Lugar: ${EVENT_DETAILS.venue}, ${EVENT_DETAILS.address}`,
     '',
-    `Codigo de confirmacion: ${confirmationCode}`,
+    `Código de confirmación: ${confirmationCode}`,
     '',
-    'INFORMACION IMPORTANTE:',
-    'Tu confirmacion nos ayuda a prepararnos, pero no reserva un corte de cabello, utiles escolares ni una hora especifica.',
-    'Los cortes de cabello y utiles gratuitos se entregan por orden de llegada mientras duren las existencias.',
+    'INFORMACIÓN IMPORTANTE:',
+    'Tu confirmación nos ayuda a prepararnos, pero no reserva un corte de cabello, útiles escolares ni una hora específica.',
+    'Los cortes de cabello y útiles gratuitos se entregan por orden de llegada mientras duren las existencias.',
     'Te recomendamos llegar temprano.',
     '',
     'Asc3nd Collective - EIN 99-1881891 - Seattle / King County',
