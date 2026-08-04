@@ -26,10 +26,20 @@ export const metadata = {
   alternates: { canonical: '/', languages: { en: '/', es: '/es' } },
   openGraph: { title, description, type: 'website', url: '/' },
   twitter: { card: 'summary', title, description },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    title: 'ASC3ND Events',
+    statusBarStyle: 'black',
+  },
+  icons: {
+    icon: '/images/asc3nd-client-logo-transparent.png',
+    apple: '/images/asc3nd-client-logo-transparent.png',
+  },
 };
 
 export const viewport = {
-  themeColor: '#0b0b0b',
+  themeColor: '#050505',
   width: 'device-width',
   initialScale: 1,
   minimumScale: 1,
