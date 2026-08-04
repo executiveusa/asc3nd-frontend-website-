@@ -44,6 +44,14 @@ function attendeeHtmlEN(submission, confirmationCode) {
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">YOUR CONFIRMATION CODE</p>
           <p style="margin:0;font-size:22px;font-weight:900;color:#fff;letter-spacing:0.1em;font-family:monospace;">${confirmationCode}</p>
         </div>
+        <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
+          <p style="margin:0 0 12px;font-size:14px;color:#f5aa17;font-weight:700;">WHAT HAPPENS NEXT</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>1.</strong> Save this email or write down your confirmation code.</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>2.</strong> Arrive at Tangles &amp; Locs on <strong>Sunday, August 30</strong>. Doors open at <strong>12:00 PM</strong>.</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>3.</strong> Check in at the ASC3ND welcome table. Show your confirmation code (or this email on your phone).</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>4.</strong> Receive your child's haircut and school supplies. Bring the whole family!</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;"><strong>5.</strong> Questions? Email <a href="mailto:social@asc3nd.org" style="color:#f5aa17;">social@asc3nd.org</a> or reply to this email.</p>
+        </div>
         <div style="background:#1a1500;border-left:4px solid #f5aa17;padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">IMPORTANT — PLEASE READ</p>
           <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;">
@@ -82,6 +90,13 @@ function attendeeTextEN(submission, confirmationCode) {
     '',
     `Confirmation code: ${confirmationCode}`,
     '',
+    'WHAT HAPPENS NEXT:',
+    '1. Save this email or write down your confirmation code.',
+    '2. Arrive at Tangles & Locs on Sunday, August 30. Doors open at 12:00 PM.',
+    '3. Check in at the ASC3ND welcome table — show your code or this email.',
+    '4. Receive your child\'s haircut and school supplies. Bring the whole family!',
+    '5. Questions? Email social@asc3nd.org or reply to this email.',
+    '',
     'IMPORTANT:',
     'Your RSVP helps us prepare, but does not reserve a haircut, school supplies, or a specific arrival time.',
     'Free haircuts and school supplies are provided on a first-come, first-served basis while supplies last.',
@@ -115,6 +130,14 @@ function attendeeHtmlES(submission, confirmationCode) {
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">TU CÓDIGO DE CONFIRMACIÓN</p>
           <p style="margin:0;font-size:22px;font-weight:900;color:#fff;letter-spacing:0.1em;font-family:monospace;">${confirmationCode}</p>
+        </div>
+        <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
+          <p style="margin:0 0 12px;font-size:14px;color:#f5aa17;font-weight:700;">QUÉ PASARÁ DESPUÉS</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>1.</strong> Guarda este correo o anota tu código de confirmación.</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>2.</strong> Llega a Tangles &amp; Locs el <strong>domingo 30 de agosto</strong>. Abrimos a las <strong>12:00 PM</strong>.</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>3.</strong> Regístrate en la mesa de ASC3ND. Muestra tu código (o este correo en tu teléfono).</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>4.</strong> Recibe el corte de cabello y los útiles escolares. ¡Trae a toda la familia!</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;"><strong>5.</strong> ¿Preguntas? Escribe a <a href="mailto:social@asc3nd.org" style="color:#f5aa17;">social@asc3nd.org</a> o responde a este correo.</p>
         </div>
         <div style="background:#1a1500;border-left:4px solid #f5aa17;padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">INFORMACIÓN IMPORTANTE</p>
@@ -154,6 +177,13 @@ function attendeeTextES(submission, confirmationCode) {
     `Lugar: ${EVENT_DETAILS.venue}, ${EVENT_DETAILS.address}`,
     '',
     `Código de confirmación: ${confirmationCode}`,
+    '',
+    'QUÉ PASARÁ DESPUÉS:',
+    '1. Guarda este correo o anota tu código de confirmación.',
+    '2. Llega a Tangles & Locs el domingo 30 de agosto. Abrimos a las 12:00 PM.',
+    '3. Regístrate en la mesa de ASC3ND — muestra tu código o este correo.',
+    '4. Recibe el corte de cabello y los útiles escolares. ¡Trae a toda la familia!',
+    '5. ¿Preguntas? Escribe a social@asc3nd.org o responde a este correo.',
     '',
     'INFORMACIÓN IMPORTANTE:',
     'Tu confirmación nos ayuda a prepararnos, pero no reserva un corte de cabello, útiles escolares ni una hora específica.',

@@ -299,9 +299,22 @@ export function EventInterestForm({ copy: t, locale = 'en', initialInterest = 'a
         >
           <strong>{status.message}</strong>
           {status.confirmationCode ? (
-            <span className={styles.confirmationCode}>
-              {t.success.confirmationCode}: {status.confirmationCode}
-            </span>
+            <>
+              <span className={styles.confirmationCode}>
+                {t.success.confirmationCode}: {status.confirmationCode}
+              </span>
+              {isAttendance && status.type === 'success' ? (
+                <span className={styles.nextSteps} style={{ display: 'block', marginTop: '12px', fontSize: '14px', lineHeight: '1.6', opacity: '0.9' }}>
+                  <strong>What happens next:</strong><br />
+                  1. Save your confirmation code.<br />
+                  2. Arrive at Tangles &amp; Locs on Sunday, August 30 — doors open at 12:00 PM.<br />
+                  3. Check in at the ASC3ND welcome table. Show your code or your email.<br />
+                  4. Receive your child's haircut and school supplies. Bring the whole family!<br />
+                  <br />
+                  Check your email for a full confirmation. Questions? Email social@asc3nd.org.
+                </span>
+              ) : null}
+            </>
           ) : null}
         </div>
       ) : null}
