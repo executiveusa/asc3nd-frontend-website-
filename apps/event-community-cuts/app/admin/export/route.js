@@ -1,9 +1,9 @@
 /**
  * CSV export — /admin/export?type=rsvps|supporters
- * Password-protected (same ADMIN_PASSWORD as the dashboard).
- * Returns a CSV file download.
+ * Session-cookie protected.
  */
 import { listRsvps, listSupporters } from '../../../lib/supabase-server.js';
+import { validateSession } from '../../../lib/admin-auth.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -17,15 +17,8 @@ function csvEscape(value) {
   return str;
 }
 
-function checkAuth(request) {
-  const adminPassword = process.env.ADMIN_PASSWORD;
-  if (!adminPassword) return false;
-  const url = new URL(request.url);
-  return url.searchParams.get('p') === adminPassword;
-}
-
 export async function GET(request) {
-  if (!checkAuth(request)) {
+  if (!validateSession(request.headers.get('cookie'))) {
     return new Response('Unauthorized', { status: 401 });
   }
 
@@ -50,7 +43,6 @@ export async function GET(request) {
     });
   }
 
-  // Default: rsvps
   const rsvps = await listRsvps(500);
   const headers = ['confirmation_code', 'guardian_name', 'email', 'phone', 'children_count', 'age_range', 'arrival_window', 'preferred_language', 'updates', 'accessibility_contact', 'status', 'created_at'];
   const rows = rsvps.map(r => [
