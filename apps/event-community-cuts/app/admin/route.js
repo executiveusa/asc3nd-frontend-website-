@@ -14,6 +14,17 @@ import { checkEventStatus, EVENT_CONFIG } from '../../lib/event-config.js';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+/** HTML-escape user-provided values to prevent stored XSS in the dashboard */
+function esc(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function parseCookies(cookieHeader) {
   const cookies = {};
   if (!cookieHeader) return cookies;
@@ -136,25 +147,25 @@ ${noPassword ? '' : `<form method="GET" action="/admin"><input type="password" n
   };
 
   const rsvpRows = rsvps.map(r => `<tr>
-    <td><strong>${r.confirmation_code || ''}</strong></td>
-    <td>${r.guardian_name || ''}</td>
-    <td>${r.email || ''}</td>
-    <td>${r.phone || ''}</td>
+    <td><strong>${esc(r.confirmation_code)}</strong></td>
+    <td>${esc(r.guardian_name)}</td>
+    <td>${esc(r.email)}</td>
+    <td>${esc(r.phone)}</td>
     <td style="text-align:center">${r.children_count || 0}</td>
-    <td>${r.age_range || ''}</td>
-    <td>${r.arrival_window || '—'}</td>
-    <td>${r.preferred_language || 'en'}</td>
-    <td>${Array.isArray(r.updates) ? r.updates.join(', ') : ''}</td>
+    <td>${esc(r.age_range)}</td>
+    <td>${esc(r.arrival_window) || '—'}</td>
+    <td>${esc(r.preferred_language) || 'en'}</td>
+    <td>${Array.isArray(r.updates) ? esc(r.updates.join(', ')) : ''}</td>
     <td>${formatTime(r.created_at)}</td>
   </tr>`).join('');
 
   const supporterRows = supporters.map(s => `<tr>
-    <td><strong>${s.confirmation_code || ''}</strong></td>
-    <td>${s.name || ''}</td>
-    <td>${s.email || ''}</td>
-    <td>${s.phone || ''}</td>
-    <td><span class="tag">${s.participation || ''}</span></td>
-    <td>${Array.isArray(s.updates) ? s.updates.join(', ') : ''}</td>
+    <td><strong>${esc(s.confirmation_code)}</strong></td>
+    <td>${esc(s.name)}</td>
+    <td>${esc(s.email)}</td>
+    <td>${esc(s.phone)}</td>
+    <td><span class="tag">${esc(s.participation)}</span></td>
+    <td>${Array.isArray(s.updates) ? esc(s.updates.join(', ')) : ''}</td>
     <td>${formatTime(s.created_at)}</td>
   </tr>`).join('');
 
