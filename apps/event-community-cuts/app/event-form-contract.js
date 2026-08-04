@@ -57,6 +57,10 @@ export function buildAttendancePayload(data, locale = 'en', idempotencyKey = nul
     preferred_language: locale === 'es' || preferences.includes('spanish') ? 'es' : 'en',
     accessibility_contact: preferences.includes('accessibility'),
     contact_privately: false,
+    // Preserve the full updates array so volunteer/supplies preferences are
+    // not silently dropped on the attendance path (Bug fix: previously only
+    // accessibility + spanish survived, as side-effects).
+    updates: preferences,
     company_website: getString(data, 'companyWebsite'),
     idempotency_key: idempotencyKey,
   };

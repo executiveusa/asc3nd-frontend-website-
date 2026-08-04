@@ -20,6 +20,7 @@ const allowedFields = new Set([
   'preferred_language',
   'accessibility_contact',
   'contact_privately',
+  'updates',
   'company_website',
   'idempotency_key',
 ]);
@@ -65,6 +66,7 @@ export async function POST(request) {
     preferred_language: String(input.preferred_language || 'en').trim(),
     accessibility_contact: Boolean(input.accessibility_contact),
     contact_privately: Boolean(input.contact_privately),
+    updates: Array.isArray(input.updates) ? input.updates.filter((v) => typeof v === 'string') : [],
     company_website: honeypot,
   };
   const idempotencyKey = String(input.idempotency_key || '').trim() || null;
@@ -121,6 +123,7 @@ export async function POST(request) {
     preferred_language: payload.preferred_language,
     accessibility_contact: payload.accessibility_contact,
     contact_privately: payload.contact_privately,
+    updates: payload.updates,
     confirmation_code: confirmationCode,
     idempotency_key: idempotencyKey,
     contact_consent: true,
@@ -128,6 +131,22 @@ export async function POST(request) {
   };
 
   try {
+    // Pre-insert dedup: check for an existing RSVP with the same idempotency
+    // key BEFORE attempting the insert. The unique constraint on the column
+    // is the last line of defense, but relying on it alone was unreliable
+    // (nullable column allowed multiple NULLs through). This explicit check
+    // catches duplicates early and returns the original confirmation code.
+    if (idempotencyKey) {
+      const existing = await findRsvpByIdempotencyKey(idempotencyKey);
+      if (existing) {
+        return json({
+          ok: true,
+          confirmation_code: existing.confirmation_code || confirmationCode,
+          is_duplicate: true,
+        }, 200);
+      }
+    }
+
     const result = await insertRsvp(insertPayload);
 
     if (result.duplicate && idempotencyKey) {
