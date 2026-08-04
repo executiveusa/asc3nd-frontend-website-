@@ -10,6 +10,7 @@ import {
   generateConfirmationCode,
 } from '../../../lib/supabase-server.js';
 import { sendAttendeeConfirmation, sendStaffNotification } from '../../../lib/email.js';
+import { checkRateLimit, getClientIp } from '../../../lib/rate-limit.js';
 
 export const runtime = 'nodejs';
 
@@ -94,6 +95,17 @@ export async function POST(request) {
   const submission = normalize(input);
 
   if (submission.honeypot) return json({ ok: true }, 200);
+
+  // Rate limiting: max 5 submissions per IP per 10 min
+  const ip = getClientIp(request);
+  const rateLimit = checkRateLimit(ip);
+  if (!rateLimit.allowed) {
+    return json({
+      ok: false,
+      error: 'rate_limited',
+      message: 'Too many submissions. Please wait a few minutes and try again.',
+    }, 429);
+  }
 
   const fields = validate(submission);
   if (fields.length) {

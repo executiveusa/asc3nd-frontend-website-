@@ -3,9 +3,12 @@ import { AGE_GROUP_VALUES, ARRIVAL_WINDOW_VALUES } from '../../event-form-contra
 import {
   insertRsvp,
   findRsvpByIdempotencyKey,
+  countRsvps,
   generateConfirmationCode,
 } from '../../../lib/supabase-server.js';
 import { sendAttendeeConfirmation, sendStaffNotification } from '../../../lib/email.js';
+import { checkRateLimit, getClientIp } from '../../../lib/rate-limit.js';
+import { checkEventStatus, checkCapacity } from '../../../lib/event-config.js';
 
 export const runtime = 'nodejs';
 
@@ -54,6 +57,38 @@ export async function POST(request) {
 
   const honeypot = String(input.company_website || '').trim();
   if (honeypot) return json({ ok: true }, 200);
+
+  // ── Rate limiting: max 5 submissions per IP per 10 min ──
+  const ip = getClientIp(request);
+  const rateLimit = checkRateLimit(ip);
+  if (!rateLimit.allowed) {
+    return json({
+      ok: false,
+      error: 'rate_limited',
+      message: 'Too many submissions. Please wait a few minutes and try again.',
+    }, 429);
+  }
+
+  // ── Event status: stop accepting RSVPs after the deadline ──
+  const eventStatus = checkEventStatus();
+  if (!eventStatus.open) {
+    return json({
+      ok: false,
+      error: eventStatus.reason,
+      message: eventStatus.message,
+    }, 409);
+  }
+
+  // ── Capacity check: stop if we've hit the ceiling ──
+  const currentCount = await countRsvps();
+  const capacity = checkCapacity(currentCount);
+  if (!capacity.hasRoom) {
+    return json({
+      ok: false,
+      error: 'at_capacity',
+      message: 'We have reached capacity for this event. Please contact us to join the waitlist.',
+    }, 409);
+  }
 
   const payload = {
     guardian_name: String(input.guardian_name || '').trim(),
@@ -165,6 +200,7 @@ export async function POST(request) {
     };
 
     const emailTo = payload.email;
+    let attendeeEmailOk = true;
     if (emailTo) {
       try {
         await sendAttendeeConfirmation({
@@ -174,13 +210,19 @@ export async function POST(request) {
           confirmationCode: submission.confirmation_code,
           type: 'rsvp',
         });
-      } catch {
+      } catch (emailErr) {
+        attendeeEmailOk = false;
+        // Surface the failure in the staff notification so nobody thinks
+        // the confirmation was sent when it wasn't.
+        submission._email_delivery_failed = emailErr.code || 'email_error';
       }
     }
 
     try {
       await sendStaffNotification({ submission, type: 'rsvp' });
     } catch {
+      // If even the staff notification fails, we can't do much — the RSVP
+      // is in the DB, which is the source of truth.
     }
 
     return json({
