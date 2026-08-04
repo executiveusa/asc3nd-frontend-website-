@@ -66,16 +66,24 @@ export async function getStaffProfile(userId) {
  * Returns { user, isStaff, isAdmin, fullName } or { user: null, isStaff: false }.
  */
 export async function getStaffSession(request) {
-  const cookieHeader = request.headers.get('cookie') || '';
-  const cookies = Object.fromEntries(
-    cookieHeader.split(';').map(c => {
-      const [k, ...v] = c.trim().split('=');
-      return [k, v.join('=')];
-    }).filter(([k]) => k)
-  );
+  // Defensive: if Supabase isn't configured, return no session
+  if (!SUPABASE_URL || !ANON_KEY) {
+    return { user: null, isStaff: false, isAdmin: false, fullName: null };
+  }
 
-  const token = cookies['sb-access-token'];
-  if (!token) return { user: null, isStaff: false, isAdmin: false };
+  // Read cookie safely
+  let token = null;
+  try {
+    const cookieHeader = request?.headers?.get?.('cookie') || '';
+    if (cookieHeader) {
+      const match = cookieHeader.match(/(?:^|;\s*)sb-access-token=([^;]+)/);
+      token = match ? match[1] : null;
+    }
+  } catch {
+    return { user: null, isStaff: false, isAdmin: false, fullName: null };
+  }
+
+  if (!token) return { user: null, isStaff: false, isAdmin: false, fullName: null };
 
   const user = await getUserByToken(token);
   if (!user) return { user: null, isStaff: false, isAdmin: false };
