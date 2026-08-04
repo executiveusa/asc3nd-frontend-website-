@@ -146,7 +146,10 @@ ${noPassword ? '' : `<form method="GET" action="/admin"><input type="password" n
            d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   };
 
-  const rsvpRows = rsvps.map(r => `<tr>
+  const rsvpRows = rsvps.map(r => {
+    const statusColor = r.status === 'ATTENDED' ? '#1a5c2e' : r.status === 'NO_SHOW' ? '#5c1a1a' : r.status === 'CANCELLED' ? '#555' : '#333';
+    const statusFg = r.status === 'ATTENDED' ? '#7eea9f' : r.status === 'NO_SHOW' ? '#e88' : '#aaa';
+    return `<tr data-id="${esc(r.id)}">
     <td><strong>${esc(r.confirmation_code)}</strong></td>
     <td>${esc(r.guardian_name)}</td>
     <td>${esc(r.email)}</td>
@@ -156,8 +159,18 @@ ${noPassword ? '' : `<form method="GET" action="/admin"><input type="password" n
     <td>${esc(r.arrival_window) || '—'}</td>
     <td>${esc(r.preferred_language) || 'en'}</td>
     <td>${Array.isArray(r.updates) ? esc(r.updates.join(', ')) : ''}</td>
+    <td><select class="status-select" data-id="${esc(r.id)}" style="background:${statusColor};color:${statusFg};border:none;border-radius:4px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer">
+      <option value="RECEIVED" ${r.status === 'RECEIVED' ? 'selected' : ''}>RECEIVED</option>
+      <option value="CONFIRMED" ${r.status === 'CONFIRMED' ? 'selected' : ''}>CONFIRMED</option>
+      <option value="ATTENDED" ${r.status === 'ATTENDED' ? 'selected' : ''}>ATTENDED</option>
+      <option value="NO_SHOW" ${r.status === 'NO_SHOW' ? 'selected' : ''}>NO_SHOW</option>
+      <option value="CANCELLED" ${r.status === 'CANCELLED' ? 'selected' : ''}>CANCELLED</option>
+    </select></td>
+    <td><input type="text" class="notes-input" data-id="${esc(r.id)}" value="${esc(r.staff_notes || '')}" placeholder="Add note..." style="width:120px;padding:4px 6px;font-size:12px;border:1px solid #ddd;border-radius:4px"></td>
     <td>${formatTime(r.created_at)}</td>
-  </tr>`).join('');
+    <td><button class="delete-btn" data-id="${esc(r.id)}" data-name="${esc(r.guardian_name)}" style="padding:4px 8px;background:#c33;color:#fff;border:none;border-radius:4px;font-size:11px;cursor:pointer">Delete</button></td>
+  </tr>`;
+  }).join('');
 
   const supporterRows = supporters.map(s => `<tr>
     <td><strong>${esc(s.confirmation_code)}</strong></td>
@@ -202,7 +215,10 @@ tr:hover{background:#fafafa}
 <body>
 <div class="header">
   <h1>ASC3ND — Community Cuts Dashboard</h1>
-  <a href="/admin?logout=1">Logout</a>
+  <div style="display:flex;gap:16px;align-items:center">
+    <a href="/admin/checkin?p=${process.env.ADMIN_PASSWORD || ''}" style="background:#F5A617;color:#050505;padding:6px 14px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none">Check-in Mode</a>
+    <a href="/admin?logout=1" style="color:#888;font-size:13px">Logout</a>
+  </div>
 </div>
 <div class="container">
 
@@ -225,8 +241,8 @@ tr:hover{background:#fafafa}
       ${Object.entries(arrivalCounts).map(([k, v]) => `<span class="mini-stat">${k}: <strong>${v}</strong></span>`).join('')}
     </div>
     <table>
-      <thead><tr><th>Code</th><th>Name</th><th>Email</th><th>Phone</th><th>Kids</th><th>Age</th><th>Arrival</th><th>Lang</th><th>Updates</th><th>Received</th></tr></thead>
-      <tbody>${rsvpRows || '<tr><td colspan="10" style="text-align:center;color:#999;padding:24px">No RSVPs yet</td></tr>'}</tbody>
+      <thead><tr><th>Code</th><th>Name</th><th>Email</th><th>Phone</th><th>Kids</th><th>Age</th><th>Arrival</th><th>Lang</th><th>Updates</th><th>Status</th><th>Notes</th><th>Received</th><th>Actions</th></tr></thead>
+      <tbody>${rsvpRows || '<tr><td colspan="13" style="text-align:center;color:#999;padding:24px">No RSVPs yet</td></tr>'}</tbody>
     </table>
     <a class="export-btn" href="/admin/export?type=rsvps&p=${process.env.ADMIN_PASSWORD || ''}">Export RSVPs as CSV</a>
   </div>
@@ -244,5 +260,71 @@ tr:hover{background:#fafafa}
   </div>
 
 </div>
+<script>
+const ADMIN_PASS = ${JSON.stringify(process.env.ADMIN_PASSWORD || '')};
+const API = '/api/admin?p=' + ADMIN_PASS;
+
+// ── Status dropdowns ──
+document.querySelectorAll('.status-select').forEach(sel => {
+  sel.addEventListener('change', async (e) => {
+    const id = e.target.dataset.id;
+    const status = e.target.value;
+    e.target.style.opacity = '0.5';
+    const res = await fetch(API, { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({action:'status', id, status}) });
+    const data = await res.json();
+    e.target.style.opacity = '1';
+    if (data.ok) {
+      // Update color
+      const colors = { ATTENDED:['#1a5c2e','#7eea9f'], NO_SHOW:['#5c1a1a','#e88'], CANCELLED:['#555','#aaa'], RECEIVED:['#333','#aaa'], CONFIRMED:['#333','#aaa'] };
+      const [bg,fg] = colors[status] || ['#333','#aaa'];
+      e.target.style.background = bg; e.target.style.color = fg;
+    } else { alert('Failed to update status'); }
+  });
+});
+
+// ── Notes auto-save (debounced) ──
+let notesTimer;
+document.querySelectorAll('.notes-input').forEach(inp => {
+  inp.addEventListener('input', (e) => {
+    clearTimeout(notesTimer);
+    const id = e.target.dataset.id;
+    const notes = e.target.value;
+    notesTimer = setTimeout(async () => {
+      e.target.style.borderColor = '#F5A617';
+      await fetch(API, { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({action:'notes', id, notes}) });
+      e.target.style.borderColor = '#ddd';
+    }, 800);
+  });
+});
+
+// ── Delete with double verification ──
+document.querySelectorAll('.delete-btn').forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    const id = e.target.dataset.id;
+    const name = e.target.dataset.name;
+    // Step 1: confirm dialog
+    if (!confirm('Delete RSVP for "' + name + '"?\\nThis cannot be undone.')) return;
+    // Step 2: type the name to confirm
+    const typed = prompt('Type the guardian name to confirm deletion:');
+    if (typed === null) return;
+    if (typed.trim().toLowerCase() !== name.trim().toLowerCase()) {
+      alert('Name does not match. Deletion cancelled.');
+      return;
+    }
+    // Delete
+    e.target.textContent = 'Deleting...'; e.target.disabled = true;
+    const res = await fetch(API, { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({action:'delete', id, confirmName: typed}) });
+    const data = await res.json();
+    if (data.ok) {
+      const row = document.querySelector('tr[data-id="' + id + '"]');
+      if (row) row.style.transition='opacity 0.3s'; if (row) row.style.opacity='0';
+      setTimeout(() => { if (row) row.remove(); }, 300);
+    } else {
+      alert('Delete failed: ' + (data.message || data.error));
+      e.target.textContent = 'Delete'; e.target.disabled = false;
+    }
+  });
+});
+</script>
 </body></html>`, { headers });
 }

@@ -142,3 +142,91 @@ export async function listSupporters(limit = 100) {
   if (!res.ok) return [];
   return res.json();
 }
+
+// ── Admin operations ──
+
+const VALID_STATUSES = ['RECEIVED', 'CONFIRMED', 'ATTENDED', 'NO_SHOW', 'CANCELLED'];
+
+export async function findRsvpById(id) {
+  const { url, key } = requireConfig();
+  const res = await fetch(
+    `${url}/rest/v1/rsvps?id=eq.${encodeURIComponent(id)}&select=*&limit=1`,
+    { headers: { Authorization: `Bearer ${key}`, apikey: key }, cache: 'no-store' },
+  );
+  if (!res.ok) return null;
+  const rows = await res.json();
+  return rows[0] || null;
+}
+
+export async function updateRsvpStatus(id, status) {
+  const { url, key } = requireConfig();
+  if (!VALID_STATUSES.includes(status)) throw new Error('invalid_status');
+  const res = await fetch(`${url}/rest/v1/rsvps?id=eq.${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    headers: { Authorization: `Bearer ${key}`, apikey: key, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify({ status }),
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error('update_failed');
+  const rows = await res.json();
+  return rows[0] || null;
+}
+
+export async function updateRsvpNotes(id, notes) {
+  const { url, key } = requireConfig();
+  const res = await fetch(`${url}/rest/v1/rsvps?id=eq.${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    headers: { Authorization: `Bearer ${key}`, apikey: key, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify({ staff_notes: String(notes).slice(0, 1000) }),
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error('update_failed');
+  const rows = await res.json();
+  return rows[0] || null;
+}
+
+export async function deleteRsvp(id) {
+  const { url, key } = requireConfig();
+  const res = await fetch(`${url}/rest/v1/rsvps?id=eq.${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${key}`, apikey: key, Prefer: 'return=representation' },
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error('delete_failed');
+  const rows = await res.json();
+  return rows[0] || null;
+}
+
+export async function findRsvpByConfirmationCode(code) {
+  const { url, key } = requireConfig();
+  const res = await fetch(
+    `${url}/rest/v1/rsvps?confirmation_code=eq.${encodeURIComponent(code.toUpperCase())}&select=*&limit=1`,
+    { headers: { Authorization: `Bearer ${key}`, apikey: key }, cache: 'no-store' },
+  );
+  if (!res.ok) return null;
+  const rows = await res.json();
+  return rows[0] || null;
+}
+
+export async function findRsvpsByName(partialName) {
+  const { url, key } = requireConfig();
+  const res = await fetch(
+    `${url}/rest/v1/rsvps?guardian_name=ilike.%${encodeURIComponent(partialName)}%&select=*&order=created_at.desc&limit=10`,
+    { headers: { Authorization: `Bearer ${key}`, apikey: key }, cache: 'no-store' },
+  );
+  if (!res.ok) return [];
+  return res.json();
+}
+
+export async function countByStatus() {
+  const { url, key } = requireConfig();
+  const all = await listRsvps(500);
+  return {
+    total: all.length,
+    received: all.filter(r => r.status === 'RECEIVED').length,
+    confirmed: all.filter(r => r.status === 'CONFIRMED').length,
+    attended: all.filter(r => r.status === 'ATTENDED').length,
+    no_show: all.filter(r => r.status === 'NO_SHOW').length,
+    cancelled: all.filter(r => r.status === 'CANCELLED').length,
+  };
+}
