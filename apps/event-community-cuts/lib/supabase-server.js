@@ -101,3 +101,44 @@ export async function findSupporterByIdempotencyKey(idempotencyKey) {
   const rows = await res.json();
   return rows[0] || null;
 }
+
+/**
+ * Count total RSVPs — used for capacity checks + health endpoint.
+ */
+export async function countRsvps() {
+  const { url, key } = requireConfig();
+  const res = await fetch(`${url}/rest/v1/rsvps?select=id&limit=0`, {
+    headers: { Authorization: `Bearer ${key}`, apikey: key, 'Prefer': 'count=exact' },
+    cache: 'no-store',
+  });
+  if (!res.ok) return 0;
+  const range = res.headers.get('content-range') || '';
+  const match = range.match(/\/(\d+)/);
+  return match ? parseInt(match[1], 10) : 0;
+}
+
+/**
+ * Fetch recent RSVPs for the staff dashboard + CSV export.
+ */
+export async function listRsvps(limit = 100) {
+  const { url, key } = requireConfig();
+  const res = await fetch(
+    `${url}/rest/v1/rsvps?select=*&order=created_at.desc&limit=${limit}`,
+    { headers: { Authorization: `Bearer ${key}`, apikey: key }, cache: 'no-store' },
+  );
+  if (!res.ok) return [];
+  return res.json();
+}
+
+/**
+ * Fetch recent supporters for the staff dashboard + CSV export.
+ */
+export async function listSupporters(limit = 100) {
+  const { url, key } = requireConfig();
+  const res = await fetch(
+    `${url}/rest/v1/supporters?select=*&order=created_at.desc&limit=${limit}`,
+    { headers: { Authorization: `Bearer ${key}`, apikey: key }, cache: 'no-store' },
+  );
+  if (!res.ok) return [];
+  return res.json();
+}

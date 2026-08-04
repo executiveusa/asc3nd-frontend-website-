@@ -230,6 +230,9 @@ function staffNotificationText(submission, type) {
       `Accessibility contact requested: ${submission.accessibility_contact ? 'YES' : 'no'}`,
       `Confirmation code: ${submission.confirmation_code}`,
     );
+    if (submission._email_delivery_failed) {
+      lines.push('', `⚠ ATTENDEE EMAIL DELIVERY FAILED: ${submission._email_delivery_failed}`, '  The attendee did NOT receive their confirmation. Please contact them manually.');
+    }
   } else {
     lines.push(
       `Name: ${submission.name}`,
