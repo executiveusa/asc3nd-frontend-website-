@@ -19,6 +19,17 @@ const ATTENDEE_SUBJECT = {
   es: 'Confirmación recibida — Community Cuts for Kids (30 de agosto)',
 };
 
+/** HTML-escape user-provided values to prevent XSS in email templates */
+function esc(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function attendeeHtmlEN(submission, confirmationCode) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -32,7 +43,7 @@ function attendeeHtmlEN(submission, confirmationCode) {
       <div style="padding:32px 24px;">
         <h2 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#f5aa17;">RSVP Received</h2>
         <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#fff;">
-          Thank you, ${submission.guardian_name}. We received your RSVP for <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
+          Thank you, ${esc(submission.guardian_name)}. We received your RSVP for <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
         </p>
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">EVENT DETAILS</p>
@@ -43,6 +54,14 @@ function attendeeHtmlEN(submission, confirmationCode) {
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">YOUR CONFIRMATION CODE</p>
           <p style="margin:0;font-size:22px;font-weight:900;color:#fff;letter-spacing:0.1em;font-family:monospace;">${confirmationCode}</p>
+        </div>
+        <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
+          <p style="margin:0 0 12px;font-size:14px;color:#f5aa17;font-weight:700;">WHAT HAPPENS NEXT</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>1.</strong> Save this email or write down your confirmation code.</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>2.</strong> Arrive at Tangles &amp; Locs on <strong>Sunday, August 30</strong>. Doors open at <strong>12:00 PM</strong>.</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>3.</strong> Check in at the ASC3ND welcome table. Show your confirmation code (or this email on your phone).</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;"><strong>4.</strong> Come in and meet The Asc3nd Collective. Enjoy the event!</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;"><strong>5.</strong> Questions? Email <a href="mailto:social@asc3nd.org" style="color:#f5aa17;">social@asc3nd.org</a> or reply to this email.</p>
         </div>
         <div style="background:#1a1500;border-left:4px solid #f5aa17;padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">IMPORTANT — PLEASE READ</p>
@@ -82,6 +101,13 @@ function attendeeTextEN(submission, confirmationCode) {
     '',
     `Confirmation code: ${confirmationCode}`,
     '',
+    'WHAT HAPPENS NEXT:',
+    '1. Save this email or write down your confirmation code.',
+    '2. Arrive at Tangles & Locs on Sunday, August 30. Doors open at 12:00 PM.',
+    '3. Check in at the ASC3ND welcome table — show your code or this email.',
+    '4. Come in and meet The Asc3nd Collective. Enjoy the event!',
+    '5. Questions? Email social@asc3nd.org or reply to this email.',
+    '',
     'IMPORTANT:',
     'Your RSVP helps us prepare, but does not reserve a haircut, school supplies, or a specific arrival time.',
     'Free haircuts and school supplies are provided on a first-come, first-served basis while supplies last.',
@@ -102,9 +128,9 @@ function attendeeHtmlES(submission, confirmationCode) {
         <h1 style="margin:0;font-size:18px;font-weight:900;color:#000;letter-spacing:0.05em;">ASC3ND COLLECTIVE</h1>
       </div>
       <div style="padding:32px 24px;">
-        <h2 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#f5aa17;">Confirmacion Recibida</h2>
+        <h2 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#f5aa17;">Confirmación Recibida</h2>
         <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#fff;">
-          Gracias, ${submission.guardian_name}. Hemos recibido tu confirmacion para <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
+          Gracias, ${esc(submission.guardian_name)}. Hemos recibido tu confirmación para <strong>Community Cuts for Kids — Fresh Fade, Fresh Grade</strong>.
         </p>
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
           <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">DETALLES DEL EVENTO</p>
@@ -113,22 +139,30 @@ function attendeeHtmlES(submission, confirmationCode) {
           <p style="margin:0;font-size:15px;color:#fff;"><strong>Lugar:</strong> ${EVENT_DETAILS.venue}, ${EVENT_DETAILS.address}</p>
         </div>
         <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
-          <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">TU CODIGO DE CONFIRMACION</p>
+          <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">TU CÓDIGO DE CONFIRMACIÓN</p>
           <p style="margin:0;font-size:22px;font-weight:900;color:#fff;letter-spacing:0.1em;font-family:monospace;">${confirmationCode}</p>
         </div>
+        <div style="background:#111;border-radius:6px;padding:16px 20px;margin:0 0 24px;">
+          <p style="margin:0 0 12px;font-size:14px;color:#f5aa17;font-weight:700;">QUÉ PASARÁ DESPUÉS</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>1.</strong> Guarda este correo o anota tu código de confirmación.</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>2.</strong> Llega a Tangles &amp; Locs el <strong>domingo 30 de agosto</strong>. Abrimos a las <strong>12:00 PM</strong>.</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>3.</strong> Regístrate en la mesa de ASC3ND. Muestra tu código (o este correo en tu teléfono).</p>
+          <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#fff;"><strong>4.</strong> Entra y conoce a The Asc3nd Collective. ¡Disfruta el evento!</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;"><strong>5.</strong> ¿Preguntas? Escribe a <a href="mailto:social@asc3nd.org" style="color:#f5aa17;">social@asc3nd.org</a> o responde a este correo.</p>
+        </div>
         <div style="background:#1a1500;border-left:4px solid #f5aa17;padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;">
-          <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">INFORMACION IMPORTANTE</p>
+          <p style="margin:0 0 8px;font-size:14px;color:#f5aa17;font-weight:700;">INFORMACIÓN IMPORTANTE</p>
           <p style="margin:0;font-size:14px;line-height:1.6;color:#fff;">
-            Tu confirmacion nos ayuda a prepararnos para todas las personas que asistiran y a servir a tantas familias
-            como sea posible. Los cortes de cabello gratuitos y los utiles escolares se entregaran por
+            Tu confirmación nos ayuda a prepararnos para todas las personas que asistirán y a servir a tantas familias
+            como sea posible. Los cortes de cabello gratuitos y los útiles escolares se entregarán por
             <strong>orden de llegada</strong> mientras duren las existencias y haya citas disponibles.
-            Te recomendamos llegar temprano. Una confirmacion no reserva un corte de cabello, utiles escolares
-            ni una hora especifica de llegada.
+            Te recomendamos llegar temprano. Una confirmación no reserva un corte de cabello, útiles escolares
+            ni una hora específica de llegada.
           </p>
         </div>
         <p style="margin:0;font-size:13px;line-height:1.5;color:#999;">
-          Esta confirmacion se envio porque alguien envio una confirmacion en asc3nd.org. Si no enviaste esto,
-          responde a este correo para que podamos eliminar tu informacion.
+          Esta confirmación se envió porque alguien envió una confirmación en asc3nd.org. Si no enviaste esto,
+          responde a este correo para que podamos eliminar tu información.
         </p>
       </div>
       <div style="padding:16px 24px;background:#111;border-top:1px solid #222;">
@@ -144,20 +178,27 @@ function attendeeHtmlES(submission, confirmationCode) {
 
 function attendeeTextES(submission, confirmationCode) {
   return [
-    'ASC3ND COLLECTIVE - CONFIRMACION RECIBIDA',
+    'ASC3ND COLLECTIVE - CONFIRMACIÓN RECIBIDA',
     '',
-    `Gracias, ${submission.guardian_name}. Hemos recibido tu confirmacion para Community Cuts for Kids - Fresh Fade, Fresh Grade.`,
+    `Gracias, ${submission.guardian_name}. Hemos recibido tu confirmación para Community Cuts for Kids - Fresh Fade, Fresh Grade.`,
     '',
     'DETALLES DEL EVENTO',
     `Fecha: ${EVENT_DETAILS.date}`,
     `Hora: ${EVENT_DETAILS.time}`,
     `Lugar: ${EVENT_DETAILS.venue}, ${EVENT_DETAILS.address}`,
     '',
-    `Codigo de confirmacion: ${confirmationCode}`,
+    `Código de confirmación: ${confirmationCode}`,
     '',
-    'INFORMACION IMPORTANTE:',
-    'Tu confirmacion nos ayuda a prepararnos, pero no reserva un corte de cabello, utiles escolares ni una hora especifica.',
-    'Los cortes de cabello y utiles gratuitos se entregan por orden de llegada mientras duren las existencias.',
+    'QUÉ PASARÁ DESPUÉS:',
+    '1. Guarda este correo o anota tu código de confirmación.',
+    '2. Llega a Tangles & Locs el domingo 30 de agosto. Abrimos a las 12:00 PM.',
+    '3. Regístrate en la mesa de ASC3ND — muestra tu código o este correo.',
+    '4. Entra y conoce a The Asc3nd Collective. ¡Disfruta el evento!',
+    '5. ¿Preguntas? Escribe a social@asc3nd.org o responde a este correo.',
+    '',
+    'INFORMACIÓN IMPORTANTE:',
+    'Tu confirmación nos ayuda a prepararnos, pero no reserva un corte de cabello, útiles escolares ni una hora específica.',
+    'Los cortes de cabello y útiles gratuitos se entregan por orden de llegada mientras duren las existencias.',
     'Te recomendamos llegar temprano.',
     '',
     'Asc3nd Collective - EIN 99-1881891 - Seattle / King County',
@@ -181,7 +222,7 @@ function supporterHtmlEN(submission, confirmationCode) {
         <h1 style="margin:0;font-size:18px;font-weight:900;color:#000;">ASC3ND COLLECTIVE</h1>
       </div>
       <div style="padding:32px 24px;">
-        <h2 style="margin:0 0 8px;font-size:24px;color:#f5aa17;">Thank You, ${submission.name}</h2>
+        <h2 style="margin:0 0 8px;font-size:24px;color:#f5aa17;">Thank You, ${esc(submission.name)}</h2>
         <p style="margin:0 0 20px;font-size:16px;line-height:1.6;">
           We received your response for <strong>${SUPPORTER_SUBJECT[submission.participation] || 'Community Cuts for Kids'}</strong>.
           The Asc3nd Collective will follow up using the contact information you provided.
