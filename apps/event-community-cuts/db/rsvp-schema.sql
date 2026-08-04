@@ -136,3 +136,43 @@ commit;
 select 'rsvps' as table_name, count(*) as col_count from information_schema.columns where table_schema='public' and table_name='rsvps'
 union all
 select 'supporters', count(*) from information_schema.columns where table_schema='public' and table_name='supporters';
+
+-- ---------------------------------------------------------------------------
+-- Migration: add updates column to rsvps + harden idempotency_key
+-- (Bug fixes: updates array was silently dropped on attendance path;
+--  idempotency_key was nullable so UNIQUE allowed duplicate NULLs through.)
+-- Safe to re-run (idempotent).
+-- ---------------------------------------------------------------------------
+-- 1. Add updates text[] column to rsvps (mirrors supporters table)
+alter table public.rsvps
+  add column if not exists updates text[] not null default '{}';
+
+-- 2. Backfill accessibility_contact/contact_privately from existing booleans
+--    into the updates array so historical rows have the full picture:
+update public.rsvps
+  set updates = array_distinct(
+    array_remove(ARRAY[
+      case when accessibility_contact then 'accessibility' end,
+      case when preferred_language = 'es' then 'spanish' end
+    ] || coalesce(updates, ARRAY[]::text[]), null)
+  )
+  where updates = '{}';
+
+-- 3. Harden idempotency_key: make it NOT NULL so the UNIQUE constraint
+--    actually prevents duplicates (NULLs are not considered equal in Postgres,
+--    so a nullable UNIQUE column allows unlimited NULL values).
+--    Existing NULL rows get a synthetic key so the constraint can be applied.
+update public.rsvps
+  set idempotency_key = 'legacy-' || id::text
+  where idempotency_key is null;
+
+alter table public.rsvps
+  alter column idempotency_key set not null;
+
+-- Same hardening for supporters
+update public.supporters
+  set idempotency_key = 'legacy-' || id::text
+  where idempotency_key is null;
+
+alter table public.supporters
+  alter column idempotency_key set not null;

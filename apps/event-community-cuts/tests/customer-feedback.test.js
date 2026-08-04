@@ -176,6 +176,7 @@ describe('event intake payloads', () => {
       preferred_language: 'en',
       accessibility_contact: true,
       contact_privately: false,
+      updates: ['accessibility'],
       company_website: '',
       idempotency_key: null,
     });
