@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "repository": "executiveusa/asc3nd-frontend-website-",
+  "package_name": "asc3nd-frontend-website",
+  "deployment_role": "community-cuts-event-production",
+  "build_command": "npm run build:event",
+  "output_directory": "apps/event-community-cuts/.next",
+  "allowed_vercel_git_owner": "executiveusa",
+  "allowed_vercel_git_repo_slug": "asc3nd-frontend-website-",
+  "allowed_project_production_urls": [
+    "asc3nd-frontend.vercel.app",
+    "asc3nd.org",
+    "www.asc3nd.org"
+  ],
+  "forbidden_project_production_urls": [
+    "asc3nd-frontend-website.vercel.app",
+    "asc3nd-interactive-document.vercel.app",
+    "ascend-demonstration-page.vercel.app"
+  ],
+  "triple_check": [
+    "source repository identity",
+    "workspace/build-output identity",
+    "Vercel project production URL identity"
+  ],
+  "fail_closed_on_vercel": true
+}
