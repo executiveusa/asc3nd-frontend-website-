@@ -20,11 +20,12 @@ function esc(value) {
 export async function GET(request) {
   const headers = { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' };
 
-  // Handle logout
+  // Handle logout — clear BOTH cookies: shared-password session + Supabase token
   const url = new URL(request.url);
   if (url.searchParams.get('logout')) {
-    const clearCookie = destroySession(request.headers.get('cookie'));
-    headers['set-cookie'] = clearCookie;
+    const clearSession = destroySession(request.headers.get('cookie'));
+    const clearSupabase = 'sb-access-token=; HttpOnly; Secure; SameSite=Strict; Max-Age=0; Path=/';
+    headers['set-cookie'] = [clearSession, clearSupabase];
     return new Response('<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=/auth/login"></head></html>', { status: 302, headers });
   }
 
