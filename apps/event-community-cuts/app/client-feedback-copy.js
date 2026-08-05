@@ -15,7 +15,7 @@ export const LOCKED_CLIENT_COPY_EN = Object.freeze({
     Object.freeze({
       title: 'Free Haircuts for Kids',
       body:
-        'Start the school year with confidence! Complimentary haircuts will be provided on a first-come, first-served basis while appointment capacity lasts.',
+        'Start the school year with confidence! Complimentary haircuts will be provided on a first-come, first-served basis while appointment capacity lasts. Some restrictions apply.',
     }),
     Object.freeze({
       title: 'School Supplies & Giveaways',
