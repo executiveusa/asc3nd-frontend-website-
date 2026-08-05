@@ -36,10 +36,18 @@ export async function signInWithEmail(email, password) {
 
 /**
  * Get user by access token (from the session cookie).
+ *
+ * Supabase requires the project's anon key as `apikey` for ALL requests,
+ * plus the user's access token as `Authorization: Bearer` to identify them.
+ * Sending the access token as the apikey returns 401 "Invalid API key".
  */
 export async function getUserByToken(accessToken) {
   const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-    headers: authHeaders(accessToken),
+    headers: {
+      'apikey': ANON_KEY,
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
   });
   if (!res.ok) return null;
   return res.json();
