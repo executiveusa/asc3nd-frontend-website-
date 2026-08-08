@@ -10,7 +10,7 @@ function headers() {
   };
 }
 
-export async function GET() {
+export async function GET(request) {
   if (!SUPABASE_URL || !SERVICE_KEY) {
     return Response.json({ ok: false, error: 'supabase_not_configured' }, { status: 503 });
   }
@@ -27,7 +27,21 @@ export async function GET() {
   const rows = await res.json();
   if (!rows[0]) return Response.json({ ok: false, error: 'guide_not_found' }, { status: 404 });
 
-  return Response.json({ ok: true, guide: rows[0] });
+  let progress = null;
+  const url = new URL(request.url);
+  const clientKey = String(url.searchParams.get('clientKey') || '').trim();
+  if (clientKey && clientKey.length <= 100) {
+    const progressRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/asc3nd_client_guide_progress?guide_slug=eq.${GUIDE_SLUG}&client_key=eq.${encodeURIComponent(clientKey)}&select=state,updated_at&limit=1`,
+      { headers: headers(), cache: 'no-store' },
+    );
+    if (progressRes.ok) {
+      const progressRows = await progressRes.json();
+      progress = progressRows[0] || null;
+    }
+  }
+
+  return Response.json({ ok: true, guide: rows[0], progress });
 }
 
 export async function POST(request) {
