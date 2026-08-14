@@ -15,6 +15,6 @@ RUN npm run build:event
 EXPOSE 3001
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD wget -qO- http://127.0.0.1:3001/api/health >/dev/null || exit 1
+  CMD wget -qO- http://127.0.0.1:3001/api/ready >/dev/null || exit 1
 
 CMD ["npm", "run", "start:event"]
