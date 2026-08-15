@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "repository": "executiveusa/asc3nd-frontend-website-",
+  "package_name": "asc3nd-frontend-website",
+  "purpose": "Production ASC3ND public website and Community Cuts event frontend",
+  "owns": [
+    "apps/site",
+    "apps/event-community-cuts",
+    "public frontend API boundaries",
+    "frontend localization, accessibility, performance and tests",
+    "frontend deployment configuration"
+  ],
+  "forbids": [
+    "canonical workbook or contract records",
+    "brand master source files",
+    "raw interview media",
+    "reusable cross-client agent platform code",
+    "design-only demonstration work",
+    "duplicate RSVP databases",
+    "competing production event applications"
+  ],
+  "route_to": {
+    "workbook_contract_strategy": "executiveusa/asce3nd-interactive-document",
+    "brand_qr_campaign_assets": "executiveusa/asc3nd-brand-kit-",
+    "agents_postiz_operations": "executiveusa/ascend-social-purpose-agentic-systems-",
+    "design_demonstrations": "executiveusa/ascend-demonstration-page"
+  },
+  "required_checks": [
+    "repository_identity",
+    "package_identity",
+    "deployment_target_identity"
+  ],
+  "fail_closed": true
+}

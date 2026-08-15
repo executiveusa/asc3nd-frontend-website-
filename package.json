@@ -8,6 +8,9 @@
     "packages/*"
   ],
   "scripts": {
+    "guard:repo": "node scripts/repo-boundary-guard.mjs",
+    "prebuild": "npm run guard:repo",
+    "prebuild:event": "npm run guard:repo",
     "dev": "npm run dev --workspace @asc3nd/site",
     "build": "npm run build --workspace @asc3nd/site",
     "start": "npm run start --workspace @asc3nd/site",
