@@ -1,0 +1,39 @@
+version: "1.0"
+service: "asc3nd-community-cuts"
+
+origins:
+  primary:
+    provider: "Vercel"
+    apex_ip: "76.76.21.21"
+    domains:
+      - "asc3nd.org"
+      - "www.asc3nd.org"
+    health_endpoint: "https://asc3nd.org/api/health"
+    root_endpoint: "https://asc3nd.org/"
+  sovereign_standby:
+    provider: "Hostinger Cloud VPS / Coolify"
+    vps_ip: "31.220.58.212"
+    internal_port: 3001
+    container_name: "asc3nd-community-cuts-staging"
+    staging_domain: "https://asc3nd-community-cuts-staging.31.220.58.212.sslip.io"
+    ready_endpoint: "https://asc3nd-community-cuts-staging.31.220.58.212.sslip.io/api/ready"
+
+state_machine:
+  states:
+    - HEALTHY
+    - DEGRADED
+    - FAILOVER_CANDIDATE
+    - AWAITING_HUMAN_APPROVAL
+    - FAILOVER_APPROVED
+    - FAILED_OVER
+    - ROLLBACK_CANDIDATE
+    - ROLLBACK_APPROVED
+    - PRIMARY_RESTORED
+
+gating_criteria:
+  primary_failure_threshold: 2
+  sovereign_readiness_required: true
+  backup_max_age_hours: 24
+  container_status_required: "running"
+  human_approval_required: true
+  automatic_dns_cutover: false
