@@ -1,6 +1,13 @@
 version: "1.0"
 service: "asc3nd-community-cuts"
 
+dns:
+  current_provider: "HOSTINGER"
+  authoritative_nameservers:
+    - "solar.dns-parking.com"
+    - "lunar.dns-parking.com"
+  future_edge_migration_target: "CLOUDFLARE"
+
 origins:
   primary:
     provider: "Vercel"
@@ -31,7 +38,7 @@ state_machine:
     - PRIMARY_RESTORED
 
 gating_criteria:
-  primary_failure_threshold: 2
+  consecutive_failure_threshold_both_endpoints: 2
   sovereign_readiness_required: true
   backup_max_age_hours: 24
   container_status_required: "running"

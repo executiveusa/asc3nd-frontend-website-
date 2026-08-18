@@ -1,40 +1,23 @@
-/**
- * ASC3ND Sovereign Recovery & Health Monitor
- * Lightweight, zero-dependency monitoring daemon for production, sovereign staging,
- * VPS infrastructure, and database backup freshness.
- */
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { execSync } from 'node:child_process';
+import { dispatchAlert } from './alert-dispatcher.mjs';
 
 const LOG_DIR = process.env.MONITOR_LOG_DIR || '/opt/monitoring/asc3nd';
 const STATE_FILE = path.join(LOG_DIR, 'state.json');
 const EVIDENCE_FILE = path.join(LOG_DIR, 'evidence.jsonl');
 const LATEST_STATUS_FILE = path.join(LOG_DIR, 'latest-status.json');
-const ALERTS_LOG = path.join(LOG_DIR, 'alerts.log');
 const BACKUP_DIR = process.env.BACKUP_DIR || '/opt/backups/asc3nd/database';
 
-if (!fs.existsSync(LOG_DIR)) {
-  fs.mkdirSync(LOG_DIR, { recursive: true });
-}
+if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR, { recursive: true });
 
-// Load previous state
-let state = {
-  consecutiveFailures: {},
-  lastRun: null,
-  alertsSent: {}
-};
-
+let state = { consecutiveFailures: {}, lastRun: null };
 if (fs.existsSync(STATE_FILE)) {
-  try {
-    state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
-  } catch {
-    state = { consecutiveFailures: {}, lastRun: null, alertsSent: {} };
-  }
+  try { state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch {}
 }
 
-async function probeHttp(targetUrl, timeoutMs = 8000) {
+export async function probeHttp(targetUrl, timeoutMs = 8000) {
   const started = Date.now();
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -78,7 +61,7 @@ async function probeHttp(targetUrl, timeoutMs = 8000) {
   }
 }
 
-function checkVpsResources() {
+export function checkVpsResources() {
   const cpus = os.cpus().length;
   const loadAvg = os.loadavg();
   const totalMem = os.totalmem();
@@ -89,10 +72,10 @@ function checkVpsResources() {
   let diskFreeGb = 0;
   try {
     const dfOut = execSync('df -k / | tail -1', { encoding: 'utf8' }).trim();
-    const parts = dfOut.split(/\s+/);
+    const parts = dfOut.split(/\\s+/);
     diskUsedPercent = parseInt(parts[4].replace('%', ''), 10);
     diskFreeGb = Math.round(parseInt(parts[3], 10) / (1024 * 1024));
-  } catch (e) {
+  } catch {
     diskUsedPercent = -1;
   }
 
@@ -115,7 +98,7 @@ function checkVpsResources() {
   };
 }
 
-function checkBackupFreshness() {
+export function checkBackupFreshness() {
   if (!fs.existsSync(BACKUP_DIR)) {
     return { ok: false, reason: 'backup_directory_missing', count: 0 };
   }
@@ -187,7 +170,8 @@ export async function runMonitorCycle(options = {}) {
         failures: currentCount,
         error: res.error,
         latency: res.latency,
-        timestamp
+        timestamp,
+        force: options.forceAlerts || false
       });
     }
   }
@@ -205,7 +189,11 @@ export async function runMonitorCycle(options = {}) {
 
   const backup = checkBackupFreshness();
   if (!backup.ok) {
-    alerts.push({ level: 'CRITICAL', target: 'database_backup', error: backup.reason, timestamp });
+    alerts.push({ level: 'CRITICAL', target: 'database_backup', error: backup.reason, timestamp, force: options.forceAlerts || false });
+  }
+
+  for (const a of alerts) {
+    await dispatchAlert(a);
   }
 
   const cycleReport = {
@@ -217,20 +205,11 @@ export async function runMonitorCycle(options = {}) {
     alerts
   };
 
-  // Write Evidence Logs
   fs.appendFileSync(EVIDENCE_FILE, JSON.stringify(cycleReport) + '\n', 'utf8');
   fs.writeFileSync(LATEST_STATUS_FILE, JSON.stringify(cycleReport, null, 2), 'utf8');
 
   state.lastRun = timestamp;
   fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2), 'utf8');
-
-  // Record Alerts to Alerts Log
-  if (alerts.length > 0) {
-    for (const a of alerts) {
-      const alertLine = `[${a.timestamp}] [${a.level}] [${a.target}] ${a.error || ''} (failures: ${a.failures || 1})\n`;
-      fs.appendFileSync(ALERTS_LOG, alertLine, 'utf8');
-    }
-  }
 
   return cycleReport;
 }
