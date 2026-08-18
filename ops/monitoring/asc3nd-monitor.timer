@@ -1,0 +1,10 @@
+[Unit]
+Description=Run ASC3ND Sovereign Recovery Health Monitor every 2 minutes
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=2min
+Unit=asc3nd-monitor.service
+
+[Install]
+WantedBy=timers.target

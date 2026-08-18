@@ -1,0 +1,13 @@
+[Unit]
+Description=ASC3ND Sovereign Recovery Health Monitor
+After=network.target docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/node /opt/asc3nd-staging-preflight/ops/monitoring/asc3nd-monitor.mjs
+WorkingDirectory=/opt/asc3nd-staging-preflight
+StandardOutput=append:/opt/monitoring/asc3nd/monitor-stdout.log
+StandardError=append:/opt/monitoring/asc3nd/monitor-stderr.log
+
+[Install]
+WantedBy=multi-user.target
