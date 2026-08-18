@@ -1,0 +1,21 @@
+# ASC3ND Sovereign Runtime — Staging & Recovery Compose Definition
+# Host port 3001 is reserved on the VPS host (e.g. Supabase Studio).
+# This service connects to the internal reverse proxy (Coolify/Caddy/Traefik) network on port 3001.
+
+services:
+  event-community-cuts:
+    build:
+      context: .
+      dockerfile: Dockerfile.coolify
+    restart: unless-stopped
+    expose:
+      - "3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    networks:
+      - coolify
+
+networks:
+  coolify:
+    external: true

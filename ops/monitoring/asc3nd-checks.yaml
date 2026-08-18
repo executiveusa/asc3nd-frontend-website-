@@ -1,0 +1,50 @@
+schema_version: 1
+service: asc3nd-community-cuts
+checks:
+  - id: public_home
+    url: https://asc3nd.org/
+    method: GET
+    expected_status: 200
+    interval_seconds: 60
+    failure_threshold: 3
+  - id: liveness
+    url: https://asc3nd.org/api/health
+    method: GET
+    expected_status: 200
+    interval_seconds: 60
+    failure_threshold: 3
+  - id: readiness
+    url: https://asc3nd.org/api/ready
+    method: GET
+    expected_status: 200
+    interval_seconds: 60
+    failure_threshold: 2
+alerts:
+  yellow:
+    conditions:
+      - public_home latency or intermittent failure without readiness failure
+      - backup age exceeds warning threshold
+    action: diagnose_and_record
+  red:
+    conditions:
+      - readiness failed twice consecutively
+      - public_home unavailable for three checks
+      - TLS or DNS resolution failure
+      - latest verified database backup exceeds 24 hours
+    action: alert_human_and_begin_read_only_diagnostics
+agent_policy:
+  autonomous_allowed:
+    - read logs
+    - inspect health
+    - inspect container state
+    - compare deployed and Git SHAs
+    - verify backup age
+    - create incident report
+  approval_required:
+    - deploy
+    - restart production
+    - change DNS
+    - change secrets
+    - change database
+    - delete resources
+    - create paid resources

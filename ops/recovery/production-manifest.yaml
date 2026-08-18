@@ -1,0 +1,54 @@
+schema_version: 1
+service: asc3nd-community-cuts
+status: recovery-in-progress
+source:
+  repository: executiveusa/asc3nd-frontend-website-
+  production_branch: main
+  audited_main_sha: 27b5d633908e292b7f4a66c971f9d873c96362e7
+  app_path: apps/event-community-cuts
+  framework: nextjs
+  node_version: 24.x
+  install_command: npm ci
+  build_command: npm run build:event
+  start_command: npm run start:event
+  container_port: 3001
+health:
+  liveness_path: /api/health
+  readiness_path: /api/ready
+  readiness_requires_database: true
+providers:
+  primary_target: coolify
+  standby_target: vercel
+  dns_edge: cloudflare
+  source_of_truth: github
+production_domains:
+  - asc3nd.org
+  - www.asc3nd.org
+secrets:
+  policy: values-never-committed
+  required_names_status: audit-required
+  recovery_rule: keep names/scopes in manifest; keep values only in approved secret store
+backups:
+  source: github
+  database: required-offsite
+  application_state: required-offsite-if-persistent
+  coolify_config: required-offsite
+  restore_test: required
+recovery_objectives:
+  rto_minutes: 30
+  rpo_hours_initial: 24
+failover:
+  mode: active_passive
+  automatic_dns_failover: planned
+  primary_origin: coolify
+  standby_origin: vercel
+  monitor_path: /api/ready
+  production_cutover_requires_human_approval: true
+unknowns:
+  - exact current Vercel project identity and project ID
+  - exact production Vercel deployment/alias state
+  - current Cloudflare zone/account configuration
+  - exact production environment variable names/scopes/values
+  - exact production Supabase project identity used by Community Cuts
+  - offsite backup bucket/provider
+  - Coolify application/server IDs and current backup policy
