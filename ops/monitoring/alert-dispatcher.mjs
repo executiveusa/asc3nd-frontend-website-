@@ -17,6 +17,10 @@ function saveAlertState(state) {
   fs.writeFileSync(ALERT_STATE_FILE, JSON.stringify(state, null, 2), 'utf8');
 }
 
+/**
+ * Dispatch alert to real external channels.
+ * Rule: dispatched is true ONLY if at least one external channel accepted the alert with HTTP 2xx.
+ */
 export async function dispatchAlert(alert) {
   const state = loadAlertState();
   const alertKey = `${alert.target}:${alert.error || alert.level}`;
@@ -27,14 +31,19 @@ export async function dispatchAlert(alert) {
     return { dispatched: false, reason: 'cooldown_suppressed', channel: 'none' };
   }
 
+  // Always record to local audit log
   const logLine = `[${alert.timestamp || new Date().toISOString()}] [${alert.level}] [${alert.target}] ${alert.error || ''} (failures: ${alert.failures || 1})\n`;
+  if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR, { recursive: true });
   fs.appendFileSync(ALERTS_LOG, logLine, 'utf8');
 
-  let dispatchedChannel = 'console_log';
   const botToken = process.env.TELEGRAM_BOT_TOKEN || '';
   const chatId = process.env.TELEGRAM_CHAT_ID || '';
   const webhookUrl = process.env.COOLIFY_WEBHOOK_URL || process.env.ALERT_WEBHOOK_URL || '';
 
+  const successfulChannels = [];
+  const errors = [];
+
+  // 1. Telegram Dispatch
   if (botToken && chatId) {
     try {
       const msg = `🚨 *ASC3ND SYSTEM ALERT* 🚨\n\n*Level:* ${alert.level}\n*Target:* ${alert.target}\n*Error:* ${alert.error || 'Check failed'}\n*Timestamp:* ${alert.timestamp || new Date().toISOString()}`;
@@ -43,15 +52,20 @@ export async function dispatchAlert(alert) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chat_id: chatId, text: msg, parse_mode: 'Markdown' })
       });
-      if (res.ok) dispatchedChannel = 'telegram';
+      if (res.ok) {
+        successfulChannels.push('telegram');
+      } else {
+        errors.push(`telegram_http_${res.status}`);
+      }
     } catch (e) {
-      console.error('Telegram dispatch error:', e.message);
+      errors.push(`telegram_error:${e.message}`);
     }
   }
 
+  // 2. Webhook Dispatch
   if (webhookUrl) {
     try {
-      await fetch(webhookUrl, {
+      const res = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -62,14 +76,38 @@ export async function dispatchAlert(alert) {
           timestamp: alert.timestamp || new Date().toISOString()
         })
       });
-      dispatchedChannel = (dispatchedChannel === 'console_log') ? 'webhook' : `${dispatchedChannel}+webhook`;
+      if (res.ok) {
+        successfulChannels.push('webhook');
+      } else {
+        errors.push(`webhook_http_${res.status}`);
+      }
     } catch (e) {
-      console.error('Webhook dispatch error:', e.message);
+      errors.push(`webhook_error:${e.message}`);
     }
   }
 
-  state.lastDispatched[alertKey] = now;
-  saveAlertState(state);
+  // Evaluate truthfulness of dispatch:
+  // Console logging alone does NOT count as external delivery.
+  if (successfulChannels.length > 0) {
+    // Only advance cooldown when actual external delivery succeeded
+    state.lastDispatched[alertKey] = now;
+    saveAlertState(state);
+    return {
+      dispatched: true,
+      channel: successfulChannels.join('+'),
+      key: alertKey
+    };
+  }
 
-  return { dispatched: true, channel: dispatchedChannel, key: alertKey };
+  // No external channel configured or all external channels failed
+  const reason = (errors.length > 0)
+    ? `external_delivery_failed:${errors.join(',')}`
+    : 'no_external_channel_configured';
+
+  return {
+    dispatched: false,
+    reason,
+    channel: 'none',
+    key: alertKey
+  };
 }

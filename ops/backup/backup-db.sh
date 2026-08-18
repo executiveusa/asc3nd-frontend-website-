@@ -35,7 +35,7 @@ chmod 600 "$DUMP_FILE"
 
 # 2. Generate SHA-256 Checksum
 SHA256=$(sha256sum "$DUMP_FILE" | awk '{print $1}')
-echo "$SHA256  $(basename "$DUMP_FILE")" > "$SHA_FILE"
+(cd "$BACKUP_DIR" && echo "$SHA256  $(basename "$DUMP_FILE")" > "$SHA_FILE")
 chmod 600 "$SHA_FILE"
 
 # 3. Verify Archive with pg_restore --list
@@ -64,16 +64,8 @@ RECORD=$(jq -n \
     '{timestamp: $ts, file: $file, sha256: $sha, size_bytes: ($size|tonumber), toc_entries: ($toc|tonumber), elapsed_seconds: ($elapsed|tonumber), status: "VERIFIED"}')
 echo "$RECORD" >> "$HISTORY_FILE"
 
-# 5. Execute Retention Policy (Preserving baseline certified recovery archive)
-ALL_DUMPS=($(ls -1t "${BACKUP_DIR}"/asc3nd-community-cuts-*.dump))
-if [[ "${#ALL_DUMPS[@]}" -gt 10 ]]; then
-    for old_dump in "${ALL_DUMPS[@]:10}"; do
-        if [[ "$old_dump" != *"20260816-222224"* ]]; then
-            echo "Pruning expired backup: $old_dump"
-            rm -f "$old_dump" "${old_dump}.sha256" 2>/dev/null || true
-        fi
-    done
-fi
+# 5. Execute True 7-Daily / 4-Weekly / 3-Monthly Retention Engine
+node /opt/asc3nd-staging-preflight/ops/backup/retention-prune.mjs "$BACKUP_DIR" --apply
 
 # 6. Execute Pluggable Offsite Adapter
 /opt/asc3nd-staging-preflight/ops/backup/offsite-adapter.sh "$DUMP_FILE" || true
