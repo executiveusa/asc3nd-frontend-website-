@@ -1,0 +1,10 @@
+[Unit]
+Description=Run ASC3ND Daily Backup at 03:30 UTC
+
+[Timer]
+OnCalendar=*-*-* 03:30:00 UTC
+Persistent=true
+Unit=asc3nd-backup.service
+
+[Install]
+WantedBy=timers.target

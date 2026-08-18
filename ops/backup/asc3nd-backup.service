@@ -1,0 +1,13 @@
+[Unit]
+Description=ASC3ND Native PostgreSQL Daily Backup
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/asc3nd-staging-preflight/ops/backup/backup-db.sh
+WorkingDirectory=/opt/asc3nd-staging-preflight
+StandardOutput=append:/opt/backups/asc3nd/database/backup-stdout.log
+StandardError=append:/opt/backups/asc3nd/database/backup-stderr.log
+
+[Install]
+WantedBy=multi-user.target

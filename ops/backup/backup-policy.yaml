@@ -1,0 +1,20 @@
+version: "1.0"
+target_project: "sxkemnqvxlgewrjplcag"
+database_host: "db.sxkemnqvxlgewrjplcag.supabase.co"
+schedule:
+  frequency: "daily"
+  time_utc: "03:30"
+  description: "Daily automated backup scheduled at low-traffic window (03:30 UTC)"
+retention:
+  daily: 7
+  weekly: 4
+  monthly: 3
+  certified_baseline_preserved: true
+verification:
+  format: "pg_dump -Fc (PostgreSQL Custom Archive)"
+  integrity_check: "pg_restore --list"
+  checksum: "SHA-256"
+  sla_max_age_hours: 24
+storage:
+  local_primary: "/opt/backups/asc3nd/database"
+  offsite_adapter: "ops/backup/offsite-adapter.sh"
