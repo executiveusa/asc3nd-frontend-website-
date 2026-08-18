@@ -111,7 +111,14 @@ export async function countRsvps() {
     headers: { Authorization: `Bearer ${key}`, apikey: key, 'Prefer': 'count=exact' },
     cache: 'no-store',
   });
-  if (!res.ok) return 0;
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    const err = new Error(`supabase_count_failed:${res.status}`);
+    err.code = "supabase_count_failed";
+    err.detail = text;
+    err.status = res.status;
+    throw err;
+  }
   const range = res.headers.get('content-range') || '';
   const match = range.match(/\/(\d+)/);
   return match ? parseInt(match[1], 10) : 0;
