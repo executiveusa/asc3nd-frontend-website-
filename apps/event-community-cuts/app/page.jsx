@@ -33,14 +33,12 @@ export default function Asc3ndHoldingPage() {
         />
 
         <div className={styles.logoStage}>
-          <Image
+          <img
             className={styles.secondaryLogo}
-            src="/images/asc3nd-secondary-logo.webp"
+            src="/images/asc3nd-secondary-logo-transparent.svg"
             alt="ASC3ND Collective logo"
-            width={600}
-            height={600}
-            priority
-            sizes="(max-width: 640px) 390px, 560px"
+            width="568"
+            height="330"
           />
         </div>
 
