@@ -40,13 +40,20 @@
 }
 
 .stay {
-  margin: 28px 0 14px;
+  margin: 28px 0 10px;
   font-family: var(--font-barlow-condensed), sans-serif;
   font-size: 0.86rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #f5a617;
+}
+
+.secondaryLogo {
+  width: min(100%, 390px);
+  height: auto;
+  display: block;
+  margin: 0 auto 18px;
 }
 
 .form {
@@ -178,6 +185,11 @@
 
   .stay {
     margin-top: 22px;
+  }
+
+  .secondaryLogo {
+    width: min(100%, 325px);
+    margin-bottom: 16px;
   }
 
   .fields {
