@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import HoldingSignupForm from './HoldingSignupForm.jsx';
 import styles from './holding.module.css';
 
@@ -62,10 +61,6 @@ export default function Asc3ndHoldingPage() {
         <p className={styles.stay}>Stay connected.</p>
 
         <HoldingSignupForm />
-
-        <Link className={styles.eventLink} href="/community-cuts">
-          Community Cuts for Kids
-        </Link>
       </section>
     </main>
   );
