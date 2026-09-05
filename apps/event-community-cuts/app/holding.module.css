@@ -23,8 +23,8 @@
 }
 
 .logoStage {
-  width: min(100%, 568px);
-  margin: 38px auto 0;
+  width: min(100%, 600px);
+  margin: 40px auto 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,21 +32,22 @@
 }
 
 .secondaryLogo {
-  width: 100%;
+  width: min(100%, 560px);
   height: auto;
   display: block;
+  margin-inline: auto;
   object-fit: contain;
 }
 
 .statementStack {
-  margin: 42px 0 0;
+  margin: 36px 0 0;
   display: grid;
-  gap: 9px;
+  gap: 8px;
   font-family: var(--font-barlow-condensed), sans-serif;
-  font-size: clamp(1.95rem, 5.2vw, 2.75rem);
+  font-size: clamp(2rem, 4vw, 2.7rem);
   line-height: 0.98;
   font-weight: 900;
-  letter-spacing: 0.085em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
@@ -56,13 +57,13 @@
 
 .thankYouBlock {
   width: min(100%, 620px);
-  margin: 34px auto 0;
+  margin: 32px auto 0;
 }
 
 .thankYouTitle {
   margin: 0;
   font-family: var(--font-barlow-condensed), sans-serif;
-  font-size: clamp(1.5rem, 3.2vw, 2.15rem);
+  font-size: clamp(1.875rem, 3vw, 2.25rem);
   line-height: 1.08;
   font-weight: 900;
   letter-spacing: 0.02em;
@@ -71,13 +72,13 @@
 .thankYouCopy {
   max-width: 600px;
   margin: 12px auto 0;
-  color: rgba(255, 255, 255, 0.74);
+  color: rgba(255, 255, 255, 0.78);
   font-size: clamp(1rem, 2vw, 1.12rem);
-  line-height: 1.58;
+  line-height: 1.56;
 }
 
 .stay {
-  margin: 28px 0 14px;
+  margin: 26px 0 14px;
   font-family: var(--font-barlow-condensed), sans-serif;
   font-size: 0.86rem;
   font-weight: 800;
@@ -114,7 +115,7 @@
 
 .fields input {
   width: 100%;
-  min-height: 50px;
+  min-height: 52px;
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 0;
   background: #080808;
@@ -148,7 +149,7 @@
 
 .form button {
   width: 100%;
-  min-height: 52px;
+  min-height: 54px;
   border: 0;
   border-radius: 0;
   background: #f5a617;
@@ -193,6 +194,12 @@
   overflow: hidden !important;
 }
 
+@media (min-width: 641px) and (max-width: 767px) {
+  .secondaryLogo {
+    width: min(92vw, 470px);
+  }
+}
+
 @media (max-width: 640px) {
   .page {
     padding: 18px 16px 28px;
@@ -204,19 +211,29 @@
   }
 
   .logoStage {
-    width: min(100%, 390px);
-    margin-top: 30px;
+    width: 100%;
+    margin-top: 28px;
+  }
+
+  .secondaryLogo {
+    width: min(94vw, 360px);
   }
 
   .statementStack {
-    margin-top: 34px;
+    margin-top: 26px;
     gap: 8px;
-    font-size: clamp(1.9rem, 9vw, 2.4rem);
-    line-height: 0.98;
+    font-size: clamp(1.7rem, 8vw, 2.15rem);
+    line-height: 1;
+    letter-spacing: 0.055em;
   }
 
   .thankYouBlock {
+    width: min(100%, calc(100vw - 40px));
     margin-top: 28px;
+  }
+
+  .thankYouTitle {
+    font-size: clamp(1.56rem, 7vw, 1.875rem);
   }
 
   .thankYouCopy {
@@ -224,11 +241,21 @@
   }
 
   .stay {
-    margin-top: 22px;
+    margin: 22px 0 13px;
+  }
+
+  .form {
+    width: 100%;
   }
 
   .fields {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 340px) {
+  .secondaryLogo {
+    width: min(92vw, 305px);
   }
 }
 
