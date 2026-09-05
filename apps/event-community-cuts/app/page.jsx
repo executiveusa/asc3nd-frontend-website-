@@ -36,20 +36,27 @@ export default function Asc3ndHoldingPage() {
           Empower Youth. Elevate Futures. Build Community.
         </h1>
 
-        <p className={styles.note}>
-          We’re building the next chapter of ASC3ND. Our new website is on the way.
-        </p>
-
-        <p className={styles.stay}>Stay connected.</p>
-
         <Image
           className={styles.secondaryLogo}
           src="/images/asc3nd-secondary-logo.webp"
           alt="ASC3ND Collective logo"
           width={600}
           height={600}
-          sizes="(max-width: 640px) 325px, 390px"
+          priority
+          sizes="(max-width: 640px) 360px, 500px"
         />
+
+        <div className={styles.thankYouBlock}>
+          <h2 className={styles.thankYouTitle}>Thank you for supporting ASC3ND.</h2>
+          <p className={styles.thankYouCopy}>
+            Your support helps us create more opportunities, stronger connections, and better futures for young people in our community.
+          </p>
+          <p className={styles.thankYouCopy}>
+            We’re building the next chapter now. Stay connected and we’ll keep you updated.
+          </p>
+        </div>
+
+        <p className={styles.stay}>Stay connected.</p>
 
         <HoldingSignupForm />
       </section>
