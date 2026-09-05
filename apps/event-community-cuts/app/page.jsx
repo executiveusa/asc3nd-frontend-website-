@@ -32,19 +32,23 @@ export default function Asc3ndHoldingPage() {
           sizes="(max-width: 640px) calc(100vw - 32px), 560px"
         />
 
-        <h1 className={styles.tagline} id="holding-title">
-          Empower Youth. Elevate Futures. Build Community.
-        </h1>
+        <div className={styles.logoStage}>
+          <Image
+            className={styles.secondaryLogo}
+            src="/images/asc3nd-secondary-logo.webp"
+            alt="ASC3ND Collective logo"
+            width={600}
+            height={600}
+            priority
+            sizes="(max-width: 640px) 390px, 560px"
+          />
+        </div>
 
-        <Image
-          className={styles.secondaryLogo}
-          src="/images/asc3nd-secondary-logo.webp"
-          alt="ASC3ND Collective logo"
-          width={600}
-          height={600}
-          priority
-          sizes="(max-width: 640px) 360px, 500px"
-        />
+        <h1 className={styles.statementStack} id="holding-title">
+          <span>Empower Youth</span>
+          <span>Elevate Futures</span>
+          <span>Build Community</span>
+        </h1>
 
         <div className={styles.thankYouBlock}>
           <h2 className={styles.thankYouTitle}>Thank you for supporting ASC3ND.</h2>
