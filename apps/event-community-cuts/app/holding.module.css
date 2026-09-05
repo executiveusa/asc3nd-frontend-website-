@@ -193,6 +193,22 @@
   overflow: hidden !important;
 }
 
+.eventLink {
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-barlow-condensed), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-underline-offset: 4px;
+}
+
+.eventLink:hover,
+.eventLink:focus-visible {
+  color: #f5a617;
+}
+
 @media (max-width: 640px) {
   .page {
     padding: 18px 16px 28px;
@@ -229,6 +245,10 @@
 
   .fields {
     grid-template-columns: 1fr;
+  }
+
+  .eventLink {
+    margin-top: 20px;
   }
 }
 
