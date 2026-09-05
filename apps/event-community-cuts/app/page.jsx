@@ -42,6 +42,15 @@ export default function Asc3ndHoldingPage() {
 
         <p className={styles.stay}>Stay connected.</p>
 
+        <Image
+          className={styles.secondaryLogo}
+          src="/images/asc3nd-secondary-logo.webp"
+          alt="ASC3ND Collective logo"
+          width={600}
+          height={600}
+          sizes="(max-width: 640px) 325px, 390px"
+        />
+
         <HoldingSignupForm />
       </section>
     </main>
