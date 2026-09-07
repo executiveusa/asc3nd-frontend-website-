@@ -1,0 +1,31 @@
+name: Import ASC3ND holding logo
+on:
+  push:
+    branches:
+      - fix/holding-page-compact-logo-20260907
+    paths:
+      - .github/workflows/holding-logo-import.yml
+permissions:
+  contents: write
+jobs:
+  import-logo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download exact approved logo
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --output apps/event-community-cuts/public/images/asc3nd-logo-transparent-tight-v2.png 'https://d2ol7oe51mr4n9.cloudfront.net/user_33irX78ICVwRYWpFZ5l6a5vZbf5/85e6857f-cc13-4b35-b0b5-2efb837efed3.png'
+          echo 'f9d4e227d4b1cb98768213e6beb9dd03222c1caf72a6c3afe9ca7a1424307c23  apps/event-community-cuts/public/images/asc3nd-logo-transparent-tight-v2.png' | sha256sum --check --status
+      - name: Commit verified binary to this branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/event-community-cuts/public/images/asc3nd-logo-transparent-tight-v2.png
+          git commit -m 'asset: preserve exact supplied ASC3ND logo' || exit 0
+          git push origin HEAD:fix/holding-page-compact-logo-20260907
