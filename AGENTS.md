@@ -1,74 +1,107 @@
-# AGENTS.md — Asc3nd Frontend Repo
-> READ THIS FIRST before editing any file in this repo.
+# AGENTS.md — ASC3ND Frontend Repository
 
----
+> Mandatory boot sequence before any edit, build, PR, or deployment.
 
-## ⚠️ THERE ARE TWO SEPARATE REPOS. DO NOT CONFUSE THEM.
+## Central source of truth
 
-| Repo | Purpose | Local Path |
-|------|---------|------------|
-| **asc3nd-frontend-website** (THIS REPO) | Public-facing website + event pages | `E:\ACTIVE PROJECTS-PIPELINE\...\asc3nd-frontend-website--main` |
-| **ascend-social-purpose-agentic-systems** | Agentic OS / backend / ICM system | `E:\ACTIVE PROJECTS-PIPELINE\...\ascend-social-purpose-agentic-systems--main(1)` |
+This repository does **not** own the contract, task ledger, agent workflow, or client strategy source of truth.
 
-**Never edit the agentic systems repo when working on the landing page or event pages.**
+Before working here, read in `executiveusa/ascend-social-purpose-agentic-systems-`:
 
----
+1. `AGENTS.md`
+2. `control-plane/README.md`
+3. `control-plane/repo-registry.json`
+4. `control-plane/task-ledger.json`
+5. `control-plane/architecture.md`
+6. the active folder under `icm/asc3nd-contract-closeout/`
 
-## This Repo Contains Two Separate Apps
+Use JCodeMunch MCP first for targeted repository discovery. Claim the task in the central ledger before editing. This repository may only implement work explicitly routed here.
 
-### App 1 — `apps/site/` — Asc3nd Collective Main Website
-- **What it is:** The public nonprofit homepage for Asc3nd Collective
-- **URL:** https://asc3nd-frontend-website.vercel.app
-- **Vercel project:** `asc3nd-frontend-website` (team: `the-pauli-effect`)
-- **Stack:** Next.js 16, Vanilla CSS, Google Fonts (Barlow), NO Tailwind
-- **Brand:** Black `#000`, Gold `#F5A617`, White `#fff`
-- **Key files:**
-  - `apps/site/app/page.jsx` — Homepage
-  - `apps/site/app/globals.css` — Full design system
-  - `apps/site/components/PublicNav.jsx` — Sticky nav
-  - `apps/site/public/images/` — Site images
-- **DO NOT** put Community Cuts event content here
+If the request belongs elsewhere, stop with:
 
----
-
-### App 2 — `apps/event-community-cuts/` — Community Cuts for Kids Event Page
-- **What it is:** Standalone event landing page for the Community Cuts for Kids back-to-school event
-- **Event:** Sunday, August 30, 2026 · 12–3PM · Tangles & Locs, 7425 Hardeson Rd, Everett WA
-- **Key files:**
-  - `apps/event-community-cuts/app/page.jsx` — Event landing page
-  - `apps/event-community-cuts/app/event.module.css` — Event styles
-  - `apps/event-community-cuts/app/visual-fixes.module.css` — Venue photo stack CSS
-  - `apps/event-community-cuts/app/EventInterestForm.jsx` — RSVP form
-  - `apps/event-community-cuts/public/images/` — Event venue images
-    - `tangles-locs-exterior.jpg` — Main venue exterior photo (Tangles & Locs salon)
-    - `tangles-locs-01.webp` through `tangles-locs-04.webp` — Additional venue shots
-- **DO NOT** put nonprofit org content here
-
----
-
-## Deploy Rules (CRITICAL)
-
-```
-# Deploy from repo ROOT, not from apps/site:
-cd "E:\ACTIVE PROJECTS-PIPELINE\...\asc3nd-frontend-website--main"
-npx vercel --prod
-
-# DO NOT run from apps/site — doubles the path and breaks the build
+```text
+REPOSITORY_BOUNDARY_STOP
+Requested work: <summary>
+Current repository: executiveusa/asc3nd-frontend-website-
+Reason it does not belong here: <reason>
+Correct destination: <repository>
+Required handoff artifact: <issue/PR/file/schema/media manifest>
 ```
 
-- Vercel auto-deploys `apps/site` on push to `main`
-- The `apps/event-community-cuts` app is separate — check its deployment status
+## Repository boundary
+
+This repository owns only:
+
+- the public ASC3ND website;
+- the Community Cuts event funnel;
+- server-side API routes required by those frontends;
+- frontend tests, accessibility, performance, and deployment configuration.
+
+It does not own:
+
+- the paid social-strategy contract ledger;
+- client workbook answers;
+- raw interview footage or transcript archive;
+- brand master ownership;
+- reusable agent-platform implementation;
+- Postiz publishing strategy;
+- a second RSVP database.
 
 ---
 
-## Image Swap Protocol
-When a user provides a new image to replace an existing one:
-1. Identify WHICH app the image belongs to (`apps/site` or `apps/event-community-cuts`)
-2. Copy the image to that app's `public/images/` folder
-3. Update only that app's `page.jsx` reference
-4. Never cross-pollinate images between apps
+## There are two primary repositories. Do not confuse them.
+
+| Repo | Purpose |
+|---|---|
+| `executiveusa/asc3nd-frontend-website-` (THIS REPO) | Public-facing website and event pages |
+| `executiveusa/ascend-social-purpose-agentic-systems-` | Central control plane, reusable agentic OS, ICM stages, task and contract ledgers |
+
+Never edit the agentic systems repository when implementing a landing-page change. Never place contract or workflow truth inside this frontend.
 
 ---
 
-## Branch: `review/glm-turbo-krug-spanish-routes`
-Contains pending work on Spanish routes and page stubs — not merged to main yet.
+## This repository contains two separate apps
+
+### App 1 — `apps/site/` — ASC3ND main website
+- Public nonprofit homepage
+- Vercel project historically named `asc3nd-frontend-website`
+- Next.js, Vanilla CSS, Barlow
+- Key files: `apps/site/app/page.jsx`, `apps/site/app/globals.css`, `apps/site/components/PublicNav.jsx`
+- Do not place Community Cuts event content here.
+
+### App 2 — `apps/event-community-cuts/` — Community Cuts event page
+- Sunday, August 30, 2026
+- 12:00 PM–3:00 PM
+- Tangles & Locs, 7425 Hardeson Rd, Everett, WA 98203
+- Key files: `apps/event-community-cuts/app/page.jsx`, `event.module.css`, `visual-fixes.module.css`, `EventInterestForm.jsx`
+- Do not place general nonprofit website content here.
+
+---
+
+## Deployment law
+
+1. Run `npm run guard:repo`.
+2. Verify Git owner/repository identity.
+3. Verify intended app/build/output identity.
+4. Verify Vercel project and production-domain identity.
+5. Preview first.
+6. Production requires recorded human approval.
+
+Do not rely on similar ASC3ND project names. Do not deploy from a nested app directory unless the approved Vercel project is explicitly configured for that root.
+
+## Image and asset protocol
+
+1. Identify the owning app.
+2. Confirm the asset belongs to this repository rather than the brand-kit repository.
+3. Copy only an approved export into the app's `public/images/` directory.
+4. Preserve logo and QR masters; do not regenerate them.
+5. Update only the owning app.
+6. Test all breakpoints and QR scanning where applicable.
+
+## Safety
+
+- No service-role key in client code.
+- No production data migration from this repository without explicit routing and approval.
+- No public publishing or external messages.
+- No youth-sensitive data in logs, fixtures, screenshots, or analytics.
+- No completion claim without test evidence.
